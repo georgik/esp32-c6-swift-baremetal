@@ -31,10 +31,14 @@ build:
 	@echo "building..."
 	$(SWIFT_BUILD) \
 		$(SWIFT_BUILD_ARGS) \
+		-Xlinker -e \
+		-Xlinker _start \
 		--verbose
 
 	@echo "extracting binary..."
 	$(LLVM_OBJCOPY) \
+		--only-section .text \
+		--only-section .rodata \
 		-O binary \
 		"$(BUILDROOT)/Application" \
 		"$(BUILDROOT)/Application.bin"
