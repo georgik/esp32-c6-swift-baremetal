@@ -30,3 +30,18 @@ func delay() {
         _ = 0
     }
 }
+
+
+@_cdecl("_start")
+public func _start() -> Never {
+    main()
+    while true { }
+}
+
+
+/// Entry point for your application logic
+public func main() -> Never {
+    // Place your initialization or test code here.
+    // e.g., blink loop or a no-op.
+    while true { }
+}
