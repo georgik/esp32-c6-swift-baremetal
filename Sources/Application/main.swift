@@ -1,24 +1,21 @@
 import MMIO
-import Device
-import GPIO
+import Registers
 
 @main
 struct Main {
     static func main() {
-        // Enable GPIO peripheral (ESP32-C3 always has GPIO, no RCC enable required)
-
-        let gpio = UnsafeMutablePointer<RegisterBlock>(bitPattern: 0x60004000)!.pointee
+        // Enable GPIO peripheral (ESP32-C6 always has GPIO, no RCC enable required)
 
         // Configure GPIO2 as output (bit 2)
-        gpio.enable_w1ts.write { $0.en |= 1 << 2 }
+//         gpio.enable_w1ts.write { $0.enable_w1ts_field = 1 << 2 }
 
         var counter: UInt32 = 0
 
         while true {
             if counter % 2 == 0 {
-                gpio.out_w1ts.write { $0.out |= 1 << 2 } // LED ON
+//                 gpio.out_w1ts.write { $0.out_w1ts_field = 1 << 2 } // LED ON
             } else {
-                gpio.out_w1tc.write { $0.out |= 1 << 2 } // LED OFF
+//                 gpio.out_w1tc.write { $0.out_w1tc_field = 1 << 2 } // LED OFF
             }
 
             delay()
@@ -33,4 +30,3 @@ func delay() {
         _ = 0
     }
 }
-

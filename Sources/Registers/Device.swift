@@ -10,3 +10,7 @@ public let spi0 = SPI0(unsafeAddress: 0x60002000)
 
 /// UART (Universal Asynchronous Receiver-Transmitter) Controller 0
 public let uart0 = UART0(unsafeAddress: 0x60000000)
+
+extension GPIO: @unchecked Sendable {}
+extension SPI0: @unchecked Sendable {}
+extension UART0: @unchecked Sendable {}
