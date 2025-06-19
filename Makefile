@@ -1,14 +1,3 @@
-##===----------------------------------------------------------------------===##
-##
-## This source file is part of the Swift open source project
-##
-## Copyright (c) 2025 Apple Inc. and the Swift project authors.
-## Licensed under Apache License v2.0 with Runtime Library Exception
-##
-## See https://swift.org/LICENSE.txt for license information
-##
-##===----------------------------------------------------------------------===##
-
 # Paths
 REPOROOT         := $(shell git rev-parse --show-toplevel)
 TOOLSROOT        := $(REPOROOT)/Tools
@@ -24,7 +13,8 @@ SWIFT_BUILD_ARGS := \
     --configuration release \
     --triple $(TARGET) \
     --toolset $(TOOLSET) \
-    --disable-local-rpath
+    --disable-local-rpath \
+    -Xcc -Wl,-T,$(REPOROOT)/Sources/Support/linkerscript.ld
 BUILDROOT        := $(shell $(SWIFT_BUILD) $(SWIFT_BUILD_ARGS) --show-bin-path)
 FLASH_BAUD       := 460800
 
@@ -79,3 +69,12 @@ flash:
 	    0x0     Tools/Partitions/bootloader.bin \
 	    0x10000 $(BUILDROOT)/Application_flash.bin \
 	    0x8000  Tools/Partitions/partition-table.bin
+
+.PHONY: image_info
+image_info:
+	@echo ""
+	@echo "=== FLASH IMAGE info ==="
+	$(ESP_IMAGE_TOOL) image_info "$(BUILDROOT)/Application_flash.bin"
+	@echo ""
+	@echo "=== ELF sections ==="
+	riscv32-unknown-elf-objdump -h "$(BUILDROOT)/Application"
