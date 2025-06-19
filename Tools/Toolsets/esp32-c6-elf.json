@@ -14,7 +14,8 @@
       "-nostdlib",
       "-static",
       "-L", "Sources/Support/ld/esp32c6",
-      "-L", "Sources/Support/ld/sections"
+      "-L", "Sources/Support/ld/sections",
+      "-L", "Sources/Support/ld/riscv"
     ]
   }
 }
