@@ -5,6 +5,7 @@ TOOLSET          := $(TOOLSROOT)/Toolsets/esp32-c6-elf.json
 LLVM_OBJCOPY     := llvm-objcopy
 SWIFT_BUILD      := swift build
 ESP_IMAGE_TOOL := esptool.py
+LINKERSCRIPT_DIR := $(REPOROOT)/Sources/Support
 
 # Flags
 ARCH             := riscv32
@@ -14,7 +15,9 @@ SWIFT_BUILD_ARGS := \
     --triple $(TARGET) \
     --toolset $(TOOLSET) \
     --disable-local-rpath \
-    -Xcc -Wl,-T,$(REPOROOT)/Sources/Support/linkerscript.ld
+    -Xlinker -T -Xlinker $(LINKERSCRIPT_DIR)/linkerscript.ld \
+    -Xlinker -L$(LINKERSCRIPT_DIR)/ld/esp32c6 \
+    -Xlinker -L$(LINKERSCRIPT_DIR)/ld/support
 BUILDROOT        := $(shell $(SWIFT_BUILD) $(SWIFT_BUILD_ARGS) --show-bin-path)
 FLASH_BAUD       := 460800
 
