@@ -3,6 +3,8 @@
 
 This project demonstrates **Embedded Swift** running bare metal on the ESP32-C6 RISC-V microcontroller. It showcases console output using ESP32 ROM UART functions, proving that Swift can run efficiently on resource-constrained embedded systems without an operating system.
 
+![ESP32-C6 Embedded Swift Wokwi](Documentation/Images/esp32-c6-embedded-swift-wokwi.webp)
+
 ## What it does
 
 The application:
