@@ -23,6 +23,7 @@ let package = Package(
       name: "Support",
       dependencies: [],
       path: "Sources/Support",
+      sources: ["esp_app_desc.c"],
       publicHeadersPath: "include"
     ),
     .executableTarget(
