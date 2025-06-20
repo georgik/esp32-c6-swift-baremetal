@@ -74,6 +74,9 @@ flash:
 .PHONY: image_info
 image_info:
 	@echo ""
+	@echo "=== Hexdump header =="
+	hexdump -C "$(BUILDROOT)/Application_flash.bin" | grep -n "32 54 cd ab"
+	@echo ""
 	@echo "=== FLASH IMAGE info ==="
 	$(ESP_IMAGE_TOOL) image_info "$(BUILDROOT)/Application_flash.bin"
 	@echo ""

@@ -3,6 +3,7 @@
   "swiftCompiler": {
     "extraCLIOptions": [
       "-enable-experimental-feature", "Embedded",
+      "-enable-experimental-feature", "SymbolLinkageMarkers",
       "-Xfrontend", "-disable-stack-protector",
       "-use-ld=lld",
       "-nostartfiles",
