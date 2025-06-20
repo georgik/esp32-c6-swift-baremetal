@@ -4,15 +4,18 @@
     "extraCLIOptions": [
       "-enable-experimental-feature", "Embedded",
       "-Xfrontend", "-mergeable-symbols",
-      "-Xfrontend", "-disable-stack-protector"
+      "-Xfrontend", "-disable-stack-protector",
+      "-use-ld=lld",
+      "-nostartfiles",
+      "-Xlinker", "-nostdlib",
+      "-Xlinker", "-static",
+      "-Xclang-linker", "-nostdlib"
     ]
   },
   "linker": {
     "extraCLIOptions": [
       "-T", "Sources/Support/linkerscript.ld",
       "-e", "_start",
-      "-nostdlib",
-      "-static",
       "-L", "Sources/Support/ld/esp32c6",
       "-L", "Sources/Support/ld/sections",
       "-L", "Sources/Support/ld/riscv"

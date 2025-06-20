@@ -14,7 +14,9 @@ SWIFT_BUILD_ARGS := \
     --configuration release \
     --triple $(TARGET) \
     --toolset $(TOOLSET) \
-    --disable-local-rpath
+    --disable-local-rpath \
+    -Xswiftc -no-clang-module-breadcrumbs
+
 BUILDROOT        := $(shell $(SWIFT_BUILD) $(SWIFT_BUILD_ARGS) --show-bin-path)
 FLASH_BAUD       := 460800
 
