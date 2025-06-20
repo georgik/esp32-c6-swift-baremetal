@@ -56,12 +56,10 @@ The project demonstrates two approaches to UART communication:
 ### Hardware Requirements
 - ESP32-C6 development board (ESP32-C6-DevKitC-1 recommended)
 - USB cable for programming and console output
-- Computer with ESP-IDF tools installed
 
 ## Build Requirements
 
 - **Swift 6.2 nightly** or later with Embedded Swift support
-- **ESP-IDF tools** for flashing and monitoring
 
 ## Building and Running
 
