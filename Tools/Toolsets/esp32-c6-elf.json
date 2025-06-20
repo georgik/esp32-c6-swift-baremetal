@@ -3,13 +3,14 @@
   "swiftCompiler": {
     "extraCLIOptions": [
       "-enable-experimental-feature", "Embedded",
-      "-Xfrontend", "-mergeable-symbols",
       "-Xfrontend", "-disable-stack-protector",
       "-use-ld=lld",
       "-nostartfiles",
       "-Xlinker", "-nostdlib",
+      "-Xclang-linker", "-nostdlib",
       "-Xlinker", "-static",
-      "-Xclang-linker", "-nostdlib"
+      "-wmo",
+      "-O"
     ]
   },
   "linker": {
