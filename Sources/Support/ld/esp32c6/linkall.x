@@ -78,3 +78,5 @@ SECTIONS
 }
 
 _stack_start = ORIGIN(RAM) + LENGTH(RAM);
+
+INCLUDE "rom-functions.x"
