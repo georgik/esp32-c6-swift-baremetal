@@ -1,10 +1,10 @@
-/* Standalone ESP32-C6 linker script - no includes */
+/* ESP32-C6 linker script - 3 segments with proper alignment */
 
 MEMORY
 {
-    /* ESP32-C6 memory layout */
     RAM : ORIGIN = 0x40800000, LENGTH = 500K
     ROM : ORIGIN = 0x42000000, LENGTH = 4M
+    ROM_ENTRY : ORIGIN = 0x42010000, LENGTH = 4M - 64K  /* Next 64KB boundary */
     RTC_FAST : ORIGIN = 0x50000000, LENGTH = 16K
 }
 
@@ -12,29 +12,36 @@ ENTRY(_start)
 
 SECTIONS
 {
-    /* Single text section starting at ROM + 0x20 */
+    /* Segment 0: App header + main application code (first 64KB) */
     .text 0x42000020 : {
         /* App descriptor must be first */
         *(.rodata.esp_app_desc)
-        
-        /* Align and place all executable code */
+
+        /* Align and place all main code */
         . = ALIGN(4);
-        *(.vectors .vectors.*)
         *(.text .text.*)
-        
-        /* Read-only data */
-        . = ALIGN(4);
         *(.rodata .rodata.*)
+
+        /* Pad to end of 64KB boundary minus some margin */
+        . = ALIGN(16);
     } > ROM
 
-    /* Initialized data (copied from ROM to RAM at startup) */
+    /* Segment 1: RAM data (loaded from flash to RAM) */
     .data : {
         _sdata = .;
         *(.data .data.*)
         _edata = .;
     } > RAM AT > ROM
-    
+
     _sidata = LOADADDR(.data);
+
+    /* Segment 2: Entry vectors (separate 64KB region) */
+    .entry_point : {
+        . = ALIGN(4);
+        *(.vectors .vectors.*)
+        KEEP(*(.entry_point))
+        . = ALIGN(16);
+    } > ROM_ENTRY
 
     /* Uninitialized data */
     .bss (NOLOAD) : {
@@ -48,13 +55,13 @@ SECTIONS
     .heap_stack (NOLOAD) : {
         . = ALIGN(8);
         _sheap = .;
-        . += 0x1000; /* 4KB heap */
+        . += 0x1000;
         _eheap = .;
         . = ALIGN(8);
         _estack = .;
     } > RAM
 
-    /* Completely discard all problematic sections */
+    /* Discard problematic sections */
     /DISCARD/ : {
         *(.text_gap)
         *(.data.wifi*)
@@ -70,5 +77,4 @@ SECTIONS
     }
 }
 
-/* Define required symbols */
 _stack_start = ORIGIN(RAM) + LENGTH(RAM);

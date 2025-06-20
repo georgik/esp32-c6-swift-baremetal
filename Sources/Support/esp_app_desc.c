@@ -89,3 +89,14 @@ int memcmp(const void* s1, const void* s2, size_t n) {
     }
     return 0;
 }
+
+
+__attribute__((section(".entry_point"))) void _start(void) {
+    while (1) {
+        // Just burn CPU cycles
+        for (volatile int i = 0; i < 1000000; i++) {
+            // Do nothing
+        }
+    }
+
+}
