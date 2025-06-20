@@ -62,8 +62,6 @@ The project demonstrates two approaches to UART communication:
 
 - **Swift 6.2 nightly** or later with Embedded Swift support
 - **ESP-IDF tools** for flashing and monitoring
-- **RISC-V GCC toolchain** (included with ESP-IDF)
-
 
 ## Building and Running
 
