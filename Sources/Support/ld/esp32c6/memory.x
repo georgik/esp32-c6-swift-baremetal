@@ -46,6 +46,7 @@ SECTIONS
         *(.eh_frame*)
         *(.gnu*)
         *(.riscv.attributes)
+        *(.swift_modhash)
         /* Specifically discard WiFi stuff we don't want in this iteration */
         *(.wifi_log_*)
         *(.wifi_*)

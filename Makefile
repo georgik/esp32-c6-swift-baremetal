@@ -47,7 +47,7 @@ elf2image:
 	$(ESP_IMAGE_TOOL) --chip esp32c6 elf2image \
 	    --flash_mode dio \
 	    --flash_freq 80m \
-	    --flash_size 2MB \
+	    --flash_size 4MB \
 	    --output "$(BUILDROOT)/Application_flash.bin" \
 	    "$(BUILDROOT)/Application"
 
