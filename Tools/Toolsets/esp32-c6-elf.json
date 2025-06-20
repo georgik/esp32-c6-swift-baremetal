@@ -14,7 +14,7 @@
   },
   "linker": {
     "extraCLIOptions": [
-      "-T", "Sources/Support/linkerscript.ld",
+      "-T", "Sources/Support/ld/esp32c6/linkall.x",
       "-e", "_start",
       "-L", "Sources/Support/ld/esp32c6",
       "-L", "Sources/Support/ld/sections",
