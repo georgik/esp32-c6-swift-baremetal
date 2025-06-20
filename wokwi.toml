@@ -1,0 +1,6 @@
+# Wokwi Configuration File
+# Reference: https://docs.wokwi.com/vscode/project-config
+[wokwi]
+version = 1
+firmware = '.build/riscv32-none-none-eabi/release/Application_flash.bin'
+elf = '.build/riscv32-none-none-eabi/release/Application_flash.bin'
