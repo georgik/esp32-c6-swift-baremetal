@@ -47,3 +47,18 @@ public func posix_memalign(_ memptr: UnsafeMutablePointer<UnsafeMutableRawPointe
 public func free(_ ptr: UnsafeMutableRawPointer?) {
     // No-op for embedded systems
 }
+
+
+
+@_cdecl("swift_main")
+public func swiftMain() {
+    // Simple infinite loop in Swift
+    while true {
+        // Just burn CPU cycles - no memory allocations or complex operations
+        for _ in 0..<1000000 {
+            // Empty loop body
+        }
+    }
+}
+
+
