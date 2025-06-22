@@ -1,11 +1,29 @@
 {
   "version": 1,
-  "author": "Uri Shaked",
+  "author": "Juraj Michálek",
   "editor": "wokwi",
   "parts": [
     {
       "type": "board-esp32-c6-devkitc-1",
       "id": "esp"
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 200,
+      "left": 300,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "resistor1",
+      "top": 150,
+      "left": 350,
+      "attrs": {
+        "value": "220"
+      }
     }
   ],
   "connections": [
@@ -18,6 +36,24 @@
       "esp:RX",
       "$serialMonitor:TX",
       ""
+    ],
+    [
+      "esp:8",
+      "resistor1:1",
+      "green",
+      []
+    ],
+    [
+      "resistor1:2",
+      "led1:A",
+      "red",
+      []
+    ],
+    [
+      "led1:C",
+      "esp:GND.2",
+      "black",
+      []
     ]
   ]
 }
