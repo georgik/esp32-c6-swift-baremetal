@@ -4,7 +4,7 @@ import Registers
 @_silgen_name("esp_app_desc")
 func _getAppDesc() -> UnsafeRawPointer
 
-// ESP32-C6 ROM delay functions - these definitely work!
+// ESP32-C6 ROM delay functions
 @_silgen_name("esp_rom_delay_us")
 func esp_rom_delay_us(_ us: UInt32)
 
@@ -103,7 +103,7 @@ public func _start() -> Never {
 public func swiftMain() {
     // Print startup message
     putLine("Hello from Swift on ESP32-C6!")
-    putLine("Swift MMIO + ROM delays working!")
+    putLine("Swift MMIO + ROM delays")
     flushUART()
 
     var counter = 0
