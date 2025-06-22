@@ -1,3 +1,4 @@
+
 import MMIO
 import Registers
 
@@ -15,16 +16,16 @@ func esp_rom_uart_putc(_ char: UInt8)
 @_silgen_name("esp_rom_uart_tx_wait_idle")
 func esp_rom_uart_tx_wait_idle(_ uart_no: UInt8)
 
-// ESP32-C6 ROM GPIO functions - found in the linker files!
+// ESP32-C6 ROM GPIO functions - using only known working ones
 @_silgen_name("esp_rom_gpio_pad_select_gpio")
 func esp_rom_gpio_pad_select_gpio(_ gpio_num: UInt32) -> Int32
 
-// Additional ROM GPIO functions from ESP32-C6 ROM
-@_silgen_name("gpio_pad_select_gpio")
-func gpio_pad_select_gpio(_ gpio_num: UInt32) -> Int32
+@_silgen_name("esp_rom_gpio_connect_out_signal")
+func esp_rom_gpio_connect_out_signal(_ gpio_num: UInt32, _ signal_idx: UInt32, _ out_inv: Bool, _ oen_inv: Bool)
 
 // Constants
 let LED_GPIO_PIN: UInt32 = 8
+let SIG_GPIO_OUT_IDX: UInt32 = 128  // GPIO simple output signal
 
 // UART helper functions
 func putChar(_ char: UInt8) {
@@ -58,41 +59,112 @@ func delayMilliseconds(_ milliseconds: UInt32) {
     esp_rom_delay_us(milliseconds * 1000)
 }
 
-func delaySeconds(_ seconds: UInt32) {
-    delayMilliseconds(seconds * 1000)
+// Simple hex printing without String operations
+private func printHex32(_ value: UInt32) {
+    putString("0x")
+    // Print each hex digit directly
+    for i in (0..<8).reversed() {
+        let nibble = (value >> (i * 4)) & 0xF
+        if nibble < 10 {
+            putChar(48 + UInt8(nibble))  // '0'-'9'
+        } else {
+            putChar(65 + UInt8(nibble - 10))  // 'A'-'F'
+        }
+    }
 }
 
-// GPIO using Swift MMIO with unlabeled initializers
+// Enhanced GPIO configuration with debugging
 private func initializeLED() {
-    // First, configure the GPIO pad using ROM function
-    let result = esp_rom_gpio_pad_select_gpio(LED_GPIO_PIN)
+    putLine("=== ESP32-C6 GPIO8 Configuration ===")
+    flushUART()
 
-    // Now use Swift MMIO with unlabeled initializers
-    // Enable GPIO8 as output - use the generated gpio instance
+    // Debug: Print initial register states
+    putLine("Initial states:")
+    putString("ENABLE: ")
+    printHex32(UInt32(gpio.enable.read().raw.storage))
+    putLine("")
+    putString("OUT: ")
+    printHex32(UInt32(gpio.out.read().raw.storage))
+    putLine("")
+    flushUART()
+
+    // Step 1: ROM pad configuration
+    putString("Step 1: ROM pad select... ")
+    let padResult = esp_rom_gpio_pad_select_gpio(LED_GPIO_PIN)
+    putString("result=")
+    putChar(UInt8(48 + UInt8(padResult % 10)))
+    putLine("")
+
+    // Step 2: ROM signal matrix connection
+    putString("Step 2: ROM output signal connection... ")
+    esp_rom_gpio_connect_out_signal(LED_GPIO_PIN, SIG_GPIO_OUT_IDX, false, false)
+    putLine("done")
+
+    // Step 3: Configure ENABLE register (critical for output direction)
+    putString("Step 3: Setting ENABLE register... ")
     gpio.enable.modify { enable in
-        // Convert Raw type to UInt32 for bit operations
         let currentBits = UInt32(enable.raw.storage)
         let newBits = currentBits | (1 << LED_GPIO_PIN)
         enable = .init(.init(newBits))
     }
+    putLine("done")
 
-    // Set initial state to off
+    // Step 4: Try setting additional registers if available
+    putString("Step 4: Additional register configuration... ")
+
+    // Try enable_w1ts (Write-1-to-Set) register
+    gpio.enable_w1ts.write { enable_w1ts in
+        enable_w1ts = .init(.init(1 << LED_GPIO_PIN))
+    }
+    putLine("enable_w1ts set")
+
+    // Step 5: Initialize output state
+    putString("Step 5: Setting initial output state... ")
     setLED(on: false)
+    putLine("OFF")
+
+    // Debug: Print final register states
+    putLine("Final states:")
+    putString("ENABLE: ")
+    printHex32(UInt32(gpio.enable.read().raw.storage))
+    putLine("")
+    putString("OUT: ")
+    printHex32(UInt32(gpio.out.read().raw.storage))
+    putLine("")
+
+    putLine("=== GPIO8 Configuration Complete ===")
+    flushUART()
 }
 
+// Enhanced LED control with debugging
 private func setLED(on: Bool) {
-    gpio.out.modify { out in
-        // Convert Raw type to UInt32 for bit operations
-        let currentBits = UInt32(out.raw.storage)
-        let newBits: UInt32
+    if on {
+        // Try multiple methods to set the pin
 
-        if on {
-            newBits = currentBits | (1 << LED_GPIO_PIN)  // Set bit 8
-        } else {
-            newBits = currentBits & ~(1 << LED_GPIO_PIN) // Clear bit 8
+        // Method 1: Direct OUT register
+        gpio.out.modify { out in
+            let currentBits = UInt32(out.raw.storage)
+            let newBits = currentBits | (1 << LED_GPIO_PIN)
+            out = .init(.init(newBits))
         }
 
-        out = .init(.init(newBits))
+        // Method 2: Write-1-to-Set register if available
+        gpio.out_w1ts.write { out_w1ts in
+            out_w1ts = .init(.init(1 << LED_GPIO_PIN))
+        }
+
+    } else {
+        // Method 1: Direct OUT register
+        gpio.out.modify { out in
+            let currentBits = UInt32(out.raw.storage)
+            let newBits = currentBits & ~(1 << LED_GPIO_PIN)
+            out = .init(.init(newBits))
+        }
+
+        // Method 2: Write-1-to-Clear register if available
+        gpio.out_w1tc.write { out_w1tc in
+            out_w1tc = .init(.init(1 << LED_GPIO_PIN))
+        }
     }
 }
 
@@ -101,50 +173,70 @@ public func _start() -> Never {
     // Force reference to app descriptor
     _ = _getAppDesc()
 
-    // Initialize LED using ROM + Swift MMIO
+    // Initialize LED with enhanced debugging
     initializeLED()
 
-    // Simple bare metal main loop with ROM-based timing
+    // Simple main loop with status output
+    var cycle = 0
     while true {
+        if cycle % 10 == 0 {
+            putString("LED ON (cycle ")
+            putChar(UInt8(48 + (cycle / 10) % 10))
+            putLine(")")
+            flushUART()
+        }
+
         setLED(on: true)
-        delayMilliseconds(200)  // 200ms on
+        delayMilliseconds(200)
         setLED(on: false)
-        delayMilliseconds(800)  // 800ms off (1 second total)
+        delayMilliseconds(800)
+
+        cycle += 1
     }
 }
 
 @_cdecl("swift_main")
 public func swiftMain() {
-    // Print startup message
-    putLine("Hello from Swift on ESP32-C6!")
-    putLine("ROM GPIO + Swift MMIO registers!")
+    putLine("ESP32-C6 Enhanced GPIO Debug Example!")
+    putLine("Detailed register analysis and configuration")
     flushUART()
+
+    // IMPORTANT: Initialize the LED first!
+    initializeLED()
 
     var counter = 0
 
     while true {
-        putString("Blink cycle ")
-        // Simple number output
-        putChar(UInt8(48 + (counter % 10))) // ASCII digit
-        putLine(" - ROM pad select + MMIO registers!")
+        putString("Debug cycle ")
+        putChar(UInt8(48 + (counter % 10)))
+        putLine("")
+
+        // Print current register states during operation
+        if counter % 5 == 0 {
+            putLine("Current states:")
+            putString("ENABLE: ")
+            printHex32(UInt32(gpio.enable.read().raw.storage))
+            putLine("")
+            putString("OUT: ")
+            printHex32(UInt32(gpio.out.read().raw.storage))
+            putLine("")
+        }
         flushUART()
 
-        // Demonstrate different LED patterns
-        // Fast blink
+        // Test pattern
         setLED(on: true)
-        delayMicroseconds(100_000)  // 100ms
+        delayMicroseconds(100_000)
         setLED(on: false)
         delayMicroseconds(100_000)
 
-        // Slow blink
         setLED(on: true)
-        delayMicroseconds(500_000)  // 500ms
+        delayMicroseconds(500_000)
         setLED(on: false)
         delayMicroseconds(500_000)
 
         counter += 1
-        if counter >= 10 {
-            putLine("ROM + Swift MMIO combination working!")
+        if counter >= 20 {
+            putLine("=== Register Analysis Complete ===")
             flushUART()
             counter = 0
         }
