@@ -120,6 +120,30 @@ esp32-c6-blink/
 └── README.md                      # This file
 ```
 
+## Exporting registers
+
+Registers are based on [ESP-PACS](https://github.com/esp-rs/esp-pacs/).
+
+Prerequisites: SVD2Swift
+```shell
+git clone https://github.com/apple/swift-mmio.git --shallow-submodules --depth 10
+cd swift-mmio
+swift build --product SVD2Swift
+```
+
+Command for exporting registers to Swift:
+
+```shell
+git clone git@github.com:esp-rs/esp-pacs.git
+cd esp32-c6-swift-baremetal
+
+SVD2Swift \
+  --input ../esp-pacs/esp32c6/svd/esp32c6.svd \
+  --output Sources/Registers \
+  --access-level public \
+  --peripherals GPIO UART0 SPI0
+```
+
 ## Key Technologies
 
 - **[Embedded Swift](https://github.com/swiftlang/swift/tree/main/docs/EmbeddedSwift)**: Swift's embedded compilation mode
