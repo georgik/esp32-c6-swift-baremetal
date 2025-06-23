@@ -1,4 +1,3 @@
-
 import MMIO
 import Registers
 
@@ -8,17 +7,21 @@ struct SPIConfig {
     let mosiPin: UInt32     // Master Out Slave In
     let misoPin: UInt32     // Master In Slave Out
     let csPin: UInt32       // Chip Select
+    let dcPin: UInt32       // Data/Command pin for display
+    let rstPin: UInt32      // Reset pin for display
     let clockFreq: UInt32   // Clock frequency in Hz
     let mode: UInt8         // SPI mode (0-3)
 }
 
-// Default SPI configuration for ESP32-C6-DevKitC-1
+// Updated SPI configuration for ESP32-C6 with ILI9341 display
 let defaultSPIConfig = SPIConfig(
     sckPin: 6,              // GPIO6 - SCK
     mosiPin: 7,             // GPIO7 - MOSI
     misoPin: 2,             // GPIO2 - MISO
     csPin: 10,              // GPIO10 - CS
-    clockFreq: SPIClockFreq.FREQ_5MHZ,
+    dcPin: 4,               // GPIO4 - DC (Data/Command)
+    rstPin: 5,              // GPIO5 - RST (Reset)
+    clockFreq: SPIClockFreq.FREQ_10MHZ,  // Higher frequency for display
     mode: SPIMode.MODE_0
 )
 
@@ -29,31 +32,65 @@ private let spi0 = SPI0(unsafeAddress: 0x60003000)
 private let IO_MUX_BASE: UInt = 0x60009000
 
 func initializeSPI(config: SPIConfig = defaultSPIConfig) {
-    putLine("=== ESP32-C6 SPI Initialization ===")
+    putLine("=== ESP32-C6 SPI Display Initialization ===")
     flushUART()
 
-    // Step 1: Configure GPIO pins for SPI function
-    putLine("Step 1: Configuring SPI GPIO pins...")
+    // Step 1: Configure display control pins first
+    putLine("Step 1: Configuring display control pins...")
+    configureDisplayControlPins(config: config)
+
+    // Step 2: Configure GPIO pins for SPI function
+    putLine("Step 2: Configuring SPI GPIO pins...")
     configureSPIGPIO(config: config)
 
-    // Step 2: Reset SPI peripheral
-    putLine("Step 2: Resetting SPI peripheral...")
+    // Step 3: Reset SPI peripheral
+    putLine("Step 3: Resetting SPI peripheral...")
     resetSPI()
 
-    // Step 3: Configure SPI clock
-    putLine("Step 3: Configuring SPI clock...")
+    // Step 4: Configure SPI clock
+    putLine("Step 4: Configuring SPI clock...")
     configureSPIClock(frequency: config.clockFreq)
 
-    // Step 4: Configure SPI mode and data format
-    putLine("Step 4: Configuring SPI mode...")
+    // Step 5: Configure SPI mode and data format
+    putLine("Step 5: Configuring SPI mode...")
     configureSPIMode(mode: config.mode)
 
-    // Step 5: Enable SPI master mode
-    putLine("Step 5: Enabling SPI master mode...")
+    // Step 6: Enable SPI master mode
+    putLine("Step 6: Enabling SPI master mode...")
     enableSPIMaster()
 
-    putLine("=== SPI Initialization Complete ===")
+    putLine("=== SPI Display Initialization Complete ===")
     flushUART()
+}
+
+private func configureDisplayControlPins(config: SPIConfig) {
+    // Configure DC pin as output
+    putLine("  Configuring DC pin...")
+    putString("  DC GPIO: ")
+    putChar(UInt8(48 + UInt8(config.dcPin % 10)))
+    putLine("")
+    configureIOMapForGPIO(pin: config.dcPin)
+    _ = esp_rom_gpio_pad_select_gpio(config.dcPin)
+    esp_rom_gpio_pad_unhold(config.dcPin)
+    esp_rom_gpio_pad_set_drv(config.dcPin, 2)
+    // Set as simple GPIO output (not connected to SPI matrix)
+    esp_rom_gpio_connect_out_signal(config.dcPin, SPISignals.GPIO_OUT_IDX, false, false)
+    setDisplayDC(high: false)  // Start in command mode
+    putLine("  DC done")
+
+    // Configure RST pin as output
+    putLine("  Configuring RST pin...")
+    putString("  RST GPIO: ")
+    putChar(UInt8(48 + UInt8(config.rstPin % 10)))
+    putLine("")
+    configureIOMapForGPIO(pin: config.rstPin)
+    _ = esp_rom_gpio_pad_select_gpio(config.rstPin)
+    esp_rom_gpio_pad_unhold(config.rstPin)
+    esp_rom_gpio_pad_set_drv(config.rstPin, 2)
+    // Set as simple GPIO output (not connected to SPI matrix)
+    esp_rom_gpio_connect_out_signal(config.rstPin, SPISignals.GPIO_OUT_IDX, false, false)
+    setDisplayRST(high: true)  // Start with reset inactive
+    putLine("  RST done")
 }
 
 private func configureSPIGPIO(config: SPIConfig) {
@@ -93,7 +130,7 @@ private func configureSPIGPIO(config: SPIConfig) {
     esp_rom_gpio_connect_out_signal(config.csPin, SPISignals.SPI2_CS_OUT_IDX, false, false)
     putLine("  CS done")
 
-    // Configure MISO input pin
+    // Configure MISO input pin (for completeness, though display may not use it)
     putLine("  Configuring MISO input pin...")
     putString("  MISO GPIO: ")
     putChar(UInt8(48 + UInt8(config.misoPin % 10)))
@@ -239,6 +276,52 @@ private func enableSPIMaster() {
     putLine("  SPI master mode enabled")
 }
 
+// Display control functions
+func setDisplayDC(high: Bool) {
+    // Use direct GPIO register access for DC control
+    let gpioBase: UInt = 0x60004000
+    let outReg = UnsafeMutablePointer<UInt32>(bitPattern: gpioBase + 0x0004)!  // GPIO_OUT_REG
+
+    var outValue = outReg.pointee
+    if high {
+        outValue |= (1 << defaultSPIConfig.dcPin)   // Set bit
+    } else {
+        outValue &= ~(1 << defaultSPIConfig.dcPin)  // Clear bit
+    }
+    outReg.pointee = outValue
+}
+
+func setDisplayRST(high: Bool) {
+    // Use direct GPIO register access for RST control
+    let gpioBase: UInt = 0x60004000
+    let outReg = UnsafeMutablePointer<UInt32>(bitPattern: gpioBase + 0x0004)!  // GPIO_OUT_REG
+
+    var outValue = outReg.pointee
+    if high {
+        outValue |= (1 << defaultSPIConfig.rstPin)   // Set bit
+    } else {
+        outValue &= ~(1 << defaultSPIConfig.rstPin)  // Clear bit
+    }
+    outReg.pointee = outValue
+}
+
+// Display communication functions
+func sendDisplayCommand(_ cmd: UInt8) {
+    setDisplayDC(high: false)  // Command mode
+    _ = spiTransferByte(cmd)
+}
+
+func sendDisplayData(_ data: UInt8) {
+    setDisplayDC(high: true)   // Data mode
+    _ = spiTransferByte(data)
+}
+
+func sendDisplayData16(_ data: UInt16) {
+    setDisplayDC(high: true)   // Data mode
+    _ = spiTransferByte(UInt8(data >> 8))    // High byte
+    _ = spiTransferByte(UInt8(data & 0xFF))  // Low byte
+}
+
 // SPI Transfer functions - using direct register access since w0 might not be in generated code
 func spiTransferByte(_ data: UInt8) -> UInt8 {
     // Wait for SPI to be ready
@@ -274,50 +357,60 @@ func spiTransferByte(_ data: UInt8) -> UInt8 {
     return UInt8(receivedData & 0xFF)
 }
 
-func spiTransferBytes(_ txData: [UInt8]) -> [UInt8] {
-    var rxData: [UInt8] = []
-    rxData.reserveCapacity(txData.count)
-
-    for byte in txData {
-        let received = spiTransferByte(byte)
-        rxData.append(received)
-    }
-
-    return rxData
-}
-
-// Simple SPI display test
+// ILI9341 Display initialization and test
 func testSPIDisplay() {
-    putLine("=== SPI Display Test ===")
+    putLine("=== ILI9341 Display Test ===")
 
     // Initialize SPI
     initializeSPI()
 
-    putLine("Sending test commands to display...")
+    // Hardware reset sequence
+    putLine("Performing display reset...")
+    setDisplayRST(high: false)
+    delayMilliseconds(10)
+    setDisplayRST(high: true)
+    delayMilliseconds(120)
 
-    // Example: Send some basic commands (adjust for your display)
-    let testCommands: [UInt8] = [
-        0x01,  // Software reset
-        0x11,  // Sleep out
-        0x29   // Display on
-    ]
+    putLine("Sending ILI9341 initialization commands...")
 
-    for (_, cmd) in testCommands.enumerated() {
-        putString("Sending command 0x")
-        printHex8(cmd)
-        putString("... ")
+    // Basic ILI9341 initialization sequence
+    sendDisplayCommand(0x01)  // Software reset
+    delayMilliseconds(150)
 
-        let response = spiTransferByte(cmd)
+    sendDisplayCommand(0x11)  // Sleep out
+    delayMilliseconds(120)
 
-        putString("response: 0x")
-        printHex8(response)
-        putLine("")
+    sendDisplayCommand(0x3A)  // Pixel format
+    sendDisplayData(0x55)     // 16-bit color
 
-        // Small delay between commands
-        delayMilliseconds(10)
+    sendDisplayCommand(0x29)  // Display on
+    delayMilliseconds(50)
+
+    putLine("Display initialized successfully!")
+
+    // Test pattern - fill screen with red
+    putLine("Drawing test pattern...")
+
+    sendDisplayCommand(0x2A)  // Column address set
+    sendDisplayData(0x00)     // Start column high
+    sendDisplayData(0x00)     // Start column low
+    sendDisplayData(0x00)     // End column high
+    sendDisplayData(0xEF)     // End column low (239)
+
+    sendDisplayCommand(0x2B)  // Page address set
+    sendDisplayData(0x00)     // Start page high
+    sendDisplayData(0x00)     // Start page low
+    sendDisplayData(0x01)     // End page high
+    sendDisplayData(0x3F)     // End page low (319)
+
+    sendDisplayCommand(0x2C)  // Memory write
+
+    // Send red pixels (simplified test)
+    for _ in 0..<100 {
+        sendDisplayData16(0xF800)  // Red color in RGB565
     }
 
-    putLine("=== SPI Display Test Complete ===")
+    putLine("=== Display Test Complete ===")
     flushUART()
 }
 
