@@ -1,4 +1,3 @@
-
 {
   "version": 1,
   "author": "Juraj Michálek",
@@ -22,33 +21,21 @@
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": -300,
-      "left": -100,
-      "attrs": {
-        "color": "red"
-      }
+      "top": -282,
+      "left": -303.4,
+      "attrs": { "color": "red" }
     },
     {
       "type": "wokwi-resistor",
       "id": "resistor1",
-      "top": -350,
-      "left": -50,
-      "attrs": {
-        "value": "220"
-      }
+      "top": -312.85,
+      "left": -307.2,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
-    [
-      "esp:TX",
-      "$serialMonitor:RX",
-      ""
-    ],
-    [
-      "esp:RX",
-      "$serialMonitor:TX",
-      ""
-    ],
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "esp:3V3", "lcd1:VCC", "green", [] ],
     [ "esp:GND.1", "lcd1:GND", "black", [] ],
     [ "esp:6", "lcd1:SCK", "blue", [] ],
@@ -59,7 +46,7 @@
     [ "esp:3", "lcd1:RST", "yellow", [] ],
     [ "lcd1:LED", "esp:3V3", "white", [] ],
     [ "esp:8", "resistor1:1", "green", [] ],
-    [ "resistor1:2", "led1:A", "red", [] ],
+    [ "resistor1:2", "led1:A", "red", [ "h8.4", "v67.2" ] ],
     [ "led1:C", "esp:GND.2", "black", [] ]
   ],
   "serialMonitor": { "display": "terminal" },
