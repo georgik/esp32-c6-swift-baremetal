@@ -105,3 +105,28 @@ __attribute__((section(".entry_point"))) void _start(void) {
     }
 
 }
+
+#include <stddef.h>
+#include <stdint.h>
+
+// Stub implementation of arc4random_buf for embedded systems
+// This is used internally by Swift's hashing mechanism
+void arc4random_buf(void *buf, size_t nbytes) {
+    // Simple pseudo-random implementation for embedded use
+    // Not cryptographically secure, but sufficient for hashing
+    uint8_t *bytes = (uint8_t *)buf;
+    static uint32_t seed = 0x12345678;
+
+    for (size_t i = 0; i < nbytes; i++) {
+        // Simple linear congruential generator
+        seed = seed * 1103515245 + 12345;
+        bytes[i] = (uint8_t)(seed >> 16);
+    }
+}
+
+// Additional stub for arc4random if needed
+uint32_t arc4random(void) {
+    static uint32_t seed = 0x87654321;
+    seed = seed * 1103515245 + 12345;
+    return seed;
+}

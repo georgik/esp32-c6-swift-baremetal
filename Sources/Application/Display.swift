@@ -1,66 +1,78 @@
+
 import MMIO
 import Registers
 
-// ILI9341 Display constants
-struct ILI9341 {
-    static let width: UInt16 = 240
-    static let height: UInt16 = 320
-
-    // RGB565 colors
-    static let colorRed: UInt16 = 0xF800
-    static let colorGreen: UInt16 = 0x07E0
-    static let colorBlue: UInt16 = 0x001F
-    static let colorWhite: UInt16 = 0xFFFF
-    static let colorBlack: UInt16 = 0x0000
-    static let colorYellow: UInt16 = 0xFFE0
-    static let colorCyan: UInt16 = 0x07FF
-    static let colorMagenta: UInt16 = 0xF81F
-}
-
-// Display application functions
+// High-level display application functions
 func runDisplayApplication() {
     putLine("=== Starting Display Application ===")
 
-    // First run the SPI test
-    testSPIDisplay()
+    // Initialize SPI first
+    initializeSPI()
 
-    putLine("Running blue fill test...")
-    fillDisplayBlue()
+    // Initialize the ILI9341 display
+    initializeDisplay()
+
+    // Test basic functionality
+    testDisplayFunctionality()
 
     putLine("=== Display Application Complete ===")
     flushUART()
 }
 
-func fillDisplayBlue() {
-    putLine("Filling display with blue color...")
+func testDisplayFunctionality() {
+    putLine("Testing display functionality...")
 
+    // Test 1: Fill screen with red
+    putLine("Test 1: Red screen")
+    fillScreen(color: ILI9341.colorRed)
+    delayMilliseconds(1000)
+
+    // Test 2: Fill screen with blue
+    putLine("Test 2: Blue screen")
+    fillScreen(color: ILI9341.colorBlue)
+    delayMilliseconds(1000)
+
+    // Test 3: Draw test pattern
+    putLine("Test 3: Color pattern")
+    drawTestPattern()
+    delayMilliseconds(2000)
+
+    // Test 4: Clear screen
+    putLine("Test 4: Clear screen")
+    clearDisplay()
+
+    putLine("Display tests complete!")
+}
+
+func fillScreen(color: UInt16) {
     // Set the full screen area
     setDisplayArea(x: 0, y: 0, width: ILI9341.width, height: ILI9341.height)
 
     // Start memory write
     sendDisplayCommand(0x2C)  // Memory write command
 
-    // Simplified approach - avoid large number calculations
-    putLine("Drawing blue pixels...")
+    // Fill screen efficiently with progress reporting
+    let totalPixels = UInt32(ILI9341.width) * UInt32(ILI9341.height)
+    var pixelCount: UInt32 = 0
 
-    // Fill screen line by line to avoid large loop
     for row in 0..<ILI9341.height {
-        for col in 0..<ILI9341.width {
-            sendDisplayData16(ILI9341.colorBlue)
+        for _ in 0..<ILI9341.width {
+            sendDisplayData16(color)
+            pixelCount += 1
         }
 
-        // Print progress every 50 rows
-        if row % 50 == 0 {
-            putString("Row: ")
-            printSimpleNumber(UInt16(row))
-            putString(" / ")
+        // Report progress every 32 rows to avoid flooding
+        if row % 32 == 0 {
+            putString("Progress: ")
+            printSimpleNumber(row)
+            putString("/")
             printSimpleNumber(ILI9341.height)
             putLine("")
             flushUART()
         }
     }
 
-    putLine("Blue fill complete!")
+    putLine("Screen fill complete")
     flushUART()
 }
 
@@ -99,12 +111,39 @@ func fillRect(x: UInt16, y: UInt16, width: UInt16, height: UInt16, color: UInt16
     // Start memory write
     sendDisplayCommand(0x2C)  // Memory write
 
-    // Fill rectangle with color using simple loops
+    // Fill rectangle with color
     for _ in 0..<height {
         for _ in 0..<width {
             sendDisplayData16(color)
         }
     }
+}
+
+// Test pattern functions
+func drawTestPattern() {
+    putLine("Drawing color test pattern...")
+
+    // Calculate rectangle size (divide screen into 6 rectangles)
+    let rectWidth: UInt16 = ILI9341.width / 3
+    let rectHeight: UInt16 = ILI9341.height / 2
+
+    // Top row
+    fillRect(x: 0, y: 0, width: rectWidth, height: rectHeight, color: ILI9341.colorRed)
+    fillRect(x: rectWidth, y: 0, width: rectWidth, height: rectHeight, color: ILI9341.colorGreen)
+    fillRect(x: rectWidth * 2, y: 0, width: rectWidth, height: rectHeight, color: ILI9341.colorBlue)
+
+    // Bottom row
+    fillRect(x: 0, y: rectHeight, width: rectWidth, height: rectHeight, color: ILI9341.colorYellow)
+    fillRect(x: rectWidth, y: rectHeight, width: rectWidth, height: rectHeight, color: ILI9341.colorCyan)
+    fillRect(x: rectWidth * 2, y: rectHeight, width: rectWidth, height: rectHeight, color: ILI9341.colorMagenta)
+
+    putLine("Test pattern complete!")
+}
+
+func clearDisplay() {
+    putLine("Clearing display...")
+    fillScreen(color: ILI9341.colorBlack)
+    putLine("Display cleared!")
 }
 
 // Ultra-simple number printing for small numbers (embedded-safe)
@@ -130,26 +169,4 @@ func printSimpleNumber(_ number: UInt16) {
     for i in (0..<digitCount).reversed() {
         putChar(digits[i])
     }
-}
-
-// Test pattern functions for future expansion
-func drawTestPattern() {
-    putLine("Drawing test pattern...")
-
-    // Draw colored rectangles
-    fillRect(x: 0, y: 0, width: 80, height: 80, color: ILI9341.colorRed)
-    fillRect(x: 80, y: 0, width: 80, height: 80, color: ILI9341.colorGreen)
-    fillRect(x: 160, y: 0, width: 80, height: 80, color: ILI9341.colorBlue)
-
-    fillRect(x: 0, y: 80, width: 80, height: 80, color: ILI9341.colorYellow)
-    fillRect(x: 80, y: 80, width: 80, height: 80, color: ILI9341.colorCyan)
-    fillRect(x: 160, y: 80, width: 80, height: 80, color: ILI9341.colorMagenta)
-
-    putLine("Test pattern complete!")
-}
-
-func clearDisplay() {
-    putLine("Clearing display...")
-    fillRect(x: 0, y: 0, width: ILI9341.width, height: ILI9341.height, color: ILI9341.colorBlack)
-    putLine("Display cleared!")
 }
