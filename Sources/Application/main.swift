@@ -32,12 +32,16 @@ public func _start() -> Never {
 
 @_cdecl("swift_main")
 public func swiftMain() {
-    putLine("ESP32-C6 Enhanced GPIO Debug Example!")
-    putLine("Detailed register analysis and configuration")
+    putLine("ESP32-C6")
+    putLine("Registers and configuration")
     flushUART()
 
     // IMPORTANT: Initialize the LED first!
     initializeLED()
+
+    // Initialize and test SPI
+    putLine("Initializing SPI for display communication...")
+    testSPIDisplay()
 
     var counter = 0
 
