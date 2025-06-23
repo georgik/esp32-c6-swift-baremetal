@@ -233,13 +233,14 @@ private func setSPICS(high: Bool) {
     setGPIO(pin: defaultSPIConfig.csPin, high: high)
 }
 
-// Enhanced SPI Implementation with debugging
+
+// Enhanced SPI Implementation with slower timing for real hardware
 func sendSPIByte(_ data: UInt8) {
     var byte = data
 
     // Assert CS (active low)
     setSPICS(high: false)
-    delayMicroseconds(2)
+    delayMicroseconds(10)  // Increased delay
 
     // Send 8 bits, MSB first
     for _ in 0..<8 {
@@ -247,21 +248,21 @@ func sendSPIByte(_ data: UInt8) {
         let bitValue = (byte & 0x80) != 0
         setSPIData(high: bitValue)
 
-        delayMicroseconds(2) // Setup time
+        delayMicroseconds(10) // Increased setup time
 
         // Clock pulse (rising edge for Mode 0)
         setSPIClock(high: true)
-        delayMicroseconds(2)
+        delayMicroseconds(10) // Increased clock high time
         setSPIClock(high: false)
-        delayMicroseconds(2)
+        delayMicroseconds(10) // Increased clock low time
 
         byte <<= 1 // Shift to next bit
     }
 
     // Deassert CS
-    delayMicroseconds(2)
+    delayMicroseconds(10)
     setSPICS(high: true)
-    delayMicroseconds(2)
+    delayMicroseconds(10)
 }
 
 // Send multiple bytes via SPI

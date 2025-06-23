@@ -60,44 +60,99 @@ struct DisplayConfig {
     static let rotation: UInt8 = 0 // 0 degree rotation
 }
 
-// Initialize the ILI9341 display following ESP-IDF sequence
 func initializeDisplay() {
     putLine("=== ILI9341 Display Initialization ===")
-    flushUART()
 
-    // Step 1: Hardware reset sequence
+    // 1. Hardware reset with proper timing
     putLine("1. Hardware reset...")
     setDisplayRST(high: false)
     delayMilliseconds(10)
     setDisplayRST(high: true)
+    delayMilliseconds(120)
+
+    // 2. Software reset
+    putLine("2. Software reset...")
+    sendDisplayCommand(0x01)
+    delayMilliseconds(120)
+
+    // 3. Exit sleep mode
+    putLine("3. Exit sleep mode...")
+    sendDisplayCommand(0x11)
+    delayMilliseconds(120)
+
+    // 4. Set pixel format to RGB565
+    putLine("4. Setting pixel format...")
+    sendDisplayCommand(0x3A)
+    sendDisplayData(0x55)
     delayMilliseconds(10)
 
-    // Step 2: Exit sleep mode first (critical!)
-    putLine("2. Exit sleep mode...")
-    sendCommand(.SLEEP_OUT)
-    delayMilliseconds(100)  // Wait at least 100ms after sleep out
+    // 5. Execute STANDARD initialization sequence
+    putLine("5. Standard initialization sequence...")
+    executeStandardInit()  // Use this instead of executeVendorInit()
 
-    // Step 3: Set MADCTL (Memory Access Control) - before vendor init
-    putLine("3. Setting memory access control...")
-    sendCommand(.MEMORY_ACCESS_CONTROL)
-    sendData([0x00])  // Normal orientation, RGB order
-
-    // Step 4: Set pixel format to RGB565
-    putLine("4. Setting pixel format...")
-    sendCommand(.PIXEL_FORMAT)
-    sendData([0x55])  // 16-bit RGB565
-
-    // Step 5: Execute vendor-specific initialization sequence (from ESP-IDF)
-    putLine("5. Vendor initialization sequence...")
-    executeVendorInit()
-
-    // Step 6: Turn on display
+    // 6. Turn on display
     putLine("6. Turning on display...")
     sendCommand(.DISPLAY_ON)
     delayMilliseconds(20)
 
     putLine("=== Display Initialization Complete! ===")
     flushUART()
+}
+
+
+// Simplified, standard-compliant initialization sequence
+private func executeStandardInit() {
+    // Set Memory Access Control (orientation and RGB order)
+    sendCommand(.MEMORY_ACCESS_CONTROL)
+    sendData([0x48])  // Normal orientation, RGB order
+    delayMilliseconds(10)
+
+    // Power control 1, GVDD=4.75V
+    sendCommand(.POWER_CONTROL_1)
+    sendData([0x23])
+    delayMilliseconds(10)
+
+    // Power control 2, DDVDH=VCl*2, VGH=VCl*7, VGL=-VCl*3
+    sendCommand(.POWER_CONTROL_2)
+    sendData([0x10])
+    delayMilliseconds(10)
+
+    // VCOM control 1, VCOMH=4.025V, VCOML=-0.950V
+    sendCommand(.VCOM_CONTROL_1)
+    sendData([0x3E, 0x28])
+    delayMilliseconds(10)
+
+    // VCOM control 2, VCOMH=VMH-2, VCOML=VML-2
+    sendCommand(.VCOM_CONTROL_2)
+    sendData([0x86])
+    delayMilliseconds(10)
+
+    // Frame rate control, Normal mode, 70Hz fps
+    sendCommand(.FRAME_RATE_CONTROL)
+    sendData([0x00, 0x18])
+    delayMilliseconds(10)
+
+    // Display function control
+    sendCommand(.DISPLAY_FUNCTION_CONTROL)
+    sendData([0x08, 0x82, 0x27])
+    delayMilliseconds(10)
+
+    // Gamma set, curve 1
+    sendCommand(.GAMMA_SET)
+    sendData([0x01])
+    delayMilliseconds(10)
+
+    // Positive gamma correction (simplified)
+    sendCommand(.POSITIVE_GAMMA)
+    sendData([0x0F, 0x31, 0x2B, 0x0C, 0x0E, 0x08, 0x4E, 0xF1,
+              0x37, 0x07, 0x10, 0x03, 0x0E, 0x09, 0x00])
+    delayMilliseconds(10)
+
+    // Negative gamma correction (simplified)
+    sendCommand(.NEGATIVE_GAMMA)
+    sendData([0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1,
+              0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F])
+    delayMilliseconds(10)
 }
 
 // Vendor-specific initialization sequence from ESP-IDF
