@@ -41,7 +41,7 @@ public func swiftMain() {
 
     // Initialize and test SPI
     putLine("Initializing SPI for display communication...")
-    testSPIDisplay()
+    runDisplayApplication()
 
     var counter = 0
 
