@@ -1,4 +1,3 @@
-
 import MMIO
 import Registers
 
@@ -22,85 +21,142 @@ let defaultSPIConfig = SPIConfig(
     csPin: 20,              // GPIO20 - CS
     dcPin: 21,              // GPIO21 - DC (Data/Command)
     rstPin: 3,              // GPIO3 - RST (Reset)
-    clockFreq: SPIClockFreq.FREQ_10MHZ,
-    mode: SPIMode.MODE_0
+    clockFreq: 40000000,    // 40MHz
+    mode: 0                 // SPI Mode 0
 )
 
-// GPIO base address for ESP32-C6
+// ESP32-C6 System Registers
 private let GPIO_BASE: UInt = 0x60004000
 private let IO_MUX_BASE: UInt = 0x60009000
+private let SYSTEM_BASE: UInt = 0x60026000
+
+// System clock control registers
+private let SYSTEM_PERIP_CLK_EN0_REG = SYSTEM_BASE + 0x018
+private let SYSTEM_PERIP_RST_EN0_REG = SYSTEM_BASE + 0x01C
+
+// GPIO clock enable bits
+private let SYSTEM_GPIO_CLK_EN: UInt32 = (1 << 16)
 
 func initializeSPI(config: SPIConfig = defaultSPIConfig) {
-    putLine("=== ESP32-C6 SPI Display Initialization ===")
+    putLine("=== ESP32-C6 GPIO/SPI Initialization ===")
     flushUART()
 
-    // Step 1: Configure display control pins first
-    putLine("Step 1: Configuring display control pins...")
+    // Step 1: Enable GPIO peripheral clock
+    putLine("1. Enabling GPIO peripheral clock...")
+    enableGPIOClock()
+
+    // Step 2: Configure display control pins
+    putLine("2. Configuring display control pins...")
     configureDisplayControlPins(config: config)
 
-    // Step 2: Configure GPIO pins for bit-bang SPI
-    putLine("Step 2: Configuring SPI GPIO pins...")
+    // Step 3: Configure SPI GPIO pins with proper IO_MUX settings
+    putLine("3. Configuring SPI GPIO pins...")
     configureSPIGPIO(config: config)
 
-    putLine("=== SPI Display Initialization Complete ===")
+    // Step 4: Print GPIO status for debugging
+    putLine("4. GPIO Status Check:")
+    printGPIOStatus(config: config)
+
+    putLine("=== GPIO/SPI Initialization Complete ===")
     flushUART()
+}
+
+private func enableGPIOClock() {
+    let clkEnReg = UnsafeMutablePointer<UInt32>(bitPattern: SYSTEM_PERIP_CLK_EN0_REG)!
+    let rstEnReg = UnsafeMutablePointer<UInt32>(bitPattern: SYSTEM_PERIP_RST_EN0_REG)!
+
+    // Enable GPIO clock
+    var clkValue = clkEnReg.pointee
+    clkValue |= SYSTEM_GPIO_CLK_EN
+    clkEnReg.pointee = clkValue
+
+    // Clear GPIO reset (enable)
+    var rstValue = rstEnReg.pointee
+    rstValue &= ~SYSTEM_GPIO_CLK_EN
+    rstEnReg.pointee = rstValue
+
+    putLine("  GPIO clock enabled")
 }
 
 private func configureDisplayControlPins(config: SPIConfig) {
-    // Configure DC pin as output
+    // Configure DC pin as GPIO output
     putLine("  Configuring DC pin...")
     configureGPIOAsOutput(pin: config.dcPin)
     setDisplayDC(high: false)  // Start in command mode
-    putLine("  DC done")
 
-    // Configure RST pin as output
+    // Configure RST pin as GPIO output
     putLine("  Configuring RST pin...")
     configureGPIOAsOutput(pin: config.rstPin)
     setDisplayRST(high: true)  // Start with reset inactive
-    putLine("  RST done")
 }
 
 private func configureSPIGPIO(config: SPIConfig) {
-    // Configure SCK pin as output
+    // Configure SCK pin as GPIO output
     putLine("  Configuring SCK pin...")
     configureGPIOAsOutput(pin: config.sckPin)
     setSPIClock(high: false)  // Start with clock low
-    putLine("  SCK done")
 
-    // Configure MOSI pin as output
+    // Configure MOSI pin as GPIO output
     putLine("  Configuring MOSI pin...")
     configureGPIOAsOutput(pin: config.mosiPin)
     setSPIData(high: false)   // Start with data low
-    putLine("  MOSI done")
 
-    // Configure CS pin as output
+    // Configure CS pin as GPIO output
     putLine("  Configuring CS pin...")
     configureGPIOAsOutput(pin: config.csPin)
     setSPICS(high: true)      // Start with CS inactive (high)
-    putLine("  CS done")
 }
 
 private func configureGPIOAsOutput(pin: UInt32) {
-    // Configure GPIO direction as output
+    // Step 1: Configure IO_MUX for GPIO function
+    let ioMuxOffset = getIOMuxOffset(pin: pin)
+    let ioMuxReg = UnsafeMutablePointer<UInt32>(bitPattern: IO_MUX_BASE + ioMuxOffset)!
+
+    putString("    Pin ")
+    printSimpleNumber(UInt16(pin))
+    putString(": IO_MUX offset 0x")
+    printHex32(UInt32(ioMuxOffset))
+
+    // Read current value
+    let currentIOMux = ioMuxReg.pointee
+    putString(", current: 0x")
+    printHex32(currentIOMux)
+
+    // Configure IO_MUX: GPIO function, output enable, proper drive strength
+    var ioMuxValue = currentIOMux
+    ioMuxValue &= ~0xF           // Clear function select (bits 0-3)
+    ioMuxValue |= 0x1            // Set GPIO function (function 1)
+    ioMuxValue &= ~(1 << 8)      // Clear input enable for output
+    ioMuxValue &= ~(1 << 9)      // Clear pull-up
+    ioMuxValue &= ~(1 << 10)     // Clear pull-down
+    ioMuxValue |= (2 << 11)      // Set drive strength to 2 (medium)
+    ioMuxReg.pointee = ioMuxValue
+
+    putString(", new: 0x")
+    printHex32(ioMuxValue)
+    putLine("")
+
+    // Step 2: Configure GPIO direction as output
     let enableReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0020)!  // GPIO_ENABLE_REG
     var enableValue = enableReg.pointee
     enableValue |= (1 << pin)
     enableReg.pointee = enableValue
 
-    // Configure IO_MUX for GPIO function
-    let ioMuxOffset = getIOMapOffset(pin: pin)
-    let ioMuxReg = UnsafeMutablePointer<UInt32>(bitPattern: IO_MUX_BASE + ioMuxOffset)!
+    // Step 3: Clear any pull-up/pull-down in GPIO registers
+    let pullUpReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0074)!   // GPIO_PIN_REG base
+    let pullDownReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0078)! // GPIO_PIN_REG base
 
-    var ioMuxValue = ioMuxReg.pointee
-    ioMuxValue &= ~0xF           // Clear function select
-    ioMuxValue |= 0x1            // Set GPIO function
-    ioMuxValue &= ~(1 << 8)      // Enable output (OE=0, active low)
-    ioMuxValue |= (2 << 10)      // Set drive strength
-    ioMuxReg.pointee = ioMuxValue
+    // Clear pull-up and pull-down for this pin
+    var pullUpValue = pullUpReg.pointee
+    var pullDownValue = pullDownReg.pointee
+    pullUpValue &= ~(1 << pin)
+    pullDownValue &= ~(1 << pin)
+    pullUpReg.pointee = pullUpValue
+    pullDownReg.pointee = pullDownValue
 }
 
-private func getIOMapOffset(pin: UInt32) -> UInt {
-    // ESP32-C6 IO_MUX register offsets for different GPIO pins
+private func getIOMuxOffset(pin: UInt32) -> UInt {
+    // ESP32-C6 IO_MUX register offsets for GPIO pins
     switch pin {
     case 0: return 0x04
     case 1: return 0x08
@@ -117,6 +173,49 @@ private func getIOMapOffset(pin: UInt32) -> UInt {
     case 20: return 0x54  // GPIO20
     case 21: return 0x58  // GPIO21
     default: return 0x04  // Default to GPIO0 offset
+    }
+}
+
+private func printGPIOStatus(config: SPIConfig) {
+    let enableReg = UnsafePointer<UInt32>(bitPattern: GPIO_BASE + 0x0020)!
+    let outReg = UnsafePointer<UInt32>(bitPattern: GPIO_BASE + 0x0004)!
+
+    let enableValue = enableReg.pointee
+    let outValue = outReg.pointee
+
+    putString("  GPIO Enable: 0x")
+    printHex32(enableValue)
+    putLine("")
+    putString("  GPIO Out: 0x")
+    printHex32(outValue)
+    putLine("")
+
+    // Check each SPI pin specifically - use static strings to avoid conversion issues
+    let pins = [config.sckPin, config.mosiPin, config.csPin, config.dcPin, config.rstPin]
+
+    for (i, pin) in pins.enumerated() {
+        let enabled = (enableValue & (1 << pin)) != 0
+        let outState = (outValue & (1 << pin)) != 0
+
+        putString("  ")
+
+        // Use individual putString calls with static strings
+        switch i {
+        case 0: putString("SCK")
+        case 1: putString("MOSI")
+        case 2: putString("CS")
+        case 3: putString("DC")
+        case 4: putString("RST")
+        default: putString("UNK")
+        }
+
+        putString("(GPIO")
+        printSimpleNumber(UInt16(pin))
+        putString("): ")
+        putString(enabled ? "OUT" : "IN")
+        putString(", ")
+        putString(outState ? "HIGH" : "LOW")
+        putLine("")
     }
 }
 
@@ -217,76 +316,4 @@ func sendDisplayData16(_ data: UInt16) {
     setDisplayDC(high: true)   // Data mode
     sendSPIByte(UInt8(data >> 8))    // High byte
     sendSPIByte(UInt8(data & 0xFF))  // Low byte
-}
-
-// ILI9341 Display Test Function
-func testSPIDisplay() {
-    putLine("=== ILI9341 Display Test ===")
-
-    // Initialize SPI
-    initializeSPI()
-
-    // Hardware reset sequence
-    putLine("Performing display reset...")
-    setDisplayRST(high: false)
-    delayMilliseconds(10)
-    setDisplayRST(high: true)
-    delayMilliseconds(120)
-
-    putLine("Sending ILI9341 initialization commands...")
-
-    // Basic ILI9341 initialization sequence
-    sendDisplayCommand(0x01)  // Software reset
-    delayMilliseconds(150)
-
-    sendDisplayCommand(0x11)  // Sleep out
-    delayMilliseconds(120)
-
-    sendDisplayCommand(0x3A)  // Pixel format
-    sendDisplayData(0x55)     // 16-bit color
-
-    sendDisplayCommand(0x29)  // Display on
-    delayMilliseconds(50)
-
-    putLine("Display initialized successfully!")
-
-    // Test pattern - fill screen with red
-    putLine("Drawing test pattern...")
-
-    sendDisplayCommand(0x2A)  // Column address set
-    sendDisplayData(0x00)     // Start column high
-    sendDisplayData(0x00)     // Start column low
-    sendDisplayData(0x00)     // End column high
-    sendDisplayData(0xEF)     // End column low (239)
-
-    sendDisplayCommand(0x2B)  // Page address set
-    sendDisplayData(0x00)     // Start page high
-    sendDisplayData(0x00)     // Start page low
-    sendDisplayData(0x01)     // End page high
-    sendDisplayData(0x3F)     // End page low (319)
-
-    sendDisplayCommand(0x2C)  // Memory write
-
-    // Send red pixels (simplified test)
-    putLine("Filling with red pixels...")
-    for _ in 0..<1000 {
-        sendDisplayData16(0xF800)  // Red color in RGB565
-    }
-
-    putLine("=== Display Test Complete ===")
-    flushUART()
-}
-
-// Helper function to print hex values
-func printHex8(_ value: UInt8) {
-    let hexChars: [UInt8] = [
-        48, 49, 50, 51, 52, 53, 54, 55, 56, 57,  // '0'-'9'
-        97, 98, 99, 100, 101, 102                // 'a'-'f'
-    ]
-
-    let high = Int(value >> 4)
-    let low = Int(value & 0x0F)
-
-    putChar(hexChars[high])
-    putChar(hexChars[low])
 }
