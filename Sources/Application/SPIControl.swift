@@ -25,138 +25,108 @@ let defaultSPIConfig = SPIConfig(
     mode: 0                 // SPI Mode 0
 )
 
-// ESP32-C6 System Registers
-private let GPIO_BASE: UInt = 0x60004000
-private let IO_MUX_BASE: UInt = 0x60009000
-private let SYSTEM_BASE: UInt = 0x60026000
-
-// System clock control registers
-private let SYSTEM_PERIP_CLK_EN0_REG = SYSTEM_BASE + 0x018
-private let SYSTEM_PERIP_RST_EN0_REG = SYSTEM_BASE + 0x01C
-
-// GPIO clock enable bits
-private let SYSTEM_GPIO_CLK_EN: UInt32 = (1 << 16)
-
 func initializeSPI(config: SPIConfig = defaultSPIConfig) {
     putLine("=== ESP32-C6 GPIO/SPI Initialization ===")
     flushUART()
 
-    // Step 1: Enable GPIO peripheral clock
-    putLine("1. Enabling GPIO peripheral clock...")
-    enableGPIOClock()
-
-    // Step 2: Configure display control pins
-    putLine("2. Configuring display control pins...")
+    // Step 1: Configure display control pins
+    putLine("1. Configuring display control pins...")
     configureDisplayControlPins(config: config)
 
-    // Step 3: Configure SPI GPIO pins with proper IO_MUX settings
-    putLine("3. Configuring SPI GPIO pins...")
+    // Step 2: Configure SPI GPIO pins
+    putLine("2. Configuring SPI GPIO pins...")
     configureSPIGPIO(config: config)
 
-    // Step 4: Print GPIO status for debugging
-    putLine("4. GPIO Status Check:")
+    // Step 3: Print GPIO status for debugging
+    putLine("3. GPIO Status Check:")
     printGPIOStatus(config: config)
 
     putLine("=== GPIO/SPI Initialization Complete ===")
     flushUART()
 }
 
-private func enableGPIOClock() {
-    let clkEnReg = UnsafeMutablePointer<UInt32>(bitPattern: SYSTEM_PERIP_CLK_EN0_REG)!
-    let rstEnReg = UnsafeMutablePointer<UInt32>(bitPattern: SYSTEM_PERIP_RST_EN0_REG)!
-
-    // Enable GPIO clock
-    var clkValue = clkEnReg.pointee
-    clkValue |= SYSTEM_GPIO_CLK_EN
-    clkEnReg.pointee = clkValue
-
-    // Clear GPIO reset (enable)
-    var rstValue = rstEnReg.pointee
-    rstValue &= ~SYSTEM_GPIO_CLK_EN
-    rstEnReg.pointee = rstValue
-
-    putLine("  GPIO clock enabled")
-}
-
 private func configureDisplayControlPins(config: SPIConfig) {
-    // Configure DC pin as GPIO output
+    // Configure DC pin as GPIO output - using same method as LED
     putLine("  Configuring DC pin...")
     configureGPIOAsOutput(pin: config.dcPin)
     setDisplayDC(high: false)  // Start in command mode
 
-    // Configure RST pin as GPIO output
+    // Configure RST pin as GPIO output - using same method as LED
     putLine("  Configuring RST pin...")
     configureGPIOAsOutput(pin: config.rstPin)
     setDisplayRST(high: true)  // Start with reset inactive
 }
 
 private func configureSPIGPIO(config: SPIConfig) {
-    // Configure SCK pin as GPIO output
+    // Configure SCK pin as GPIO output - using same method as LED
     putLine("  Configuring SCK pin...")
     configureGPIOAsOutput(pin: config.sckPin)
     setSPIClock(high: false)  // Start with clock low
 
-    // Configure MOSI pin as GPIO output
+    // Configure MOSI pin as GPIO output - using same method as LED
     putLine("  Configuring MOSI pin...")
     configureGPIOAsOutput(pin: config.mosiPin)
     setSPIData(high: false)   // Start with data low
 
-    // Configure CS pin as GPIO output
+    // Configure CS pin as GPIO output - using same method as LED
     putLine("  Configuring CS pin...")
     configureGPIOAsOutput(pin: config.csPin)
     setSPICS(high: true)      // Start with CS inactive (high)
 }
 
 private func configureGPIOAsOutput(pin: UInt32) {
-    // Step 1: Configure IO_MUX for GPIO function
-    let ioMuxOffset = getIOMuxOffset(pin: pin)
-    let ioMuxReg = UnsafeMutablePointer<UInt32>(bitPattern: IO_MUX_BASE + ioMuxOffset)!
-
     putString("    Pin ")
     printSimpleNumber(UInt16(pin))
-    putString(": IO_MUX offset 0x")
-    printHex32(UInt32(ioMuxOffset))
+    putString(": ")
 
-    // Read current value
-    let currentIOMux = ioMuxReg.pointee
-    putString(", current: 0x")
-    printHex32(currentIOMux)
+    // Step 1: Configure IO_MUX for GPIO function (EXACTLY like LED code)
+    let ioMuxBase: UInt = 0x60009000
+    let ioMuxOffset = getIOMuxOffset(pin: pin)
+    let ioMuxReg = UnsafeMutablePointer<UInt32>(bitPattern: ioMuxBase + ioMuxOffset)!
 
-    // Configure IO_MUX: GPIO function, output enable, proper drive strength
-    var ioMuxValue = currentIOMux
+    var ioMuxValue = ioMuxReg.pointee
+    putString("IO_MUX(0x")
+    printHex32(ioMuxValue)
+    putString(") ")
+
+    // Configure IO_MUX: GPIO function, output enable, proper drive strength (EXACTLY like LED)
     ioMuxValue &= ~0xF           // Clear function select (bits 0-3)
     ioMuxValue |= 0x1            // Set GPIO function (function 1)
-    ioMuxValue &= ~(1 << 8)      // Clear input enable for output
-    ioMuxValue &= ~(1 << 9)      // Clear pull-up
-    ioMuxValue &= ~(1 << 10)     // Clear pull-down
-    ioMuxValue |= (2 << 11)      // Set drive strength to 2 (medium)
+    ioMuxValue &= ~(1 << 8)      // Enable output (OE=0, active low)
+    ioMuxValue |= (2 << 10)      // Set drive strength to 2
     ioMuxReg.pointee = ioMuxValue
 
-    putString(", new: 0x")
+    putString("-> 0x")
     printHex32(ioMuxValue)
+
+    // Step 2: Skip ROM calls entirely, use only MMIO
+
+    // Step 3: Enable GPIO output using MMIO (EXACTLY like LED code)
+    gpio.enable.modify { enable in
+        let currentBits = UInt32(enable.raw.storage)
+        let newBits = currentBits | (1 << pin)
+        enable = .init(.init(newBits))
+    }
+
+    // Verify the enable register was set
+    let enableValue = UInt32(gpio.enable.read().raw.storage)
+    let isEnabled = (enableValue & (1 << pin)) != 0
+
+    putString(", GPIO_EN: ")
+    putString(isEnabled ? "SET" : "FAILED")
     putLine("")
 
-    // Step 2: Configure GPIO direction as output
-    let enableReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0020)!  // GPIO_ENABLE_REG
-    var enableValue = enableReg.pointee
-    enableValue |= (1 << pin)
-    enableReg.pointee = enableValue
-
-    // Step 3: Clear any pull-up/pull-down in GPIO registers
-    let pullUpReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0074)!   // GPIO_PIN_REG base
-    let pullDownReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0078)! // GPIO_PIN_REG base
-
-    // Clear pull-up and pull-down for this pin
-    var pullUpValue = pullUpReg.pointee
-    var pullDownValue = pullDownReg.pointee
-    pullUpValue &= ~(1 << pin)
-    pullDownValue &= ~(1 << pin)
-    pullUpReg.pointee = pullUpValue
-    pullDownReg.pointee = pullDownValue
+    if !isEnabled {
+        putString("    ERROR: GPIO ")
+        printSimpleNumber(UInt16(pin))
+        putString(" enable failed! Enable reg: 0x")
+        printHex32(enableValue)
+        putLine("")
+    }
 }
 
 private func getIOMuxOffset(pin: UInt32) -> UInt {
-    // ESP32-C6 IO_MUX register offsets for GPIO pins
+    // ESP32-C6 IO_MUX register offsets for GPIO pins (same as LED code)
     switch pin {
     case 0: return 0x04
     case 1: return 0x08
@@ -166,7 +136,7 @@ private func getIOMuxOffset(pin: UInt32) -> UInt {
     case 5: return 0x18
     case 6: return 0x1C
     case 7: return 0x20
-    case 8: return 0x24
+    case 8: return 0x24   // LED pin
     case 9: return 0x28
     case 10: return 0x2C
     case 11: return 0x30
@@ -177,11 +147,8 @@ private func getIOMuxOffset(pin: UInt32) -> UInt {
 }
 
 private func printGPIOStatus(config: SPIConfig) {
-    let enableReg = UnsafePointer<UInt32>(bitPattern: GPIO_BASE + 0x0020)!
-    let outReg = UnsafePointer<UInt32>(bitPattern: GPIO_BASE + 0x0004)!
-
-    let enableValue = enableReg.pointee
-    let outValue = outReg.pointee
+    let enableValue = UInt32(gpio.enable.read().raw.storage)
+    let outValue = UInt32(gpio.out.read().raw.storage)
 
     putString("  GPIO Enable: 0x")
     printHex32(enableValue)
@@ -190,7 +157,13 @@ private func printGPIOStatus(config: SPIConfig) {
     printHex32(outValue)
     putLine("")
 
-    // Check each SPI pin specifically - use static strings to avoid conversion issues
+    // Check expected pins
+    let expectedPins: UInt32 = (1 << config.sckPin) | (1 << config.mosiPin) | (1 << config.csPin) | (1 << config.dcPin) | (1 << config.rstPin)
+    putString("  Expected enable bits: 0x")
+    printHex32(expectedPins)
+    putLine("")
+
+    // Check each SPI pin specifically
     let pins = [config.sckPin, config.mosiPin, config.csPin, config.dcPin, config.rstPin]
 
     for (i, pin) in pins.enumerated() {
@@ -215,21 +188,27 @@ private func printGPIOStatus(config: SPIConfig) {
         putString(enabled ? "OUT" : "IN")
         putString(", ")
         putString(outState ? "HIGH" : "LOW")
+
+        if !enabled {
+            putString(" ❌")
+        }
         putLine("")
     }
 }
 
-// GPIO Control Functions
+// GPIO Control Functions - Using MMIO like the LED code
 private func setGPIO(pin: UInt32, high: Bool) {
-    let outReg = UnsafeMutablePointer<UInt32>(bitPattern: GPIO_BASE + 0x0004)!  // GPIO_OUT_REG
-    var outValue = outReg.pointee
-
     if high {
-        outValue |= (1 << pin)   // Set bit
+        // Use the set register for atomic operation (same as LED code)
+        gpio.out_w1ts.write { out_w1ts in
+            out_w1ts = .init(.init(1 << pin))
+        }
     } else {
-        outValue &= ~(1 << pin)  // Clear bit
+        // Use the clear register for atomic operation (same as LED code)
+        gpio.out_w1tc.write { out_w1tc in
+            out_w1tc = .init(.init(1 << pin))
+        }
     }
-    outReg.pointee = outValue
 }
 
 // Display Control Functions
@@ -254,38 +233,35 @@ private func setSPICS(high: Bool) {
     setGPIO(pin: defaultSPIConfig.csPin, high: high)
 }
 
-// Bit-bang SPI Implementation
+// Enhanced SPI Implementation with debugging
 func sendSPIByte(_ data: UInt8) {
     var byte = data
 
     // Assert CS (active low)
     setSPICS(high: false)
-    delayMicroseconds(1)
+    delayMicroseconds(2)
 
     // Send 8 bits, MSB first
     for _ in 0..<8 {
         // Set data line (MOSI)
-        if (byte & 0x80) != 0 {
-            setSPIData(high: true)
-        } else {
-            setSPIData(high: false)
-        }
+        let bitValue = (byte & 0x80) != 0
+        setSPIData(high: bitValue)
 
-        delayMicroseconds(1) // Setup time
+        delayMicroseconds(2) // Setup time
 
         // Clock pulse (rising edge for Mode 0)
         setSPIClock(high: true)
-        delayMicroseconds(1)
+        delayMicroseconds(2)
         setSPIClock(high: false)
-        delayMicroseconds(1)
+        delayMicroseconds(2)
 
         byte <<= 1 // Shift to next bit
     }
 
     // Deassert CS
-    delayMicroseconds(1)
+    delayMicroseconds(2)
     setSPICS(high: true)
-    delayMicroseconds(1)
+    delayMicroseconds(2)
 }
 
 // Send multiple bytes via SPI

@@ -1,4 +1,3 @@
-
 import MMIO
 import Registers
 
@@ -52,7 +51,7 @@ func fillScreen(color: UInt16) {
     sendDisplayCommand(0x2C)  // Memory write command
 
     // Fill screen efficiently with progress reporting
-    let totalPixels = UInt32(ILI9341.width) * UInt32(ILI9341.height)
+    _ = UInt32(ILI9341.width) * UInt32(ILI9341.height)  // Calculate total pixels but don't store
     var pixelCount: UInt32 = 0
 
     for row in 0..<ILI9341.height {
