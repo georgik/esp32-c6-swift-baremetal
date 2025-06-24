@@ -62,39 +62,77 @@ struct DisplayConfig {
 
 func initializeDisplay() {
     putLine("=== ILI9341 Display Initialization ===")
+    flushUART()
 
-    // 1. Hardware reset with proper timing
-    putLine("1. Hardware reset...")
-    setDisplayRST(high: false)
-    delayMilliseconds(10)
+    // CRITICAL: Power-on reset sequence per ILI9341 datasheet
+    putLine("Power-on sequence: Initial stabilization...")
+    delayMilliseconds(200)  // Wait for display power to stabilize
+    flushUART()
+    
+    // 1. Hardware reset with datasheet-compliant timing
+    putLine("1. Hardware reset sequence...")
+    diagnoseSPISignals("before reset")
+    
+    // Step 1a: Ensure RST is high first (power-on state)
+    putLine("   RST high (power-on state)...")
     setDisplayRST(high: true)
-    delayMilliseconds(120)
+    delayMilliseconds(100)  // Wait in powered state
+    
+    // Step 1b: RST low (reset active) - ILI9341 requires minimum 10μs
+    putLine("   RST low (reset active)...")
+    setDisplayRST(high: false)
+    delayMilliseconds(50)   // 50ms >> 10μs minimum
+    
+    // Step 1c: RST high (reset release) - ILI9341 requires minimum 120ms wait
+    putLine("   RST high (reset release)...")
+    setDisplayRST(high: true)
+    putLine("   Waiting for display wake-up (critical timing)...")
+    delayMilliseconds(300)  // 300ms >> 120ms minimum from datasheet
+    
+    diagnoseSPISignals("after reset")
+    putLine("   Hardware reset sequence complete")
+    flushUART()
 
-    // 2. Software reset
+    // 2. Software reset with verification
     putLine("2. Software reset...")
-    sendDisplayCommand(0x01)
-    delayMilliseconds(120)
+    sendDisplayCommandWithVerification(0x01, name: "SWRESET")
+    delayMilliseconds(150) // Increased from 120ms
+    putLine("   Software reset complete")
+    flushUART()
 
-    // 3. Exit sleep mode
+    // 3. Exit sleep mode with verification
     putLine("3. Exit sleep mode...")
-    sendDisplayCommand(0x11)
-    delayMilliseconds(120)
+    sendDisplayCommandWithVerification(0x11, name: "SLPOUT")
+    delayMilliseconds(150) // Increased from 120ms
+    putLine("   Sleep mode exit complete")
+    flushUART()
 
-    // 4. Set pixel format to RGB565
+    // 4. Set pixel format to RGB565 with verification
     putLine("4. Setting pixel format...")
-    sendDisplayCommand(0x3A)
-    sendDisplayData(0x55)
-    delayMilliseconds(10)
+    sendDisplayCommandWithVerification(0x3A, name: "COLMOD")
+    sendDisplayDataWithVerification(0x55, name: "RGB565")
+    delayMilliseconds(20)  // Increased from 10ms
+    putLine("   Pixel format set to RGB565")
+    flushUART()
 
     // 5. Execute STANDARD initialization sequence
     putLine("5. Standard initialization sequence...")
-    executeStandardInit()  // Use this instead of executeVendorInit()
+    executeStandardInitWithDiagnostics()
+    putLine("   Standard initialization complete")
+    flushUART()
 
-    // 6. Turn on display
+    // 6. Turn on display with verification
     putLine("6. Turning on display...")
-    sendCommand(.DISPLAY_ON)
-    delayMilliseconds(20)
+    sendCommandWithVerification(.DISPLAY_ON, name: "DISPON")
+    delayMilliseconds(50)  // Increased from 20ms
+    putLine("   Display enabled")
+    flushUART()
 
+    // 7. Final diagnostic check
+    putLine("7. Final diagnostic check...")
+    diagnoseSPISignals("initialization complete")
+    testDisplayConnection()
+    
     putLine("=== Display Initialization Complete! ===")
     flushUART()
 }
@@ -239,5 +277,175 @@ func sendData(_ data: [UInt8]) {
     setDisplayDC(high: true) // Data mode
     for byte in data {
         sendSPIByte(byte)
+    }
+}
+
+// DIAGNOSTIC FUNCTIONS FOR DEBUGGING
+
+// Diagnose SPI signal states - simplified for bare metal
+func diagnoseSPISignals(_ context: StaticString) {
+    putString("   SPI signals: ")
+    
+    let gpioOut = UInt32(gpio.out.read().raw.storage)
+    let config = defaultSPIConfig
+    
+    // Check each signal
+    let sckHigh = (gpioOut & (1 << config.sckPin)) != 0
+    let mosiHigh = (gpioOut & (1 << config.mosiPin)) != 0
+    let csHigh = (gpioOut & (1 << config.csPin)) != 0
+    let dcHigh = (gpioOut & (1 << config.dcPin)) != 0
+    let rstHigh = (gpioOut & (1 << config.rstPin)) != 0
+    
+    putString("SCK:")
+    putString(sckHigh ? "H" : "L")
+    putString(", MOSI:")
+    putString(mosiHigh ? "H" : "L")
+    putString(", CS:")
+    putString(csHigh ? "H" : "L")
+    putString(", DC:")
+    putString(dcHigh ? "H" : "L")
+    putString(", RST:")
+    putString(rstHigh ? "H" : "L")
+    putLine("")
+}
+
+// Send command with verification - simplified for bare metal
+func sendDisplayCommandWithVerification(_ cmd: UInt8, name: StaticString) {
+    putString("   CMD 0x")
+    printHex8(cmd)
+    putString("... ")
+    
+    diagnoseSPISignals("before cmd")
+    sendDisplayCommand(cmd)
+    diagnoseSPISignals("after cmd")
+    
+    putLine("done")
+}
+
+// Send data with verification - simplified for bare metal
+func sendDisplayDataWithVerification(_ data: UInt8, name: StaticString) {
+    putString("   DATA 0x")
+    printHex8(data)
+    putString("... ")
+    
+    diagnoseSPISignals("before data")
+    sendDisplayData(data)
+    diagnoseSPISignals("after data")
+    
+    putLine("done")
+}
+
+// Send command enum with verification - simplified for bare metal
+func sendCommandWithVerification(_ command: ILI9341Command, name: StaticString) {
+    sendDisplayCommandWithVerification(command.rawValue, name: name)
+}
+
+// Enhanced standard initialization with diagnostics
+func executeStandardInitWithDiagnostics() {
+    putLine("   Standard Init: Memory Access Control...")
+    sendCommandWithVerification(.MEMORY_ACCESS_CONTROL, name: "MADCTL")
+    sendDisplayDataWithVerification(0x48, name: "orientation")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Power Control 1...")
+    sendCommandWithVerification(.POWER_CONTROL_1, name: "PWCTR1")
+    sendDisplayDataWithVerification(0x23, name: "GVDD=4.75V")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Power Control 2...")
+    sendCommandWithVerification(.POWER_CONTROL_2, name: "PWCTR2")
+    sendDisplayDataWithVerification(0x10, name: "voltage levels")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: VCOM Control...")
+    sendCommandWithVerification(.VCOM_CONTROL_1, name: "VMCTR1")
+    sendDisplayDataWithVerification(0x3E, name: "VCOMH high")
+    sendDisplayDataWithVerification(0x28, name: "VCOMH low")
+    delayMilliseconds(20)
+    
+    sendCommandWithVerification(.VCOM_CONTROL_2, name: "VMCTR2")
+    sendDisplayDataWithVerification(0x86, name: "VCOM offset")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Frame Rate Control...")
+    sendCommandWithVerification(.FRAME_RATE_CONTROL, name: "FRMCTR1")
+    sendDisplayDataWithVerification(0x00, name: "frame rate 1")
+    sendDisplayDataWithVerification(0x18, name: "frame rate 2")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Display Function Control...")
+    sendCommandWithVerification(.DISPLAY_FUNCTION_CONTROL, name: "DISCTRL")
+    sendDisplayDataWithVerification(0x08, name: "display control 1")
+    sendDisplayDataWithVerification(0x82, name: "display control 2")
+    sendDisplayDataWithVerification(0x27, name: "display control 3")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Gamma Settings...")
+    sendCommandWithVerification(.GAMMA_SET, name: "GAMSET")
+    sendDisplayDataWithVerification(0x01, name: "gamma curve")
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Positive Gamma...")
+    sendCommandWithVerification(.POSITIVE_GAMMA, name: "GMCTRP1")
+    let posGamma: [UInt8] = [0x0F, 0x31, 0x2B, 0x0C, 0x0E, 0x08, 0x4E, 0xF1,
+                            0x37, 0x07, 0x10, 0x03, 0x0E, 0x09, 0x00]
+    for value in posGamma {
+        sendDisplayDataWithVerification(value, name: "pos_gamma")
+    }
+    delayMilliseconds(20)
+    
+    putLine("   Standard Init: Negative Gamma...")
+    sendCommandWithVerification(.NEGATIVE_GAMMA, name: "GMCTRN1")
+    let negGamma: [UInt8] = [0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1,
+                            0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F]
+    for value in negGamma {
+        sendDisplayDataWithVerification(value, name: "neg_gamma")
+    }
+    delayMilliseconds(20)
+}
+
+// Test display connection by trying to set and read back simple operations
+func testDisplayConnection() {
+    putLine("   Connection Test: Testing display communication...")
+    
+    // Test 1: Set a simple window and try to write a pixel
+    putLine("   Connection Test: Setting small test area...")
+    sendDisplayCommandWithVerification(0x2A, name: "CASET")
+    sendDisplayDataWithVerification(0x00, name: "x_start_high")
+    sendDisplayDataWithVerification(0x00, name: "x_start_low")
+    sendDisplayDataWithVerification(0x00, name: "x_end_high")
+    sendDisplayDataWithVerification(0x01, name: "x_end_low")
+    
+    sendDisplayCommandWithVerification(0x2B, name: "RASET")
+    sendDisplayDataWithVerification(0x00, name: "y_start_high")
+    sendDisplayDataWithVerification(0x00, name: "y_start_low")
+    sendDisplayDataWithVerification(0x00, name: "y_end_high")
+    sendDisplayDataWithVerification(0x01, name: "y_end_low")
+    
+    // Test 2: Try to write some pixel data
+    putLine("   Connection Test: Writing test pixel data...")
+    sendDisplayCommandWithVerification(0x2C, name: "RAMWR")
+    sendDisplayDataWithVerification(0xFF, name: "test_pixel_high")
+    sendDisplayDataWithVerification(0xFF, name: "test_pixel_low")
+    
+    delayMilliseconds(50)
+    putLine("   Connection Test: Basic communication test complete")
+}
+
+// Helper function to print hex values for debugging
+func printHex8(_ value: UInt8) {
+    let high = (value >> 4) & 0x0F
+    let low = value & 0x0F
+    
+    if high < 10 {
+        putChar(48 + high) // '0' + digit
+    } else {
+        putChar(65 + high - 10) // 'A' + (digit - 10)
+    }
+    
+    if low < 10 {
+        putChar(48 + low)
+    } else {
+        putChar(65 + low - 10)
     }
 }

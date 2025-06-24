@@ -20,27 +20,46 @@ func runDisplayApplication() {
 
 func testDisplayFunctionality() {
     putLine("Testing display functionality...")
+    flushUART()
 
-    // Test 1: Fill screen with red
-    putLine("Test 1: Red screen")
-    fillScreen(color: ILI9341.colorRed)
-    delayMilliseconds(1000)
-
-    // Test 2: Fill screen with blue
-    putLine("Test 2: Blue screen")
-    fillScreen(color: ILI9341.colorBlue)
-    delayMilliseconds(1000)
-
-    // Test 3: Draw test pattern
-    putLine("Test 3: Color pattern")
-    drawTestPattern()
+    // Test 1: Simple single pixel test first
+    putLine("Test 1: Single pixel test")
+    simpleSinglePixelTest()
     delayMilliseconds(2000)
+    flushUART()
 
-    // Test 4: Clear screen
-    putLine("Test 4: Clear screen")
+    // Test 2: Small rectangle test
+    putLine("Test 2: Small rectangle test")
+    simpleRectangleTest()
+    delayMilliseconds(2000)
+    flushUART()
+
+    // Test 3: Fill screen with red (slower)
+    putLine("Test 3: Red screen")
+    fillScreenSlowly(color: ILI9341.colorRed)
+    delayMilliseconds(3000)
+    flushUART()
+
+    // Test 4: Fill screen with blue (slower)
+    putLine("Test 4: Blue screen")
+    fillScreenSlowly(color: ILI9341.colorBlue)
+    delayMilliseconds(3000)
+    flushUART()
+
+    // Test 5: Draw test pattern
+    putLine("Test 5: Color pattern")
+    drawTestPattern()
+    delayMilliseconds(5000)
+    flushUART()
+
+    // Test 6: Clear screen
+    putLine("Test 6: Clear screen")
     clearDisplay()
+    delayMilliseconds(2000)
+    flushUART()
 
     putLine("Display tests complete!")
+    flushUART()
 }
 
 func fillScreen(color: UInt16) {
@@ -168,4 +187,98 @@ func printSimpleNumber(_ number: UInt16) {
     for i in (0..<digitCount).reversed() {
         putChar(digits[i])
     }
+}
+
+// ADDITIONAL TEST FUNCTIONS FOR DEBUGGING
+
+// Very simple single pixel test
+func simpleSinglePixelTest() {
+    putLine("   Setting single red pixel at (10,10)...")
+    
+    // Diagnostic before
+    diagnoseSPISignals("before pixel")
+    
+    // Set a single red pixel at position (10, 10)
+    drawPixel(x: 10, y: 10, color: ILI9341.colorRed)
+    
+    delayMilliseconds(100)
+    
+    // Diagnostic after
+    diagnoseSPISignals("after pixel")
+    
+    putLine("   Single pixel test complete")
+}
+
+// Simple rectangle test
+func simpleRectangleTest() {
+    putLine("   Drawing small green rectangle...")
+    
+    // Diagnostic before
+    diagnoseSPISignals("before rectangle")
+    
+    // Draw a small 20x20 green rectangle at position (50, 50)
+    fillRect(x: 50, y: 50, width: 20, height: 20, color: ILI9341.colorGreen)
+    
+    delayMilliseconds(100)
+    
+    // Diagnostic after
+    diagnoseSPISignals("after rectangle")
+    
+    putLine("   Rectangle test complete")
+}
+
+// Slower screen fill with more diagnostics
+func fillScreenSlowly(color: UInt16) {
+    putLine("   Slowly filling screen...")
+    
+    // Set the full screen area with diagnostics
+    putLine("   Setting display area...")
+    diagnoseSPISignals("before area set")
+    setDisplayArea(x: 0, y: 0, width: ILI9341.width, height: ILI9341.height)
+    diagnoseSPISignals("after area set")
+    
+    // Start memory write with diagnostics
+    putLine("   Starting memory write...")
+    diagnoseSPISignals("before memory write")
+    sendDisplayCommand(0x2C)  // Memory write command
+    diagnoseSPISignals("after memory write cmd")
+    
+    // Fill screen very slowly with progress reporting
+    _ = UInt32(ILI9341.width) * UInt32(ILI9341.height)  // Calculate total pixels but don't store
+    var pixelCount: UInt32 = 0
+    
+    putLine("   Writing pixel data...")
+    flushUART()
+    
+    for row in 0..<ILI9341.height {
+        for _ in 0..<ILI9341.width {
+            // Send pixel data with extra delays
+            setDisplayDC(high: true)   // Ensure we're in data mode
+            delayMicroseconds(50)      // Extra delay before each pixel
+            
+            sendDisplayData16(color)
+            
+            delayMicroseconds(50)      // Extra delay after each pixel
+            pixelCount += 1
+            
+            // Diagnostic every 1000 pixels
+            if pixelCount % 1000 == 0 {
+                diagnoseSPISignals("mid-fill")
+            }
+        }
+        
+        // Report progress every 32 rows
+        if row % 32 == 0 {
+            putString("   Progress: ")
+            printSimpleNumber(row)
+            putString("/")
+            printSimpleNumber(ILI9341.height)
+            putLine("")
+            flushUART()
+        }
+    }
+    
+    diagnoseSPISignals("fill complete")
+    putLine("   Slow screen fill complete")
+    flushUART()
 }

@@ -14,6 +14,7 @@ struct SPIConfig {
 }
 
 // Updated SPI configuration for ESP32-C6 with ILI9341 display
+// FIXED: Reduced clock frequency and added timing diagnostics
 let defaultSPIConfig = SPIConfig(
     sckPin: 6,              // GPIO6 - SCK
     mosiPin: 7,             // GPIO7 - MOSI
@@ -21,7 +22,7 @@ let defaultSPIConfig = SPIConfig(
     csPin: 20,              // GPIO20 - CS
     dcPin: 21,              // GPIO21 - DC (Data/Command)
     rstPin: 3,              // GPIO3 - RST (Reset)
-    clockFreq: 40000000,    // 40MHz
+    clockFreq: 10000000,    // REDUCED: 10MHz (was 40MHz - too fast for some displays)
     mode: 0                 // SPI Mode 0
 )
 
@@ -29,17 +30,37 @@ func initializeSPI(config: SPIConfig = defaultSPIConfig) {
     putLine("=== ESP32-C6 GPIO/SPI Initialization ===")
     flushUART()
 
-    // Step 1: Configure display control pins
+    // CRITICAL: Power-on sequencing delay
+    putLine("Power-on sequence: Waiting for GPIO stabilization...")
+    delayMilliseconds(100)  // Let GPIO system stabilize
+    flushUART()
+
+    // Step 1: Configure display control pins with power-on sequence
     putLine("1. Configuring display control pins...")
     configureDisplayControlPins(config: config)
+    
+    // CRITICAL: Delay after control pin configuration
+    putLine("   Waiting for control pins to stabilize...")
+    delayMilliseconds(50)
+    flushUART()
 
     // Step 2: Configure SPI GPIO pins
     putLine("2. Configuring SPI GPIO pins...")
     configureSPIGPIO(config: config)
+    
+    // CRITICAL: Delay after SPI pin configuration
+    putLine("   Waiting for SPI pins to stabilize...")
+    delayMilliseconds(50)
+    flushUART()
 
     // Step 3: Print GPIO status for debugging
     putLine("3. GPIO Status Check:")
     printGPIOStatus(config: config)
+    
+    // CRITICAL: Final stabilization delay before display operations
+    putLine("Final GPIO/SPI stabilization...")
+    delayMilliseconds(200)  // Extra time for all pins to be ready
+    flushUART()
 
     putLine("=== GPIO/SPI Initialization Complete ===")
     flushUART()
@@ -234,35 +255,35 @@ private func setSPICS(high: Bool) {
 }
 
 
-// Enhanced SPI Implementation with slower timing for real hardware
+// Enhanced SPI Implementation with ultra-conservative timing for real hardware
 func sendSPIByte(_ data: UInt8) {
     var byte = data
 
-    // Assert CS (active low)
+    // Assert CS (active low) with extended setup time
     setSPICS(high: false)
-    delayMicroseconds(10)  // Increased delay
+    delayMicroseconds(100)  // Much longer CS setup time
 
     // Send 8 bits, MSB first
     for _ in 0..<8 {
-        // Set data line (MOSI)
+        // Set data line (MOSI) with extended setup
         let bitValue = (byte & 0x80) != 0
         setSPIData(high: bitValue)
 
-        delayMicroseconds(10) // Increased setup time
+        delayMicroseconds(100) // Much longer data setup time
 
-        // Clock pulse (rising edge for Mode 0)
+        // Clock pulse (rising edge for Mode 0) with extended timing
         setSPIClock(high: true)
-        delayMicroseconds(10) // Increased clock high time
+        delayMicroseconds(100) // Much longer clock high time
         setSPIClock(high: false)
-        delayMicroseconds(10) // Increased clock low time
+        delayMicroseconds(100) // Much longer clock low time
 
         byte <<= 1 // Shift to next bit
     }
 
-    // Deassert CS
-    delayMicroseconds(10)
+    // Deassert CS with extended hold time
+    delayMicroseconds(100)
     setSPICS(high: true)
-    delayMicroseconds(10)
+    delayMicroseconds(100) // Extended CS release time
 }
 
 // Send multiple bytes via SPI

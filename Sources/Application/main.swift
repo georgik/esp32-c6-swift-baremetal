@@ -8,16 +8,32 @@ public func _start() -> Never {
     // Force reference to app descriptor
     _ = _getAppDesc()
 
+    // CRITICAL: Wait for system to fully stabilize after power-on
+    putLine("=== ESP32-C6 System Startup ===")
+    putLine("Waiting for system stabilization...")
+    flushUART()
+    delayMilliseconds(500)  // Half second for voltage rails to stabilize
+
     // Initialize LED with enhanced debugging
     initializeLED()
 
-    // Simple main loop with status output
+    // CRITICAL: Additional delay before display initialization
+    putLine("System ready. Preparing display initialization...")
+    flushUART()
+    delayMilliseconds(1000)  // 1 second additional delay
+
+    // Initialize and test display with comprehensive diagnostics
+    putLine("Starting display initialization...")
+    flushUART()
+    runDisplayApplication()
+
+    // After display initialization, continue with LED blink to show we're alive
     var cycle = 0
     while true {
         if cycle % 10 == 0 {
             putString("LED ON (cycle ")
             putChar(UInt8(48 + (cycle / 10) % 10))
-            putLine(")")
+            putLine(") - Display should be working")
             flushUART()
         }
 
