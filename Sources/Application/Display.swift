@@ -330,7 +330,7 @@ func fillScreenWithRects(color: UInt16,
                                 flushUART()
 
             let w = min(tile, ILI9341.width - x)
-            fillRect(x: x, y: y, width: 4, height: 4, color: color)
+            fillRect(x: x, y: y, width: 14, height: 14, color: color)
             x &+= w
         }
         y &+= h

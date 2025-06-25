@@ -11,6 +11,9 @@ private func readReg32(_ addr: UInt32) -> UInt32 {
 /// Pretty-print the SoC reset cause and key WDT status bits.
 /// Call this once right after UART is initialised.
 public func printBootDiagnostics() {
+    ESP32C6ROM.hardDisableMWDT0()
+    ESP32C6ROM.hardDisableRWDT()
+    ESP32C6ROM.disableRTCWatchdogDirectly()
     putLine("=== Boot Diagnostics ===")
 
     // 1. ROM helper: esp_rom_get_reset_reason() -> UInt32
@@ -51,7 +54,7 @@ public func printBootDiagnostics() {
     }
 
     ESP32C6ROM.printRTCWatchdogState()   // before disabling
-    ESP32C6ROM.disableRTCWatchdog()      // clear the enable bit
+    ESP32C6ROM.hardDisableRWDT()      // clear the enable bit
     ESP32C6ROM.printRTCWatchdogState()   // verify it's really off
 
     putLine("=== End Boot Diagnostics ===")

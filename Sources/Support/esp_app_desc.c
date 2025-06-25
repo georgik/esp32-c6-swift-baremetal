@@ -93,7 +93,34 @@ int memcmp(const void* s1, const void* s2, size_t n) {
 
 extern void swift_main(void);
 
+void disable_all_watchdogs(void) {
+    // Disable RTC WDT (RWDT)
+    volatile uint32_t* wdt_wprotect = (uint32_t*)(0x60008000 + 0x18);
+    volatile uint32_t* wdt_config0 = (uint32_t*)(0x60008000 + 0x00);
+    volatile uint32_t* wdt_feed = (uint32_t*)(0x60008000 + 0x14);
+
+    *wdt_wprotect = 0x50D83AA1;       // unlock
+    *wdt_config0 &= ~((1u << 31) | (1u << 12)); // disable EN + FLASHBOOT
+    *wdt_config0 &= ~((7u << 28) | (7u << 25) | (7u << 22) | (7u << 19)); // clear STGx
+    *wdt_feed = 1;                    // feed once
+    *wdt_wprotect = 0;               // relock
+
+    // Disable MWDT0
+    volatile uint32_t* mwdt_wprotect = (uint32_t*)(0x6001F000 + 0x64);
+    volatile uint32_t* mwdt_config0 = (uint32_t*)(0x6001F000 + 0x48);
+    volatile uint32_t* mwdt_feed = (uint32_t*)(0x6001F000 + 0x4C);
+
+    *mwdt_wprotect = 0x50D83AA1;
+    *mwdt_config0 &= ~((1u << 31) | (1u << 12));
+    *mwdt_config0 &= ~((7u << 28) | (7u << 25) | (7u << 22) | (7u << 19));
+    *mwdt_feed = 1;
+    *mwdt_wprotect = 0;
+}
+
 __attribute__((section(".entry_point"))) void _start(void) {
+    // Disable watchdogs before launching Swift app
+    disable_all_watchdogs();
+
     // Call Swift main function
     swift_main();
 

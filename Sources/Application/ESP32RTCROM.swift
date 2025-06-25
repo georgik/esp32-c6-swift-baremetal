@@ -234,6 +234,80 @@ public struct ESP32C6ROM {
 
         // Re-lock WDT write protection
         wdtProtectPtr.pointee = 0
+
+
+    }
+
+    public static func disableRTCWatchdogDirectly() {
+        let WDTCONFIG0_ADDR: UInt = 0x60008094
+        let WDTWPROTECT_ADDR: UInt = 0x600080A4
+        let WDT_WKEY: UInt32 = 0x50D83AA1
+
+        let config0 = UnsafeMutablePointer<UInt32>(bitPattern: WDTCONFIG0_ADDR)!
+        let protect = UnsafeMutablePointer<UInt32>(bitPattern: WDTWPROTECT_ADDR)!
+
+        putLine("[WDT] Unlocking RTC watchdog...")
+        protect.pointee = WDT_WKEY
+
+        putLine("[WDT] Disabling RTC watchdog...")
+        config0.pointee &= ~(1 << 31)  // Clear enable bit
+
+        putLine("[WDT] Locking RTC watchdog...")
+        protect.pointee = 0
+    }
+
+
+static let RTC_BASE: UInt32 = 0x6000_8000
+static let WDTCONFIG0  = RTC_BASE + 0x80
+static let WDTWPROTECT = RTC_BASE + 0xA4
+static let KEY: UInt32 = 0x50D83AA1
+
+/// Disable the RWDT *completely* and blank all stage configs.
+public static func hardDisableRWDT() {
+    let cfg  = UnsafeMutablePointer<UInt32>(bitPattern: Int(Self.WDTCONFIG0))!
+    let prot = UnsafeMutablePointer<UInt32>(bitPattern: Int(Self.WDTWPROTECT))!
+
+    prot.pointee = Self.KEY          // unlock
+
+    // 1. Clear enable, flash-boot bit, stage-0 action, and set hold-time = 0
+    cfg.pointee &= ~0xC0000000       // clear EN (bit31) + FLASHBOOT_EN (bit30)
+    cfg.pointee &= ~0x70000000       // clear STG0 action bits
+    cfg.pointee &= ~0x0003FFFF       // clear STG0_HOLD
+
+    // 2. Immediately feed once (optional, but guarantees counter reset)
+    cfg.pointee |=  (1 << 14)        // set WDT_FEED bit (auto-clears)
+
+    prot.pointee  = 0                // relock
+}
+
+
+static let TIMG0_BASE: UInt32 = 0x6001_F000
+static let TG0_WDTCONFIG0  = TIMG0_BASE + 0x48
+static let TG0_WDTWPROTECT = TIMG0_BASE + 0x64
+
+public static func hardDisableMWDT0() {
+    let cfg  = UnsafeMutablePointer<UInt32>(bitPattern: Int(Self.TG0_WDTCONFIG0))!
+    let prot = UnsafeMutablePointer<UInt32>(bitPattern: Int(Self.TG0_WDTWPROTECT))!
+
+    prot.pointee = Self.KEY
+    cfg.pointee &= ~(1 << 31)        // clear TG0_WDT_EN
+    prot.pointee = 0
+}
+    public static func disableAllWatchdogs() {
+        // RTC Watchdog
+        disableRTCWatchdog()
+
+        // MWDT0 (TIMG0)
+        let TIMG0_BASE = 0x6001F000
+        let TIMG_WDTCONFIG0 = TIMG0_BASE + 0x48
+        let TIMG_WDTWPROTECT = TIMG0_BASE + 0x64
+
+        let timgWdtProtect = UnsafeMutablePointer<UInt32>(bitPattern: TIMG_WDTWPROTECT)!
+        let timgWdtConfig0 = UnsafeMutablePointer<UInt32>(bitPattern: TIMG_WDTCONFIG0)!
+
+        timgWdtProtect.pointee = 0x50D83AA1
+        timgWdtConfig0.pointee &= ~(1 << 31)
+        timgWdtProtect.pointee = 0
     }
 
     /// Print the current state of the RTC watchdog timer
