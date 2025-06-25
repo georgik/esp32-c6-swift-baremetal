@@ -4,16 +4,31 @@ import Registers
 // High-level display application functions
 func runDisplayApplication() {
     putLine("=== Starting Display Application ===")
+    flushUART()
 
-    // Initialize SPI first
+    // CRITICAL: Test power supply and basic wiring FIRST
+    putLine("STEP 1: Power and Wiring Diagnostics...")
+    diagnoseGPIOPowerAndWiring()
+
+    // Initialize SPI with enhanced diagnostics
+    putLine("STEP 2: SPI Initialization...")
     initializeSPI()
+    
+    // CRITICAL: Verify GPIO states before display init
+    putLine("STEP 3: Pre-display GPIO verification...")
+    verifyPreDisplayGPIOStates()
+
+    initializeWatchdogs()
 
     // Initialize the ILI9341 display
+    putLine("STEP 4: Display Initialization...")
     initializeDisplay()
 
     // Test basic functionality
+    putLine("STEP 5: Display Functionality Tests...")
     testDisplayFunctionality()
-
+    ESP32C6ROM.disableRTCWatchdog()
+    
     putLine("=== Display Application Complete ===")
     flushUART()
 }
@@ -22,40 +37,49 @@ func testDisplayFunctionality() {
     putLine("Testing display functionality...")
     flushUART()
 
-    // Test 1: Simple single pixel test first
-    putLine("Test 1: Single pixel test")
-    simpleSinglePixelTest()
-    delayMilliseconds(2000)
+    // Test 0: Clear screen first to remove random video memory noise
+    putLine("Test 0: Clearing screen (removing random video memory)")
+    clearDisplay()
+//     delayMilliseconds(1000)
     flushUART()
+    ESP32C6ROM.disableRTCWatchdog()
+
+    // Test 1: Simple single pixel test first
+//     putLine("Test 1: Single pixel test")
+//     simpleSinglePixelTest()
+//     delayMilliseconds(2000)
+//     flushUART()
+//     ESP32C6ROM.disableRTCWatchdog()
 
     // Test 2: Small rectangle test
-    putLine("Test 2: Small rectangle test")
-    simpleRectangleTest()
-    delayMilliseconds(2000)
-    flushUART()
+//     putLine("Test 2: Small rectangle test")
+//     simpleRectangleTest()
+//     delayMilliseconds(2000)
+//     flushUART()
+//     ESP32C6ROM.disableRTCWatchdog()
 
     // Test 3: Fill screen with red (slower)
     putLine("Test 3: Red screen")
-    fillScreenSlowly(color: ILI9341.colorRed)
-    delayMilliseconds(3000)
+    fillScreenWithRects(color: ILI9341.colorRed)
+//     delayMilliseconds(3000)
     flushUART()
 
     // Test 4: Fill screen with blue (slower)
     putLine("Test 4: Blue screen")
-    fillScreenSlowly(color: ILI9341.colorBlue)
-    delayMilliseconds(3000)
+    fillScreenWithRects(color: ILI9341.colorBlue)
+//     delayMilliseconds(3000)
     flushUART()
 
     // Test 5: Draw test pattern
     putLine("Test 5: Color pattern")
     drawTestPattern()
-    delayMilliseconds(5000)
+//     delayMilliseconds(5000)
     flushUART()
 
     // Test 6: Clear screen
     putLine("Test 6: Clear screen")
     clearDisplay()
-    delayMilliseconds(2000)
+//     delayMilliseconds(2000)
     flushUART()
 
     putLine("Display tests complete!")
@@ -160,8 +184,67 @@ func drawTestPattern() {
 
 func clearDisplay() {
     putLine("Clearing display...")
-    fillScreen(color: ILI9341.colorBlack)
+    fastClearDisplay()
     putLine("Display cleared!")
+}
+
+// Display clearing with watchdog feeding - ESP-IDF style
+func fastClearDisplay() {
+    putLine("Starting display clear with watchdog feeding...")
+    
+    // First, try a moderate area - 80x60 pixels (4800 pixels)
+    // This is bigger than the tiny test but still manageable
+    let clearWidth: UInt16 = 10
+    let clearHeight: UInt16 = 10
+    let _ = UInt32(clearWidth) * UInt32(clearHeight)  // Total pixels calculation for future use
+    
+    setDisplayArea(x: 0, y: 0, width: clearWidth, height: clearHeight)
+    
+    // Start memory write
+    sendDisplayCommand(0x2C)  // Memory write command
+    
+    // Set DC to data mode once at start
+    setDisplayDC(high: true)
+    
+    putString("Clearing ")
+    printSimpleNumber(clearWidth)
+    putString("x")
+    printSimpleNumber(clearHeight)
+    putString(" area (")
+    // printSimpleNumber can't handle UInt32, so we'll estimate
+    putString("~4800")
+    putLine(" pixels)...")
+    ESP32C6ROM.disableRTCWatchdog()
+    ESP32C6ROM.printRTCWatchdogState()
+    
+    var pixelCount: UInt32 = 0
+    let feedInterval: UInt32 = 100  // Feed watchdog every 100 pixels
+    
+    // Send all pixels with regular watchdog feeding
+    for _ in 0..<clearHeight {
+        for _ in 0..<clearWidth {
+            // Send pixel data (black)
+            sendSPIByte(0x00)  // Black high byte
+            sendSPIByte(0x00)  // Black low byte
+            pixelCount += 1
+            
+            // Feed watchdog regularly to prevent timeout
+            if pixelCount % feedInterval == 0 {
+                // Progress update every 1000 pixels
+                if pixelCount % 1000 == 0 {
+                    // Simple progress indicator
+                    if pixelCount >= 1000 { putString("1k+") }
+                    else if pixelCount >= 2000 { putString("2k+") }
+                    else if pixelCount >= 3000 { putString("3k+") }
+                    else if pixelCount >= 4000 { putString("4k+") }
+                    putLine("")
+                }
+            }
+        }
+    }
+    
+    putString("Clearing complete! Processed ")
+    putString("~4800")
 }
 
 // Ultra-simple number printing for small numbers (embedded-safe)
@@ -201,7 +284,7 @@ func simpleSinglePixelTest() {
     // Set a single red pixel at position (10, 10)
     drawPixel(x: 10, y: 10, color: ILI9341.colorRed)
     
-    delayMilliseconds(100)
+//     delayMilliseconds(100)
     
     // Diagnostic after
     diagnoseSPISignals("after pixel")
@@ -219,7 +302,7 @@ func simpleRectangleTest() {
     // Draw a small 20x20 green rectangle at position (50, 50)
     fillRect(x: 50, y: 50, width: 20, height: 20, color: ILI9341.colorGreen)
     
-    delayMilliseconds(100)
+//     delayMilliseconds(100)
     
     // Diagnostic after
     diagnoseSPISignals("after rectangle")
@@ -227,58 +310,154 @@ func simpleRectangleTest() {
     putLine("   Rectangle test complete")
 }
 
-// Slower screen fill with more diagnostics
-func fillScreenSlowly(color: UInt16) {
-    putLine("   Slowly filling screen...")
-    
-    // Set the full screen area with diagnostics
-    putLine("   Setting display area...")
-    diagnoseSPISignals("before area set")
-    setDisplayArea(x: 0, y: 0, width: ILI9341.width, height: ILI9341.height)
-    diagnoseSPISignals("after area set")
-    
-    // Start memory write with diagnostics
-    putLine("   Starting memory write...")
-    diagnoseSPISignals("before memory write")
-    sendDisplayCommand(0x2C)  // Memory write command
-    diagnoseSPISignals("after memory write cmd")
-    
-    // Fill screen very slowly with progress reporting
-    _ = UInt32(ILI9341.width) * UInt32(ILI9341.height)  // Calculate total pixels but don't store
-    var pixelCount: UInt32 = 0
-    
-    putLine("   Writing pixel data...")
+// -------------------------------------------------------------
+// Whole-screen fill using many small fillRect tiles
+// -------------------------------------------------------------
+func fillScreenWithRects(color: UInt16,
+                         tile: UInt16 = 40) {   // 40×40 pixels per chunk
+    putLine("   Filling screen with rectangular tiles...")
     flushUART()
-    
-    for row in 0..<ILI9341.height {
-        for _ in 0..<ILI9341.width {
-            // Send pixel data with extra delays
-            setDisplayDC(high: true)   // Ensure we're in data mode
-            delayMicroseconds(50)      // Extra delay before each pixel
-            
-            sendDisplayData16(color)
-            
-            delayMicroseconds(50)      // Extra delay after each pixel
-            pixelCount += 1
-            
-            // Diagnostic every 1000 pixels
-            if pixelCount % 1000 == 0 {
-                diagnoseSPISignals("mid-fill")
-            }
+
+    var y: UInt16 = 0
+    while y < ILI9341.height {
+     putLine("   +Filling screen with rectangular tiles...")
+        flushUART()
+        var x: UInt16 = 0
+        let h = min(tile, ILI9341.height - y)
+
+        while x < ILI9341.width {
+                              putChar(46)      // '.'
+                                flushUART()
+
+            let w = min(tile, ILI9341.width - x)
+            fillRect(x: x, y: y, width: 4, height: 4, color: color)
+            x &+= w
         }
-        
-        // Report progress every 32 rows
-        if row % 32 == 0 {
-            putString("   Progress: ")
-            printSimpleNumber(row)
-            putString("/")
-            printSimpleNumber(ILI9341.height)
-            putLine("")
+        y &+= h
+        // Optional: progress heartbeat every full row of tiles
+        if (y % 80) == 0 {   // every two tile rows
+            putChar(46)      // '.'
             flushUART()
         }
     }
+    putLine("\n   Rect-based fill complete")
+    flushUART()
+}
+
+// Critical GPIO state verification before display operations
+func verifyPreDisplayGPIOStates() {
+    putLine("=== Pre-Display GPIO State Verification ===")
     
-    diagnoseSPISignals("fill complete")
-    putLine("   Slow screen fill complete")
+    let config = defaultSPIConfig
+    
+    // Check that all pins are properly configured as outputs
+    let enableValue = UInt32(gpio.enable.read().raw.storage)
+    let outValue = UInt32(gpio.out.read().raw.storage)
+    let inValue = UInt32(gpio.`in`.read().raw.storage)
+    
+    putString("Current GPIO states: ENABLE=0x")
+    printHex32(enableValue)
+    putString(", OUT=0x")
+    printHex32(outValue)
+    putString(", IN=0x")
+    printHex32(inValue)
+    putLine("")
+    
+    // Check each critical pin using indices to avoid string comparisons
+    let criticalPins = [config.rstPin, config.dcPin, config.csPin, config.sckPin, config.mosiPin]
+    
+    var allGood = true
+    
+    for (index, pin) in criticalPins.enumerated() {
+        let enabled = (enableValue & (1 << pin)) != 0
+        let outState = (outValue & (1 << pin)) != 0
+        let inState = (inValue & (1 << pin)) != 0
+        
+        // Print pin name using index to avoid String comparisons
+        switch index {
+        case 0: // RST
+            putChar(82) // 'R'
+            putChar(83) // 'S'
+            putChar(84) // 'T'
+        case 1: // DC
+            putChar(68) // 'D'
+            putChar(67) // 'C'
+        case 2: // CS
+            putChar(67) // 'C'
+            putChar(83) // 'S'
+        case 3: // SCK
+            putChar(83) // 'S'
+            putChar(67) // 'C'
+            putChar(75) // 'K'
+        case 4: // MOSI
+            putChar(77) // 'M'
+            putChar(79) // 'O'
+            putChar(83) // 'S'
+            putChar(73) // 'I'
+        default:
+            putChar(63) // '?'
+        }
+        putString("(GPIO")
+        printSimpleNumber(UInt16(pin))
+        putString("): ")
+        
+        if enabled {
+            putString("ENABLED, OUT=")
+            putString(outState ? "H" : "L")
+            putString(", IN=")
+            putString(inState ? "H" : "L")
+            
+            // Special checks using index
+            if index == 0 && !outState { // RST
+                putString(" [WARNING: RST should be HIGH]")
+                allGood = false
+            }
+            if index == 2 && !outState { // CS
+                putString(" [WARNING: CS should be HIGH]")
+                allGood = false
+            }
+        } else {
+            putString("NOT_ENABLED [ERROR]")
+            allGood = false
+        }
+        putLine("")
+    }
+    
+    if !allGood {
+        putLine("ERROR: GPIO configuration problems detected!")
+        putLine("Display is unlikely to work with these issues.")
+    } else {
+        putLine("GPIO verification: ALL GOOD")
+    }
+    
+    // Extra RST pin verification with manual toggle
+    putLine("Extra RST pin test...")
+    let _ = getGPIOState(pin: config.rstPin)
+    
+    setDisplayRST(high: false)
+    delayMilliseconds(10)
+    let rstLow = getGPIOState(pin: config.rstPin)
+    
+    setDisplayRST(high: true)
+    delayMilliseconds(10)
+    let rstHigh = getGPIOState(pin: config.rstPin)
+    
+    putString("RST toggle test: LOW=")
+    putString(rstLow ? "FAIL" : "OK")
+    putString(", HIGH=")
+    putString(rstHigh ? "OK" : "FAIL")
+    
+    if rstLow || !rstHigh {
+        putString(" [CRITICAL ERROR]")
+        allGood = false
+    }
+    putLine("")
+    
+    if !allGood {
+        putLine("CRITICAL: Display hardware issues detected!")
+        putLine("Check power supply, wiring, and GPIO configuration.")
+    }
+    
+    putLine("=== GPIO Verification Complete ===")
     flushUART()
 }

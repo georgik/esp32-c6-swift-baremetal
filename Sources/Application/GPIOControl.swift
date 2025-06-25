@@ -106,11 +106,11 @@ func ledOn() {
     // Debug: verify the change
     let currentOut = UInt32(gpio.out.read().raw.storage)
     if (currentOut & (1 << LED_GPIO_PIN)) != 0 {
-        putString("✓ LED ON confirmed: 0x")
+        putString("[OK] LED ON confirmed: 0x")
         printHex32(currentOut)
         putLine("")
     } else {
-        putString("✗ LED ON failed: 0x")
+        putString("[FAIL] LED ON failed: 0x")
         printHex32(currentOut)
         putLine("")
     }
@@ -125,11 +125,11 @@ func ledOff() {
     // Debug: verify the change
     let currentOut = UInt32(gpio.out.read().raw.storage)
     if (currentOut & (1 << LED_GPIO_PIN)) == 0 {
-        putString("✓ LED OFF confirmed: 0x")
+        putString("[OK] LED OFF confirmed: 0x")
         printHex32(currentOut)
         putLine("")
     } else {
-        putString("✗ LED OFF failed: 0x")
+        putString("[FAIL] LED OFF failed: 0x")
         printHex32(currentOut)
         putLine("")
     }

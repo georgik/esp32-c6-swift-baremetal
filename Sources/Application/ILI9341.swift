@@ -63,12 +63,12 @@ struct DisplayConfig {
 func initializeDisplay() {
     putLine("=== ILI9341 Display Initialization ===")
     flushUART()
-
+    
     // CRITICAL: Power-on reset sequence per ILI9341 datasheet
     putLine("Power-on sequence: Initial stabilization...")
     delayMilliseconds(200)  // Wait for display power to stabilize
     flushUART()
-    
+
     // 1. Hardware reset with datasheet-compliant timing
     putLine("1. Hardware reset sequence...")
     diagnoseSPISignals("before reset")
@@ -77,7 +77,7 @@ func initializeDisplay() {
     putLine("   RST high (power-on state)...")
     setDisplayRST(high: true)
     delayMilliseconds(100)  // Wait in powered state
-    
+
     // Step 1b: RST low (reset active) - ILI9341 requires minimum 10μs
     putLine("   RST low (reset active)...")
     setDisplayRST(high: false)
@@ -315,9 +315,9 @@ func sendDisplayCommandWithVerification(_ cmd: UInt8, name: StaticString) {
     printHex8(cmd)
     putString("... ")
     
-    diagnoseSPISignals("before cmd")
+//     diagnoseSPISignals("before cmd")
     sendDisplayCommand(cmd)
-    diagnoseSPISignals("after cmd")
+//     diagnoseSPISignals("after cmd")
     
     putLine("done")
 }
@@ -328,9 +328,9 @@ func sendDisplayDataWithVerification(_ data: UInt8, name: StaticString) {
     printHex8(data)
     putString("... ")
     
-    diagnoseSPISignals("before data")
+//     diagnoseSPISignals("before data")
     sendDisplayData(data)
-    diagnoseSPISignals("after data")
+//     diagnoseSPISignals("after data")
     
     putLine("done")
 }
