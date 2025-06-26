@@ -38,7 +38,9 @@ public func swiftMain() {
     putLine("ESP32-C6")
     putLine("Registers and configuration")
     flushUART()
+    
     WatchdogControl.disableAll()
+    flushUART()
 
     printBootDiagnostics()
 
