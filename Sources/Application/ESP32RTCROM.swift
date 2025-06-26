@@ -112,7 +112,15 @@ func crc16_le(_ crc: UInt16, _ buf: UnsafePointer<UInt8>, _ len: UInt32) -> UInt
 @_silgen_name("crc8_le")
 func crc8_le(_ crc: UInt8, _ buf: UnsafePointer<UInt8>, _ len: UInt32) -> UInt8
 
+@inline(__always)
+private func readReg32(_ addr: UInt32) -> UInt32 {
+    return UnsafePointer<UInt32>(bitPattern: UInt(addr))!.pointee
+}
 
+@inline(__always)
+private func writeReg32(_ addr: UInt32, _ value: UInt32) {
+    UnsafeMutablePointer<UInt32>(bitPattern: UInt(addr))!.pointee = value
+}
 // MARK: - Public Swift API Wrappers
 
 public struct ESP32C6ROM {
@@ -256,6 +264,28 @@ public struct ESP32C6ROM {
         protect.pointee = 0
     }
 
+
+
+public static func hardDisableMWDT1() {
+    let TIMG1_BASE: UInt32         = 0x6002_0000      // verify in soc header
+    let WDTWPROTECT_OFF: UInt32    = 0x64             // same offset as TIMG0
+    let WDTCONFIG0_OFF: UInt32     = 0x48
+    let KEY: UInt32                = 0x50D8_3AA1
+
+    // -- unlock -----------------------------------------------------------
+    writeReg32(TIMG1_BASE + WDTWPROTECT_OFF, KEY)
+
+    // -- disable EN bit & all stages -------------------------------------
+    var cfg0 = readReg32(TIMG1_BASE + WDTCONFIG0_OFF)
+    cfg0 &= ~(1 << 31)                     // clear EN
+    cfg0 &= 0x0000_000F                    // keep only flash-boot bits if you need them
+    writeReg32(TIMG1_BASE + WDTCONFIG0_OFF, cfg0)
+
+    // (optional) clear STG0-3 in WDTCONFIGn registers here
+
+    // -- lock again -------------------------------------------------------
+    writeReg32(TIMG1_BASE + WDTWPROTECT_OFF, 0)
+}
 
 static let RTC_BASE: UInt32 = 0x6000_8000
 static let WDTCONFIG0  = RTC_BASE + 0x80

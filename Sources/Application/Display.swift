@@ -18,8 +18,6 @@ func runDisplayApplication() {
     putLine("STEP 3: Pre-display GPIO verification...")
     verifyPreDisplayGPIOStates()
 
-    initializeWatchdogs()
-
     // Initialize the ILI9341 display
     putLine("STEP 4: Display Initialization...")
     initializeDisplay()
