@@ -93,33 +93,35 @@ int memcmp(const void* s1, const void* s2, size_t n) {
 
 extern void swift_main(void);
 
-void disable_all_watchdogs(void) {
-    // Disable RTC WDT (RWDT)
-    volatile uint32_t* wdt_wprotect = (uint32_t*)(0x60008000 + 0x18);
-    volatile uint32_t* wdt_config0 = (uint32_t*)(0x60008000 + 0x00);
-    volatile uint32_t* wdt_feed = (uint32_t*)(0x60008000 + 0x14);
-
-    *wdt_wprotect = 0x50D83AA1;       // unlock
-    *wdt_config0 &= ~((1u << 31) | (1u << 12)); // disable EN + FLASHBOOT
-    *wdt_config0 &= ~((7u << 28) | (7u << 25) | (7u << 22) | (7u << 19)); // clear STGx
-    *wdt_feed = 1;                    // feed once
-    *wdt_wprotect = 0;               // relock
-
-    // Disable MWDT0
-    volatile uint32_t* mwdt_wprotect = (uint32_t*)(0x6001F000 + 0x64);
-    volatile uint32_t* mwdt_config0 = (uint32_t*)(0x6001F000 + 0x48);
-    volatile uint32_t* mwdt_feed = (uint32_t*)(0x6001F000 + 0x4C);
-
-    *mwdt_wprotect = 0x50D83AA1;
-    *mwdt_config0 &= ~((1u << 31) | (1u << 12));
-    *mwdt_config0 &= ~((7u << 28) | (7u << 25) | (7u << 22) | (7u << 19));
-    *mwdt_feed = 1;
-    *mwdt_wprotect = 0;
-}
 
 __attribute__((section(".entry_point"))) void _start(void) {
-    // Disable watchdogs before launching Swift app
-    disable_all_watchdogs();
+    // Disable RWDT (Real-time Watchdog Timer) before launching the app
+    // ESP32-C6 LP_WDT (RWDT) register addresses
+    #define LP_WDT_BASE         0x600B1C00
+    #define LP_WDT_WDTCONFIG0   (LP_WDT_BASE + 0x0)
+    #define LP_WDT_WDTFEED      (LP_WDT_BASE + 0x14)
+    #define LP_WDT_WDTWPROTECT  (LP_WDT_BASE + 0x18)
+    #define WDT_WKEY            0x50D83AA1
+    
+    // Access registers as volatile pointers
+    volatile uint32_t* wdt_protect = (volatile uint32_t*)LP_WDT_WDTWPROTECT;
+    volatile uint32_t* wdt_config0 = (volatile uint32_t*)LP_WDT_WDTCONFIG0;
+    volatile uint32_t* wdt_feed = (volatile uint32_t*)LP_WDT_WDTFEED;
+    
+    // Step 1: Unlock RWDT write protection
+    *wdt_protect = WDT_WKEY;
+    
+    // Step 2: Read current config and disable RWDT
+    uint32_t current_config = *wdt_config0;
+    // Clear enable bit (bit 31) and flashboot bit (bit 12)
+    current_config &= ~((1U << 31) | (1U << 12));
+    *wdt_config0 = current_config;
+    
+    // Step 3: Feed the watchdog once to reset counter
+    *wdt_feed = 1;
+    
+    // Step 4: Re-enable write protection
+    *wdt_protect = 0;
 
     // Call Swift main function
     swift_main();

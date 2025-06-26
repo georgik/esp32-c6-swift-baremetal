@@ -39,7 +39,26 @@ public func swiftMain() {
     putLine("Registers and configuration")
     flushUART()
     
+    // Check watchdog status before disabling
+    putLine("\n=== Watchdog Status Analysis ===")
+    putLine("Checking watchdog status BEFORE disabling:")
+    WatchdogControl.printAllWatchdogStatuses()
+    flushUART()
+    
+    putLine("\n==> Disabling all watchdogs...")
     WatchdogControl.disableAll()
+    
+    putLine("\nChecking watchdog status AFTER disabling:")
+    WatchdogControl.printAllWatchdogStatuses()
+    
+    putLine("\nWatchdog disabling complete.")
+    
+    putLine("\nWatchdog control registers:")
+    putLine("- TIMG0 base: 0x60008000 (MWDT0 control)")
+    putLine("- TIMG1 base: 0x60009000 (MWDT1 control)")
+    putLine("- LP_WDT base: 0x600B1C00 (RWDT control)")
+    putLine("- Key register field: wdtconfig0.wdt_en (bit 31)")
+    putLine("=== End Watchdog Analysis ===")
     flushUART()
 
     printBootDiagnostics()
