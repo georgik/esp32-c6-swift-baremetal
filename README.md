@@ -70,11 +70,6 @@ The project demonstrates two approaches to UART communication:
 make
 ```
 
-### Convert to flashable format:
-```bash
-make elf2image
-```
-
 ### Flash to ESP32-C6:
 ```bash
 make flash
@@ -87,10 +82,61 @@ espflash monitor
 
 Expected output:
 ```
-Hello from Swift on ESP32-C6!
-Swift is running...
-Swift is running...
-Completed 10 iterations, continuing...
+ESP32-C6
+Registers and configuration
+
+=== Watchdog Status Analysis ===
+Checking watchdog status BEFORE disabling:
+TIMG0 MWDT enabled: false, config0: 0x0x00448000
+TIMG1 MWDT enabled: false, config0: 0x0x0004C000
+RWDT (LP_WDT) enabled: false, config0: 0x0x00012214
+
+==> Disabling all watchdogs...
+
+Checking watchdog status AFTER disabling:
+TIMG0 MWDT enabled: false, config0: 0x0x00000000
+TIMG1 MWDT enabled: false, config0: 0x0x00000000
+RWDT (LP_WDT) enabled: false, config0: 0x0x00012214
+
+Watchdog disabling complete.
+
+Watchdog control registers:
+- TIMG0 base: 0x60008000 (MWDT0 control)
+- TIMG1 base: 0x60009000 (MWDT1 control)
+- LP_WDT base: 0x600B1C00 (RWDT control)
+- Key register field: wdtconfig0.wdt_en (bit 31)
+=== End Watchdog Analysis ===
+=== Boot Diagnostics ===
+Reset reason (code 1): Power-on reset
+=== End Boot Diagnostics ===
+Initial states:
+ENABLE: 0x0x00000000
+OUT: 0x0x00000000
+Step 1: Configuring IO_MUX... (initial: 0x0x60002000) configured: 0x0x60002801
+Step 2: ROM pad select... result=6
+Step 3: ROM pad unhold... done
+Step 4: ROM set drive strength... done
+Step 5: ROM output signal connection... done
+Step 6: Setting ENABLE register... done
+Step 7: Initialize output to LOW... [OK] LED OFF confirmed: 0x0x00000000
+done
+Final states:
+ENABLE: 0x0x00000100
+OUT: 0x0x00000000
+IO_MUX final: 0x0x60002801
+=== GPIO Initialization Complete ===
+Initializing SPI for display communication...
+=== Starting Display Application ===
+STEP 1: Power and Wiring Diagnostics...
+=== GPIO Power and Wiring Diagnostics ===
+```
+
+### Convert to image format
+
+If you need the image format, you can use the following target
+
+```bash
+make elf2image
 ```
 
 ## Simulation Support
