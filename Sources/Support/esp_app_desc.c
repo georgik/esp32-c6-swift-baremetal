@@ -93,7 +93,36 @@ int memcmp(const void* s1, const void* s2, size_t n) {
 
 extern void swift_main(void);
 
+
 __attribute__((section(".entry_point"))) void _start(void) {
+    // Disable RWDT (Real-time Watchdog Timer) before launching the app
+    // ESP32-C6 LP_WDT (RWDT) register addresses
+    #define LP_WDT_BASE         0x600B1C00
+    #define LP_WDT_WDTCONFIG0   (LP_WDT_BASE + 0x0)
+    #define LP_WDT_WDTFEED      (LP_WDT_BASE + 0x14)
+    #define LP_WDT_WDTWPROTECT  (LP_WDT_BASE + 0x18)
+    #define WDT_WKEY            0x50D83AA1
+    
+    // Access registers as volatile pointers
+    volatile uint32_t* wdt_protect = (volatile uint32_t*)LP_WDT_WDTWPROTECT;
+    volatile uint32_t* wdt_config0 = (volatile uint32_t*)LP_WDT_WDTCONFIG0;
+    volatile uint32_t* wdt_feed = (volatile uint32_t*)LP_WDT_WDTFEED;
+    
+    // Step 1: Unlock RWDT write protection
+    *wdt_protect = WDT_WKEY;
+    
+    // Step 2: Read current config and disable RWDT
+    uint32_t current_config = *wdt_config0;
+    // Clear enable bit (bit 31) and flashboot bit (bit 12)
+    current_config &= ~((1U << 31) | (1U << 12));
+    *wdt_config0 = current_config;
+    
+    // Step 3: Feed the watchdog once to reset counter
+    *wdt_feed = 1;
+    
+    // Step 4: Re-enable write protection
+    *wdt_protect = 0;
+
     // Call Swift main function
     swift_main();
 
@@ -104,4 +133,29 @@ __attribute__((section(".entry_point"))) void _start(void) {
         }
     }
 
+}
+
+#include <stddef.h>
+#include <stdint.h>
+
+// Stub implementation of arc4random_buf for embedded systems
+// This is used internally by Swift's hashing mechanism
+void arc4random_buf(void *buf, size_t nbytes) {
+    // Simple pseudo-random implementation for embedded use
+    // Not cryptographically secure, but sufficient for hashing
+    uint8_t *bytes = (uint8_t *)buf;
+    static uint32_t seed = 0x12345678;
+
+    for (size_t i = 0; i < nbytes; i++) {
+        // Simple linear congruential generator
+        seed = seed * 1103515245 + 12345;
+        bytes[i] = (uint8_t)(seed >> 16);
+    }
+}
+
+// Additional stub for arc4random if needed
+uint32_t arc4random(void) {
+    static uint32_t seed = 0x87654321;
+    seed = seed * 1103515245 + 12345;
+    return seed;
 }

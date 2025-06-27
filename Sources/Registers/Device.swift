@@ -2,15 +2,50 @@
 
 import MMIO
 
+/// Core Local Interrupts
+public nonisolated(unsafe) let clint = CLINT(unsafeAddress: 0x20000000)
+
 /// General Purpose Input/Output
-public let gpio = GPIO(unsafeAddress: 0x60091000)
+public nonisolated(unsafe) let gpio = GPIO(unsafeAddress: 0x60091000)
+
+/// I2C (Inter-Integrated Circuit) Controller 0
+public nonisolated(unsafe) let i2c0 = I2C0(unsafeAddress: 0x60004000)
+
+/// Input/Output Multiplexer
+public nonisolated(unsafe) let io_mux = IO_MUX(unsafeAddress: 0x60090000)
+
+/// LED Control PWM (Pulse Width Modulation)
+public nonisolated(unsafe) let ledc = LEDC(unsafeAddress: 0x60007000)
+
+/// Low-power Watchdog Timer
+public nonisolated(unsafe) let lp_wdt = LP_WDT(unsafeAddress: 0x600b1c00)
+
+/// Pulse Count Controller
+public nonisolated(unsafe) let pcnt = PCNT(unsafeAddress: 0x60012000)
+
+/// PCR Peripheral
+public nonisolated(unsafe) let pcr = PCR(unsafeAddress: 0x60096000)
+
+/// PMU Peripheral
+public nonisolated(unsafe) let pmu = PMU(unsafeAddress: 0x600b0000)
+
+/// Remote Control
+public nonisolated(unsafe) let rmt = RMT(unsafeAddress: 0x60006000)
 
 /// SPI (Serial Peripheral Interface) Controller 0
-public let spi0 = SPI0(unsafeAddress: 0x60002000)
+public nonisolated(unsafe) let spi0 = SPI0(unsafeAddress: 0x60002000)
+
+/// SPI (Serial Peripheral Interface) Controller 1
+public nonisolated(unsafe) let spi1 = SPI1(unsafeAddress: 0x60003000)
+
+/// SPI (Serial Peripheral Interface) Controller 2
+public nonisolated(unsafe) let spi2 = SPI2(unsafeAddress: 0x60081000)
+
+/// System Timer
+public nonisolated(unsafe) let systimer = SYSTIMER(unsafeAddress: 0x6000a000)
+
+/// Timer Group 0
+public nonisolated(unsafe) let timg0 = TIMG0(unsafeAddress: 0x60008000)
 
 /// UART (Universal Asynchronous Receiver-Transmitter) Controller 0
-public let uart0 = UART0(unsafeAddress: 0x60000000)
-
-extension GPIO: @unchecked Sendable {}
-extension SPI0: @unchecked Sendable {}
-extension UART0: @unchecked Sendable {}
+public nonisolated(unsafe) let uart0 = UART0(unsafeAddress: 0x60000000)

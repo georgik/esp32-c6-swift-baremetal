@@ -5,55 +5,52 @@
   "parts": [
     {
       "type": "board-esp32-c6-devkitc-1",
-      "id": "esp"
+      "id": "esp",
+      "top": -494.32,
+      "left": -455.03
+    },
+    {
+      "type": "wokwi-ili9341",
+      "id": "lcd1",
+      "top": -546.22,
+      "left": -134.92,
+      "rotate": 90,
+      "attrs": { "flipVertical": "1" }
     },
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": 200,
-      "left": 300,
-      "attrs": {
-        "color": "red"
-      }
+      "top": -282,
+      "left": -303.4,
+      "attrs": { "color": "red" }
     },
     {
       "type": "wokwi-resistor",
       "id": "resistor1",
-      "top": 150,
-      "left": 350,
+      "top": -312.85,
+      "left": -307.2,
       "attrs": {
-        "value": "220"
+        "swapXY": "1",
+        "flipVertical": "1"
       }
     }
   ],
   "connections": [
-    [
-      "esp:TX",
-      "$serialMonitor:RX",
-      ""
-    ],
-    [
-      "esp:RX",
-      "$serialMonitor:TX",
-      ""
-    ],
-    [
-      "esp:8",
-      "resistor1:1",
-      "green",
-      []
-    ],
-    [
-      "resistor1:2",
-      "led1:A",
-      "red",
-      []
-    ],
-    [
-      "led1:C",
-      "esp:GND.2",
-      "black",
-      []
-    ]
-  ]
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "lcd1:VCC", "green", [] ],
+    [ "esp:GND.1", "lcd1:GND", "black", [] ],
+    [ "esp:6", "lcd1:SCK", "blue", [] ],
+    [ "esp:7", "lcd1:MOSI", "orange", [] ],
+    [ "esp:0", "lcd1:MISO", "purple", [] ],
+    [ "esp:20", "lcd1:CS", "red", [] ],
+    [ "esp:21", "lcd1:D/C", "magenta", [] ],
+    [ "esp:3", "lcd1:RST", "yellow", [] ],
+    [ "lcd1:LED", "esp:3V3", "white", [] ],
+    [ "esp:8", "resistor1:1", "green", [] ],
+    [ "resistor1:2", "led1:A", "red", [ "h8.4", "v67.2" ] ],
+    [ "led1:C", "esp:GND.2", "black", [] ]
+  ],
+  "serialMonitor": { "display": "terminal" },
+  "dependencies": {}
 }
