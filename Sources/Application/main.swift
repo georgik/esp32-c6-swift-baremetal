@@ -70,6 +70,9 @@ public func swiftMain() {
     putLine("Initializing SPI for display communication...")
     runDisplayApplication()
 
+    // IMPORTANT: Initialize the LED first!
+    initializeLED()
+
     var counter = 0
 
     while true {
