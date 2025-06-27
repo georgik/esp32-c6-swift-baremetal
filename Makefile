@@ -4,7 +4,7 @@ TOOLSROOT        := $(REPOROOT)/Tools
 TOOLSET          := $(TOOLSROOT)/Toolsets/esp32-c6-elf.json
 LLVM_OBJCOPY     := llvm-objcopy
 SWIFT_BUILD      := swift build
-ESP_IMAGE_TOOL := esptool.py
+ESP_FLASH 		 := espflash
 LINKERSCRIPT_DIR := $(REPOROOT)/Sources/Support
 
 # Flags
@@ -43,13 +43,18 @@ clean:
 
 .PHONY: elf2image
 elf2image:
-	@echo "generating esp32 flash image..."
-	$(ESP_IMAGE_TOOL) --chip esp32c6 elf2image \
-	    --flash_mode dio \
-	    --flash_freq 80m \
-	    --flash_size 4MB \
-	    --output "$(BUILDROOT)/Application_flash.bin" \
-	    "$(BUILDROOT)/Application"
+	@echo "generating esp32 flash image using espflash..."
+	$(ESP_FLASH) save-image \
+		--chip esp32c6 \
+		--flash-mode dio \
+		--flash-size 4mb \
+		--skip-padding \
+		--merge \
+		"$(BUILDROOT)/Application" \
+		"$(BUILDROOT)/Application_flash.bin" \
+		--bootloader Tools/Partitions/bootloader.bin \
+		--partition-table Tools/Partitions/partition-table.bin \
+		--partition-table-offset 0x8000
 
 .PHONY: check-image
 check-image:
@@ -58,18 +63,18 @@ check-image:
 
 .PHONY: flash
 flash:
-	@echo "flashing..."
-	esptool.py --chip esp32c6 \
-	    -b $(FLASH_BAUD) \
-	    --before=default_reset \
-	    --after=hard_reset \
-	    write_flash \
-	    --flash_mode dio \
-	    --flash_freq 80m \
-	    --flash_size 2MB \
-	    0x0     Tools/Partitions/bootloader.bin \
-	    0x10000 $(BUILDROOT)/Application_flash.bin \
-	    0x8000  Tools/Partitions/partition-table.bin
+	@echo "flashing with espflash..."
+	$(ESP_FLASH) flash \
+		--chip esp32c6 \
+		--baud $(FLASH_BAUD) \
+		--before default-reset \
+		--after hard-reset \
+		--flash-mode dio \
+		--flash-size 4mb \
+		--bootloader Tools/Partitions/bootloader.bin \
+		--partition-table Tools/Partitions/partition-table.bin \
+		--partition-table-offset 0x8000 \
+		"$(BUILDROOT)/Application"
 
 .PHONY: image_info
 image_info:

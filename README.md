@@ -9,9 +9,9 @@ This project demonstrates **Embedded Swift** running bare metal on the ESP32-C6 
 
 The application:
 - Runs bare metal Swift code on ESP32-C6 (RISC-V architecture)
-- Outputs "Hello from Swift on ESP32-C6!" to the console
-- Continuously prints status messages every few seconds
+- Send graphics to SPI display
 - Uses ESP32 ROM UART functions for reliable console communication
+- Uses GPIO to drive led
 
 ## Architecture Overview
 
@@ -60,6 +60,8 @@ The project demonstrates two approaches to UART communication:
 ## Build Requirements
 
 - **Swift 6.2 nightly** or later with Embedded Swift support
+- [espflash](https://github.com/esp-rs/espflash)  - single binary flasher
+  - installation: `cargo install espflash`
 
 ## Building and Running
 
@@ -131,7 +133,7 @@ cd swift-mmio
 swift build --product SVD2Swift
 ```
 
-Command for exporting registers to Swift:
+Command for exporting registers to Swift (`swift-export.sh`):
 
 ```shell
 git clone git@github.com:esp-rs/esp-pacs.git
