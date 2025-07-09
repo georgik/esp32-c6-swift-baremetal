@@ -7,449 +7,509 @@ import MMIO
 public struct SPI1 {
     /// SPI1 memory command register
     @RegisterBlock(offset: 0x0)
-    public var cmd: Register<CMD>
+    public var spi_mem_cmd: Register<SPI_MEM_CMD>
 
     /// SPI1 address register
     @RegisterBlock(offset: 0x4)
-    public var addr: Register<ADDR>
+    public var spi_mem_addr: Register<SPI_MEM_ADDR>
 
     /// SPI1 control register.
     @RegisterBlock(offset: 0x8)
-    public var ctrl: Register<CTRL>
+    public var spi_mem_ctrl: Register<SPI_MEM_CTRL>
 
     /// SPI1 control1 register.
     @RegisterBlock(offset: 0xc)
-    public var ctrl1: Register<CTRL1>
+    public var spi_mem_ctrl1: Register<SPI_MEM_CTRL1>
 
     /// SPI1 control2 register.
     @RegisterBlock(offset: 0x10)
-    public var ctrl2: Register<CTRL2>
+    public var spi_mem_ctrl2: Register<SPI_MEM_CTRL2>
 
     /// SPI1 clock division control register.
     @RegisterBlock(offset: 0x14)
-    public var clock: Register<CLOCK>
+    public var spi_mem_clock: Register<SPI_MEM_CLOCK>
 
     /// SPI1 user register.
     @RegisterBlock(offset: 0x18)
-    public var user: Register<USER>
+    public var spi_mem_user: Register<SPI_MEM_USER>
 
     /// SPI1 user1 register.
     @RegisterBlock(offset: 0x1c)
-    public var user1: Register<USER1>
+    public var spi_mem_user1: Register<SPI_MEM_USER1>
 
     /// SPI1 user2 register.
     @RegisterBlock(offset: 0x20)
-    public var user2: Register<USER2>
+    public var spi_mem_user2: Register<SPI_MEM_USER2>
 
     /// SPI1 send data bit length control register.
     @RegisterBlock(offset: 0x24)
-    public var mosi_dlen: Register<MOSI_DLEN>
+    public var spi_mem_mosi_dlen: Register<SPI_MEM_MOSI_DLEN>
 
     /// SPI1 receive data bit length control register.
     @RegisterBlock(offset: 0x28)
-    public var miso_dlen: Register<MISO_DLEN>
+    public var spi_mem_miso_dlen: Register<SPI_MEM_MISO_DLEN>
 
     /// SPI1 status register.
     @RegisterBlock(offset: 0x2c)
-    public var rd_status: Register<RD_STATUS>
+    public var spi_mem_rd_status: Register<SPI_MEM_RD_STATUS>
 
     /// SPI1 misc register
     @RegisterBlock(offset: 0x34)
-    public var misc: Register<MISC>
+    public var spi_mem_misc: Register<SPI_MEM_MISC>
 
     /// SPI1 TX CRC data register.
     @RegisterBlock(offset: 0x38)
-    public var tx_crc: Register<TX_CRC>
+    public var spi_mem_tx_crc: Register<SPI_MEM_TX_CRC>
 
     /// SPI1 bit mode control register.
     @RegisterBlock(offset: 0x3c)
-    public var cache_fctrl: Register<CACHE_FCTRL>
+    public var spi_mem_cache_fctrl: Register<SPI_MEM_CACHE_FCTRL>
 
-    /// SPI1 memory data buffer%s
-    @RegisterBlock(offset: 0x58, stride: 0x4, count: 16)
-    public var w: RegisterArray<W>
+    /// SPI1 memory data buffer0
+    @RegisterBlock(offset: 0x58)
+    public var spi_mem_w0: Register<SPI_MEM_W0>
+
+    /// SPI1 memory data buffer1
+    @RegisterBlock(offset: 0x5c)
+    public var spi_mem_w1: Register<SPI_MEM_W1>
+
+    /// SPI1 memory data buffer2
+    @RegisterBlock(offset: 0x60)
+    public var spi_mem_w2: Register<SPI_MEM_W2>
+
+    /// SPI1 memory data buffer3
+    @RegisterBlock(offset: 0x64)
+    public var spi_mem_w3: Register<SPI_MEM_W3>
+
+    /// SPI1 memory data buffer4
+    @RegisterBlock(offset: 0x68)
+    public var spi_mem_w4: Register<SPI_MEM_W4>
+
+    /// SPI1 memory data buffer5
+    @RegisterBlock(offset: 0x6c)
+    public var spi_mem_w5: Register<SPI_MEM_W5>
+
+    /// SPI1 memory data buffer6
+    @RegisterBlock(offset: 0x70)
+    public var spi_mem_w6: Register<SPI_MEM_W6>
+
+    /// SPI1 memory data buffer7
+    @RegisterBlock(offset: 0x74)
+    public var spi_mem_w7: Register<SPI_MEM_W7>
+
+    /// SPI1 memory data buffer8
+    @RegisterBlock(offset: 0x78)
+    public var spi_mem_w8: Register<SPI_MEM_W8>
+
+    /// SPI1 memory data buffer9
+    @RegisterBlock(offset: 0x7c)
+    public var spi_mem_w9: Register<SPI_MEM_W9>
+
+    /// SPI1 memory data buffer10
+    @RegisterBlock(offset: 0x80)
+    public var spi_mem_w10: Register<SPI_MEM_W10>
+
+    /// SPI1 memory data buffer11
+    @RegisterBlock(offset: 0x84)
+    public var spi_mem_w11: Register<SPI_MEM_W11>
+
+    /// SPI1 memory data buffer12
+    @RegisterBlock(offset: 0x88)
+    public var spi_mem_w12: Register<SPI_MEM_W12>
+
+    /// SPI1 memory data buffer13
+    @RegisterBlock(offset: 0x8c)
+    public var spi_mem_w13: Register<SPI_MEM_W13>
+
+    /// SPI1 memory data buffer14
+    @RegisterBlock(offset: 0x90)
+    public var spi_mem_w14: Register<SPI_MEM_W14>
+
+    /// SPI1 memory data buffer15
+    @RegisterBlock(offset: 0x94)
+    public var spi_mem_w15: Register<SPI_MEM_W15>
 
     /// SPI1 wait idle control register
     @RegisterBlock(offset: 0x98)
-    public var flash_waiti_ctrl: Register<FLASH_WAITI_CTRL>
+    public var spi_mem_flash_waiti_ctrl: Register<SPI_MEM_FLASH_WAITI_CTRL>
 
     /// SPI1 flash suspend control register
     @RegisterBlock(offset: 0x9c)
-    public var flash_sus_ctrl: Register<FLASH_SUS_CTRL>
+    public var spi_mem_flash_sus_ctrl: Register<SPI_MEM_FLASH_SUS_CTRL>
 
     /// SPI1 flash suspend command register
     @RegisterBlock(offset: 0xa0)
-    public var flash_sus_cmd: Register<FLASH_SUS_CMD>
+    public var spi_mem_flash_sus_cmd: Register<SPI_MEM_FLASH_SUS_CMD>
 
     /// SPI1 flash suspend status register
     @RegisterBlock(offset: 0xa4)
-    public var sus_status: Register<SUS_STATUS>
+    public var spi_mem_sus_status: Register<SPI_MEM_SUS_STATUS>
 
     /// SPI1 interrupt enable register
     @RegisterBlock(offset: 0xc0)
-    public var int_ena: Register<INT_ENA>
+    public var spi_mem_int_ena: Register<SPI_MEM_INT_ENA>
 
     /// SPI1 interrupt clear register
     @RegisterBlock(offset: 0xc4)
-    public var int_clr: Register<INT_CLR>
+    public var spi_mem_int_clr: Register<SPI_MEM_INT_CLR>
 
     /// SPI1 interrupt raw register
     @RegisterBlock(offset: 0xc8)
-    public var int_raw: Register<INT_RAW>
+    public var spi_mem_int_raw: Register<SPI_MEM_INT_RAW>
 
     /// SPI1 interrupt status register
     @RegisterBlock(offset: 0xcc)
-    public var int_st: Register<INT_ST>
+    public var spi_mem_int_st: Register<SPI_MEM_INT_ST>
 
     /// SPI1 DDR control register
     @RegisterBlock(offset: 0xd4)
-    public var ddr: Register<DDR>
+    public var spi_mem_ddr: Register<SPI_MEM_DDR>
 
     /// SPI1 timing control register
     @RegisterBlock(offset: 0x180)
-    public var timing_cali: Register<TIMING_CALI>
+    public var spi_mem_timing_cali: Register<SPI_MEM_TIMING_CALI>
 
     /// SPI1 clk_gate register
     @RegisterBlock(offset: 0x200)
-    public var clock_gate: Register<CLOCK_GATE>
+    public var spi_mem_clock_gate: Register<SPI_MEM_CLOCK_GATE>
 
     /// Version control register
     @RegisterBlock(offset: 0x3fc)
-    public var date: Register<DATE>
+    public var spi_mem_date: Register<SPI_MEM_DATE>
 }
 
 extension SPI1 {
     /// SPI1 memory command register
     @Register(bitWidth: 32)
-    public struct CMD {
+    public struct SPI_MEM_CMD {
         /// The current status of SPI1 master FSM.
         @ReadOnly(bits: 0..<4)
-        public var mst_st: MST_ST
+        public var spi_mem_mst_st: SPI_MEM_MST_ST
 
         /// The current status of SPI1 slave FSM: mspi_st. 0: idle state, 1: preparation state, 2: send command state, 3: send address state, 4: wait state, 5: read data state, 6:write data state, 7: done state, 8: read data end state.
         @ReadOnly(bits: 4..<8)
-        public var slv_st: SLV_ST
+        public var spi_mem_slv_st: SPI_MEM_SLV_ST
 
         /// In user mode, it is set to indicate that program/erase operation will be triggered. The bit is combined with spi_mem_usr bit. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 17..<18)
-        public var flash_pe: FLASH_PE
+        public var spi_mem_flash_pe: SPI_MEM_FLASH_PE
 
         /// User define command enable. An operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 18..<19)
-        public var usr: USR
+        public var spi_mem_usr: SPI_MEM_USR
 
         /// Drive Flash into high performance mode. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 19..<20)
-        public var flash_hpm: FLASH_HPM
+        public var spi_mem_flash_hpm: SPI_MEM_FLASH_HPM
 
         /// This bit combined with reg_resandres bit releases Flash from the power-down state or high performance mode and obtains the devices ID. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 20..<21)
-        public var flash_res: FLASH_RES
+        public var spi_mem_flash_res: SPI_MEM_FLASH_RES
 
         /// Drive Flash into power down. An operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 21..<22)
-        public var flash_dp: FLASH_DP
+        public var spi_mem_flash_dp: SPI_MEM_FLASH_DP
 
         /// Chip erase enable. Chip erase operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 22..<23)
-        public var flash_ce: FLASH_CE
+        public var spi_mem_flash_ce: SPI_MEM_FLASH_CE
 
         /// Block erase enable(32KB) . Block erase operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 23..<24)
-        public var flash_be: FLASH_BE
+        public var spi_mem_flash_be: SPI_MEM_FLASH_BE
 
         /// Sector erase enable(4KB). Sector erase operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 24..<25)
-        public var flash_se: FLASH_SE
+        public var spi_mem_flash_se: SPI_MEM_FLASH_SE
 
         /// Page program enable(1 byte ~256 bytes data to be programmed). Page program operation will be triggered when the bit is set. The bit will be cleared once the operation done .1: enable 0: disable.
         @ReadWrite(bits: 25..<26)
-        public var flash_pp: FLASH_PP
+        public var spi_mem_flash_pp: SPI_MEM_FLASH_PP
 
         /// Write status register enable. Write status operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 26..<27)
-        public var flash_wrsr: FLASH_WRSR
+        public var spi_mem_flash_wrsr: SPI_MEM_FLASH_WRSR
 
         /// Read status register-1. Read status operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 27..<28)
-        public var flash_rdsr: FLASH_RDSR
+        public var spi_mem_flash_rdsr: SPI_MEM_FLASH_RDSR
 
         /// Read JEDEC ID . Read ID command will be sent when the bit is set. The bit will be cleared once the operation done. 1: enable 0: disable.
         @ReadWrite(bits: 28..<29)
-        public var flash_rdid: FLASH_RDID
+        public var spi_mem_flash_rdid: SPI_MEM_FLASH_RDID
 
         /// Write flash disable. Write disable command will be sent when the bit is set. The bit will be cleared once the operation done. 1: enable 0: disable.
         @ReadWrite(bits: 29..<30)
-        public var flash_wrdi: FLASH_WRDI
+        public var spi_mem_flash_wrdi: SPI_MEM_FLASH_WRDI
 
         /// Write flash enable. Write enable command will be sent when the bit is set. The bit will be cleared once the operation done. 1: enable 0: disable.
         @ReadWrite(bits: 30..<31)
-        public var flash_wren: FLASH_WREN
+        public var spi_mem_flash_wren: SPI_MEM_FLASH_WREN
 
         /// Read flash enable. Read flash operation will be triggered when the bit is set. The bit will be cleared once the operation done. 1: enable 0: disable.
         @ReadWrite(bits: 31..<32)
-        public var flash_read: FLASH_READ
+        public var spi_mem_flash_read: SPI_MEM_FLASH_READ
     }
 
     /// SPI1 address register
     @Register(bitWidth: 32)
-    public struct ADDR {
+    public struct SPI_MEM_ADDR {
         /// In user mode, it is the memory address. other then the bit0-bit23 is the memory address, the bit24-bit31 are the byte length of a transfer.
         @ReadWrite(bits: 0..<32)
-        public var usr_addr_value: USR_ADDR_VALUE
+        public var spi_mem_usr_addr_value: SPI_MEM_USR_ADDR_VALUE
     }
 
     /// SPI1 control register.
     @Register(bitWidth: 32)
-    public struct CTRL {
+    public struct SPI_MEM_CTRL {
         /// In the dummy phase of a MSPI read data transfer when accesses to flash, the signal level of SPI bus is output by the MSPI controller.
         @ReadWrite(bits: 2..<3)
-        public var fdummy_rin: FDUMMY_RIN
+        public var spi_mem_fdummy_rin: SPI_MEM_FDUMMY_RIN
 
         /// In the dummy phase of a MSPI write data transfer when accesses to flash, the signal level of SPI bus is output by the MSPI controller.
         @ReadWrite(bits: 3..<4)
-        public var fdummy_wout: FDUMMY_WOUT
+        public var spi_mem_fdummy_wout: SPI_MEM_FDUMMY_WOUT
 
         /// Apply 8 signals during write-data phase 1:enable 0: disable
         @ReadOnly(bits: 4..<5)
-        public var fdout_oct: FDOUT_OCT
+        public var spi_mem_fdout_oct: SPI_MEM_FDOUT_OCT
 
         /// Apply 8 signals during read-data phase 1:enable 0: disable
         @ReadOnly(bits: 5..<6)
-        public var fdin_oct: FDIN_OCT
+        public var spi_mem_fdin_oct: SPI_MEM_FDIN_OCT
 
         /// Apply 8 signals during address phase 1:enable 0: disable
         @ReadOnly(bits: 6..<7)
-        public var faddr_oct: FADDR_OCT
+        public var spi_mem_faddr_oct: SPI_MEM_FADDR_OCT
 
         /// Apply 4 signals during command phase 1:enable 0: disable
         @ReadWrite(bits: 8..<9)
-        public var fcmd_quad: FCMD_QUAD
+        public var spi_mem_fcmd_quad: SPI_MEM_FCMD_QUAD
 
         /// Apply 8 signals during command phase 1:enable 0: disable
         @ReadOnly(bits: 9..<10)
-        public var fcmd_oct: FCMD_OCT
+        public var spi_mem_fcmd_oct: SPI_MEM_FCMD_OCT
 
         /// For SPI1, initialize crc32 module before writing encrypted data to flash. Active low.
         @ReadOnly(bits: 10..<11)
-        public var fcs_crc_en: FCS_CRC_EN
+        public var spi_mem_fcs_crc_en: SPI_MEM_FCS_CRC_EN
 
         /// For SPI1, enable crc32 when writing encrypted data to flash. 1: enable 0:disable
         @ReadOnly(bits: 11..<12)
-        public var tx_crc_en: TX_CRC_EN
+        public var spi_mem_tx_crc_en: SPI_MEM_TX_CRC_EN
 
         /// This bit enable the bits: spi_mem_fread_qio, spi_mem_fread_dio, spi_mem_fread_qout and spi_mem_fread_dout. 1: enable 0: disable.
         @ReadWrite(bits: 13..<14)
-        public var fastrd_mode: FASTRD_MODE
+        public var spi_mem_fastrd_mode: SPI_MEM_FASTRD_MODE
 
         /// In the read operations, read-data phase apply 2 signals. 1: enable 0: disable.
         @ReadWrite(bits: 14..<15)
-        public var fread_dual: FREAD_DUAL
+        public var spi_mem_fread_dual: SPI_MEM_FREAD_DUAL
 
         /// The Device ID is read out to SPI_MEM_RD_STATUS register, this bit combine with spi_mem_flash_res bit. 1: enable 0: disable.
         @ReadWrite(bits: 15..<16)
-        public var resandres: RESANDRES
+        public var spi_mem_resandres: SPI_MEM_RESANDRES
 
         /// The bit is used to set MISO line polarity, 1: high 0, low
         @ReadWrite(bits: 18..<19)
-        public var q_pol: Q_POL
+        public var spi_mem_q_pol: SPI_MEM_Q_POL
 
         /// The bit is used to set MOSI line polarity, 1: high 0, low
         @ReadWrite(bits: 19..<20)
-        public var d_pol: D_POL
+        public var spi_mem_d_pol: SPI_MEM_D_POL
 
         /// In the read operations read-data phase apply 4 signals. 1: enable 0: disable.
         @ReadWrite(bits: 20..<21)
-        public var fread_quad: FREAD_QUAD
+        public var spi_mem_fread_quad: SPI_MEM_FREAD_QUAD
 
         /// Write protect signal output when SPI is idle. 1: output high, 0: output low.
         @ReadWrite(bits: 21..<22)
-        public var wp: WP
+        public var spi_mem_wp: SPI_MEM_WP
 
         /// two bytes data will be written to status register when it is set. 1: enable 0: disable.
         @ReadWrite(bits: 22..<23)
-        public var wrsr_2b: WRSR_2B
+        public var spi_mem_wrsr_2b: SPI_MEM_WRSR_2B
 
         /// In the read operations address phase and read-data phase apply 2 signals. 1: enable 0: disable.
         @ReadWrite(bits: 23..<24)
-        public var fread_dio: FREAD_DIO
+        public var spi_mem_fread_dio: SPI_MEM_FREAD_DIO
 
         /// In the read operations address phase and read-data phase apply 4 signals. 1: enable 0: disable.
         @ReadWrite(bits: 24..<25)
-        public var fread_qio: FREAD_QIO
+        public var spi_mem_fread_qio: SPI_MEM_FREAD_QIO
     }
 
     /// SPI1 control1 register.
     @Register(bitWidth: 32)
-    public struct CTRL1 {
+    public struct SPI_MEM_CTRL1 {
         /// SPI clock mode bits. 0: SPI clock is off when CS inactive 1: SPI clock is delayed one cycle after CS inactive 2: SPI clock is delayed two cycles after CS inactive 3: SPI clock is alwasy on.
         @ReadWrite(bits: 0..<2)
-        public var clk_mode: CLK_MODE
+        public var spi_mem_clk_mode: SPI_MEM_CLK_MODE
 
         /// After RES/DP/HPM command is sent, SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 512) SPI_CLK cycles.
         @ReadWrite(bits: 2..<12)
-        public var cs_hold_dly_res: CS_HOLD_DLY_RES
+        public var spi_mem_cs_hold_dly_res: SPI_MEM_CS_HOLD_DLY_RES
     }
 
     /// SPI1 control2 register.
     @Register(bitWidth: 32)
-    public struct CTRL2 {
+    public struct SPI_MEM_CTRL2 {
         /// The FSM will be reset.
         @WriteOnly(bits: 31..<32)
-        public var sync_reset: SYNC_RESET
+        public var spi_mem_sync_reset: SPI_MEM_SYNC_RESET
     }
 
     /// SPI1 clock division control register.
     @Register(bitWidth: 32)
-    public struct CLOCK {
+    public struct SPI_MEM_CLOCK {
         /// In the master mode it must be equal to spi_mem_clkcnt_N.
         @ReadWrite(bits: 0..<8)
-        public var clkcnt_l: CLKCNT_L
+        public var spi_mem_clkcnt_l: SPI_MEM_CLKCNT_L
 
         /// In the master mode it must be floor((spi_mem_clkcnt_N+1)/2-1).
         @ReadWrite(bits: 8..<16)
-        public var clkcnt_h: CLKCNT_H
+        public var spi_mem_clkcnt_h: SPI_MEM_CLKCNT_H
 
         /// In the master mode it is the divider of spi_mem_clk. So spi_mem_clk frequency is system/(spi_mem_clkcnt_N+1)
         @ReadWrite(bits: 16..<24)
-        public var clkcnt_n: CLKCNT_N
+        public var spi_mem_clkcnt_n: SPI_MEM_CLKCNT_N
 
         /// reserved
         @ReadWrite(bits: 31..<32)
-        public var clk_equ_sysclk: CLK_EQU_SYSCLK
+        public var spi_mem_clk_equ_sysclk: SPI_MEM_CLK_EQU_SYSCLK
     }
 
     /// SPI1 user register.
     @Register(bitWidth: 32)
-    public struct USER {
+    public struct SPI_MEM_USER {
         /// the bit combined with spi_mem_mosi_delay_mode bits to set mosi signal delay mode.
         @ReadWrite(bits: 9..<10)
-        public var ck_out_edge: CK_OUT_EDGE
+        public var spi_mem_ck_out_edge: SPI_MEM_CK_OUT_EDGE
 
         /// In the write operations read-data phase apply 2 signals
         @ReadWrite(bits: 12..<13)
-        public var fwrite_dual: FWRITE_DUAL
+        public var spi_mem_fwrite_dual: SPI_MEM_FWRITE_DUAL
 
         /// In the write operations read-data phase apply 4 signals
         @ReadWrite(bits: 13..<14)
-        public var fwrite_quad: FWRITE_QUAD
+        public var spi_mem_fwrite_quad: SPI_MEM_FWRITE_QUAD
 
         /// In the write operations address phase and read-data phase apply 2 signals.
         @ReadWrite(bits: 14..<15)
-        public var fwrite_dio: FWRITE_DIO
+        public var spi_mem_fwrite_dio: SPI_MEM_FWRITE_DIO
 
         /// In the write operations address phase and read-data phase apply 4 signals.
         @ReadWrite(bits: 15..<16)
-        public var fwrite_qio: FWRITE_QIO
+        public var spi_mem_fwrite_qio: SPI_MEM_FWRITE_QIO
 
         /// read-data phase only access to high-part of the buffer spi_mem_w8~spi_mem_w15. 1: enable 0: disable.
         @ReadOnly(bits: 24..<25)
-        public var usr_miso_highpart: USR_MISO_HIGHPART
+        public var spi_mem_usr_miso_highpart: SPI_MEM_USR_MISO_HIGHPART
 
         /// write-data phase only access to high-part of the buffer spi_mem_w8~spi_mem_w15. 1: enable 0: disable.
         @ReadOnly(bits: 25..<26)
-        public var usr_mosi_highpart: USR_MOSI_HIGHPART
+        public var spi_mem_usr_mosi_highpart: SPI_MEM_USR_MOSI_HIGHPART
 
         /// SPI clock is disable in dummy phase when the bit is enable.
         @ReadWrite(bits: 26..<27)
-        public var usr_dummy_idle: USR_DUMMY_IDLE
+        public var spi_mem_usr_dummy_idle: SPI_MEM_USR_DUMMY_IDLE
 
         /// This bit enable the write-data phase of an operation.
         @ReadWrite(bits: 27..<28)
-        public var usr_mosi: USR_MOSI
+        public var spi_mem_usr_mosi: SPI_MEM_USR_MOSI
 
         /// This bit enable the read-data phase of an operation.
         @ReadWrite(bits: 28..<29)
-        public var usr_miso: USR_MISO
+        public var spi_mem_usr_miso: SPI_MEM_USR_MISO
 
         /// This bit enable the dummy phase of an operation.
         @ReadWrite(bits: 29..<30)
-        public var usr_dummy: USR_DUMMY
+        public var spi_mem_usr_dummy: SPI_MEM_USR_DUMMY
 
         /// This bit enable the address phase of an operation.
         @ReadWrite(bits: 30..<31)
-        public var usr_addr: USR_ADDR
+        public var spi_mem_usr_addr: SPI_MEM_USR_ADDR
 
         /// This bit enable the command phase of an operation.
         @ReadWrite(bits: 31..<32)
-        public var usr_command: USR_COMMAND
+        public var spi_mem_usr_command: SPI_MEM_USR_COMMAND
     }
 
     /// SPI1 user1 register.
     @Register(bitWidth: 32)
-    public struct USER1 {
+    public struct SPI_MEM_USER1 {
         /// The length in spi_mem_clk cycles of dummy phase. The register value shall be (cycle_num-1).
         @ReadWrite(bits: 0..<6)
-        public var usr_dummy_cyclelen: USR_DUMMY_CYCLELEN
+        public var spi_mem_usr_dummy_cyclelen: SPI_MEM_USR_DUMMY_CYCLELEN
 
         /// The length in bits of address phase. The register value shall be (bit_num-1).
         @ReadWrite(bits: 26..<32)
-        public var usr_addr_bitlen: USR_ADDR_BITLEN
+        public var spi_mem_usr_addr_bitlen: SPI_MEM_USR_ADDR_BITLEN
     }
 
     /// SPI1 user2 register.
     @Register(bitWidth: 32)
-    public struct USER2 {
+    public struct SPI_MEM_USER2 {
         /// The value of command.
         @ReadWrite(bits: 0..<16)
-        public var usr_command_value: USR_COMMAND_VALUE
+        public var spi_mem_usr_command_value: SPI_MEM_USR_COMMAND_VALUE
 
         /// The length in bits of command phase. The register value shall be (bit_num-1)
         @ReadWrite(bits: 28..<32)
-        public var usr_command_bitlen: USR_COMMAND_BITLEN
+        public var spi_mem_usr_command_bitlen: SPI_MEM_USR_COMMAND_BITLEN
     }
 
     /// SPI1 send data bit length control register.
     @Register(bitWidth: 32)
-    public struct MOSI_DLEN {
+    public struct SPI_MEM_MOSI_DLEN {
         /// The length in bits of write-data. The register value shall be (bit_num-1).
         @ReadWrite(bits: 0..<10)
-        public var usr_mosi_dbitlen: USR_MOSI_DBITLEN
+        public var spi_mem_usr_mosi_dbitlen: SPI_MEM_USR_MOSI_DBITLEN
     }
 
     /// SPI1 receive data bit length control register.
     @Register(bitWidth: 32)
-    public struct MISO_DLEN {
+    public struct SPI_MEM_MISO_DLEN {
         /// The length in bits of read-data. The register value shall be (bit_num-1).
         @ReadWrite(bits: 0..<10)
-        public var usr_miso_dbitlen: USR_MISO_DBITLEN
+        public var spi_mem_usr_miso_dbitlen: SPI_MEM_USR_MISO_DBITLEN
     }
 
     /// SPI1 status register.
     @Register(bitWidth: 32)
-    public struct RD_STATUS {
+    public struct SPI_MEM_RD_STATUS {
         /// The value is stored when set spi_mem_flash_rdsr bit and spi_mem_flash_res bit.
         @ReadWrite(bits: 0..<16)
-        public var status: STATUS
+        public var spi_mem_status: SPI_MEM_STATUS
 
         /// Mode bits in the flash fast read mode it is combined with spi_mem_fastrd_mode bit.
         @ReadWrite(bits: 16..<24)
-        public var wb_mode: WB_MODE
+        public var spi_mem_wb_mode: SPI_MEM_WB_MODE
     }
 
     /// SPI1 misc register
     @Register(bitWidth: 32)
-    public struct MISC {
+    public struct SPI_MEM_MISC {
         /// SPI_CS0 pin enable, 1: disable SPI_CS0, 0: SPI_CS0 pin is active to select SPI device, such as flash, external RAM and so on.
         @ReadWrite(bits: 0..<1)
-        public var cs0_dis: CS0_DIS
+        public var spi_mem_cs0_dis: SPI_MEM_CS0_DIS
 
         /// SPI_CS1 pin enable, 1: disable SPI_CS1, 0: SPI_CS1 pin is active to select SPI device, such as flash, external RAM and so on.
         @ReadWrite(bits: 1..<2)
-        public var cs1_dis: CS1_DIS
+        public var spi_mem_cs1_dis: SPI_MEM_CS1_DIS
 
         /// 1: spi clk line is high when idle 0: spi clk line is low when idle
         @ReadWrite(bits: 9..<10)
-        public var ck_idle_edge: CK_IDLE_EDGE
+        public var spi_mem_ck_idle_edge: SPI_MEM_CK_IDLE_EDGE
 
         /// spi cs line keep low when the bit is set.
         @ReadWrite(bits: 10..<11)
-        public var cs_keep_active: CS_KEEP_ACTIVE
+        public var spi_mem_cs_keep_active: SPI_MEM_CS_KEEP_ACTIVE
     }
 
     /// SPI1 TX CRC data register.
     @Register(bitWidth: 32)
-    public struct TX_CRC {
+    public struct SPI_MEM_TX_CRC {
         /// For SPI1, the value of crc32.
         @ReadOnly(bits: 0..<32)
         public var data: DATA
@@ -457,106 +517,226 @@ extension SPI1 {
 
     /// SPI1 bit mode control register.
     @Register(bitWidth: 32)
-    public struct CACHE_FCTRL {
+    public struct SPI_MEM_CACHE_FCTRL {
         /// For SPI1, cache read flash with 4 bytes address, 1: enable, 0:disable.
         @ReadWrite(bits: 1..<2)
-        public var cache_usr_addr_4byte: CACHE_USR_ADDR_4BYTE
+        public var spi_mem_cache_usr_addr_4byte: SPI_MEM_CACHE_USR_ADDR_4BYTE
 
         /// For SPI1, din phase apply 2 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_dio.
         @ReadWrite(bits: 3..<4)
-        public var fdin_dual: FDIN_DUAL
+        public var spi_mem_fdin_dual: SPI_MEM_FDIN_DUAL
 
         /// For SPI1, dout phase apply 2 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_dio.
         @ReadWrite(bits: 4..<5)
-        public var fdout_dual: FDOUT_DUAL
+        public var spi_mem_fdout_dual: SPI_MEM_FDOUT_DUAL
 
         /// For SPI1, address phase apply 2 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_dio.
         @ReadWrite(bits: 5..<6)
-        public var faddr_dual: FADDR_DUAL
+        public var spi_mem_faddr_dual: SPI_MEM_FADDR_DUAL
 
         /// For SPI1, din phase apply 4 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_qio.
         @ReadWrite(bits: 6..<7)
-        public var fdin_quad: FDIN_QUAD
+        public var spi_mem_fdin_quad: SPI_MEM_FDIN_QUAD
 
         /// For SPI1, dout phase apply 4 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_qio.
         @ReadWrite(bits: 7..<8)
-        public var fdout_quad: FDOUT_QUAD
+        public var spi_mem_fdout_quad: SPI_MEM_FDOUT_QUAD
 
         /// For SPI1, address phase apply 4 signals. 1: enable 0: disable. The bit is the same with spi_mem_fread_qio.
         @ReadWrite(bits: 8..<9)
-        public var faddr_quad: FADDR_QUAD
+        public var spi_mem_faddr_quad: SPI_MEM_FADDR_QUAD
     }
 
-    /// SPI1 memory data buffer%s
+    /// SPI1 memory data buffer0
     @Register(bitWidth: 32)
-    public struct W {
+    public struct SPI_MEM_W0 {
         /// data buffer
         @ReadWrite(bits: 0..<32)
-        public var buf: BUF
+        public var spi_mem_buf0: SPI_MEM_BUF0
+    }
+
+    /// SPI1 memory data buffer1
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W1 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf1: SPI_MEM_BUF1
+    }
+
+    /// SPI1 memory data buffer2
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W2 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf2: SPI_MEM_BUF2
+    }
+
+    /// SPI1 memory data buffer3
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W3 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf3: SPI_MEM_BUF3
+    }
+
+    /// SPI1 memory data buffer4
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W4 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf4: SPI_MEM_BUF4
+    }
+
+    /// SPI1 memory data buffer5
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W5 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf5: SPI_MEM_BUF5
+    }
+
+    /// SPI1 memory data buffer6
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W6 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf6: SPI_MEM_BUF6
+    }
+
+    /// SPI1 memory data buffer7
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W7 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf7: SPI_MEM_BUF7
+    }
+
+    /// SPI1 memory data buffer8
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W8 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf8: SPI_MEM_BUF8
+    }
+
+    /// SPI1 memory data buffer9
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W9 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf9: SPI_MEM_BUF9
+    }
+
+    /// SPI1 memory data buffer10
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W10 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf10: SPI_MEM_BUF10
+    }
+
+    /// SPI1 memory data buffer11
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W11 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf11: SPI_MEM_BUF11
+    }
+
+    /// SPI1 memory data buffer12
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W12 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf12: SPI_MEM_BUF12
+    }
+
+    /// SPI1 memory data buffer13
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W13 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf13: SPI_MEM_BUF13
+    }
+
+    /// SPI1 memory data buffer14
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W14 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf14: SPI_MEM_BUF14
+    }
+
+    /// SPI1 memory data buffer15
+    @Register(bitWidth: 32)
+    public struct SPI_MEM_W15 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_mem_buf15: SPI_MEM_BUF15
     }
 
     /// SPI1 wait idle control register
     @Register(bitWidth: 32)
-    public struct FLASH_WAITI_CTRL {
+    public struct SPI_MEM_FLASH_WAITI_CTRL {
         /// 1: The hardware will wait idle after SE/PP/WRSR automatically, and hardware auto Suspend/Resume can be enabled. 0: The functions of hardware wait idle and auto Suspend/Resume are not supported.
         @ReadWrite(bits: 0..<1)
-        public var waiti_en: WAITI_EN
+        public var spi_mem_waiti_en: SPI_MEM_WAITI_EN
 
         /// The dummy phase enable when wait flash idle (RDSR)
         @ReadWrite(bits: 1..<2)
-        public var waiti_dummy: WAITI_DUMMY
+        public var spi_mem_waiti_dummy: SPI_MEM_WAITI_DUMMY
 
         /// 1: Output address 0 in RDSR or read SUS command transfer. 0: Do not send out address in RDSR or read SUS command transfer.
         @ReadWrite(bits: 2..<3)
-        public var waiti_addr_en: WAITI_ADDR_EN
+        public var spi_mem_waiti_addr_en: SPI_MEM_WAITI_ADDR_EN
 
         /// When SPI_MEM_WAITI_ADDR_EN is set, the cycle length of sent out address is (SPI_MEM_WAITI_ADDR_CYCLELEN[1:0] + 1) SPI bus clock cycles. It is not active when SPI_MEM_WAITI_ADDR_EN is cleared.
         @ReadWrite(bits: 3..<5)
-        public var waiti_addr_cyclelen: WAITI_ADDR_CYCLELEN
+        public var spi_mem_waiti_addr_cyclelen: SPI_MEM_WAITI_ADDR_CYCLELEN
 
         /// 1:The wait idle command bit length is 16. 0: The wait idle command bit length is 8.
         @ReadWrite(bits: 9..<10)
-        public var waiti_cmd_2b: WAITI_CMD_2B
+        public var spi_mem_waiti_cmd_2b: SPI_MEM_WAITI_CMD_2B
 
         /// The dummy cycle length when wait flash idle(RDSR).
         @ReadWrite(bits: 10..<16)
-        public var waiti_dummy_cyclelen: WAITI_DUMMY_CYCLELEN
+        public var spi_mem_waiti_dummy_cyclelen: SPI_MEM_WAITI_DUMMY_CYCLELEN
 
         /// The command value to wait flash idle(RDSR).
         @ReadWrite(bits: 16..<32)
-        public var waiti_cmd: WAITI_CMD
+        public var spi_mem_waiti_cmd: SPI_MEM_WAITI_CMD
     }
 
     /// SPI1 flash suspend control register
     @Register(bitWidth: 32)
-    public struct FLASH_SUS_CTRL {
+    public struct SPI_MEM_FLASH_SUS_CTRL {
         /// program erase resume bit, program erase suspend operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 0..<1)
-        public var flash_per: FLASH_PER
+        public var spi_mem_flash_per: SPI_MEM_FLASH_PER
 
         /// program erase suspend bit, program erase suspend operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable.
         @ReadWrite(bits: 1..<2)
-        public var flash_pes: FLASH_PES
+        public var spi_mem_flash_pes: SPI_MEM_FLASH_PES
 
         /// 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4 or *128) SPI_CLK cycles after program erase resume command is sent. 0: SPI1 does not wait after program erase resume command is sent.
         @ReadWrite(bits: 2..<3)
-        public var flash_per_wait_en: FLASH_PER_WAIT_EN
+        public var spi_mem_flash_per_wait_en: SPI_MEM_FLASH_PER_WAIT_EN
 
         /// 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4 or *128) SPI_CLK cycles after program erase suspend command is sent. 0: SPI1 does not wait after program erase suspend command is sent.
         @ReadWrite(bits: 3..<4)
-        public var flash_pes_wait_en: FLASH_PES_WAIT_EN
+        public var spi_mem_flash_pes_wait_en: SPI_MEM_FLASH_PES_WAIT_EN
 
         /// Set this bit to enable PES end triggers PER transfer option. If this bit is 0, application should send PER after PES is done.
         @ReadWrite(bits: 4..<5)
-        public var pes_per_en: PES_PER_EN
+        public var spi_mem_pes_per_en: SPI_MEM_PES_PER_EN
 
         /// Set this bit to enable Auto-suspending function.
         @ReadWrite(bits: 5..<6)
-        public var flash_pes_en: FLASH_PES_EN
+        public var spi_mem_flash_pes_en: SPI_MEM_FLASH_PES_EN
 
         /// The mask value when check SUS/SUS1/SUS2 status bit. If the read status value is status_in[15:0](only status_in[7:0] is valid when only one byte of data is read out, status_in[15:0] is valid when two bytes of data are read out), SUS/SUS1/SUS2 = status_in[15:0]^ SPI_MEM_PESR_END_MSK[15:0].
         @ReadWrite(bits: 6..<22)
-        public var pesr_end_msk: PESR_END_MSK
+        public var spi_mem_pesr_end_msk: SPI_MEM_PESR_END_MSK
 
         /// 1: Read two bytes when check flash SUS/SUS1/SUS2 status bit. 0: Read one byte when check flash SUS/SUS1/SUS2 status bit
         @ReadWrite(bits: 22..<23)
@@ -564,188 +744,188 @@ extension SPI1 {
 
         /// 1: Both WIP and SUS/SUS1/SUS2 bits should be checked to insure the resume status of flash. 0: Only need to check WIP is 0.
         @ReadWrite(bits: 23..<24)
-        public var per_end_en: PER_END_EN
+        public var spi_mem_per_end_en: SPI_MEM_PER_END_EN
 
         /// 1: Both WIP and SUS/SUS1/SUS2 bits should be checked to insure the suspend status of flash. 0: Only need to check WIP is 0.
         @ReadWrite(bits: 24..<25)
-        public var pes_end_en: PES_END_EN
+        public var spi_mem_pes_end_en: SPI_MEM_PES_END_EN
 
         /// When SPI1 checks SUS/SUS1/SUS2 bits fail for SPI_MEM_SUS_TIMEOUT_CNT[6:0] times, it will be treated as check pass.
         @ReadWrite(bits: 25..<32)
-        public var sus_timeout_cnt: SUS_TIMEOUT_CNT
+        public var spi_mem_sus_timeout_cnt: SPI_MEM_SUS_TIMEOUT_CNT
     }
 
     /// SPI1 flash suspend command register
     @Register(bitWidth: 32)
-    public struct FLASH_SUS_CMD {
+    public struct SPI_MEM_FLASH_SUS_CMD {
         /// Program/Erase suspend command.
         @ReadWrite(bits: 0..<16)
-        public var flash_pes_command: FLASH_PES_COMMAND
+        public var spi_mem_flash_pes_command: SPI_MEM_FLASH_PES_COMMAND
 
         /// Flash SUS/SUS1/SUS2 status bit read command. The command should be sent when SUS/SUS1/SUS2 bit should be checked to insure the suspend or resume status of flash.
         @ReadWrite(bits: 16..<32)
-        public var wait_pesr_command: WAIT_PESR_COMMAND
+        public var spi_mem_wait_pesr_command: SPI_MEM_WAIT_PESR_COMMAND
     }
 
     /// SPI1 flash suspend status register
     @Register(bitWidth: 32)
-    public struct SUS_STATUS {
+    public struct SPI_MEM_SUS_STATUS {
         /// The status of flash suspend, only used in SPI1.
         @ReadWrite(bits: 0..<1)
-        public var flash_sus: FLASH_SUS
+        public var spi_mem_flash_sus: SPI_MEM_FLASH_SUS
 
         /// 1: SPI1 sends out SPI_MEM_WAIT_PESR_COMMAND[15:0] to check SUS/SUS1/SUS2 bit. 0: SPI1 sends out SPI_MEM_WAIT_PESR_COMMAND[7:0] to check SUS/SUS1/SUS2 bit.
         @ReadWrite(bits: 1..<2)
-        public var wait_pesr_cmd_2b: WAIT_PESR_CMD_2B
+        public var spi_mem_wait_pesr_cmd_2b: SPI_MEM_WAIT_PESR_CMD_2B
 
         /// 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 128) SPI_CLK cycles after HPM command is sent. 0: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4) SPI_CLK cycles after HPM command is sent.
         @ReadWrite(bits: 2..<3)
-        public var flash_hpm_dly_128: FLASH_HPM_DLY_128
+        public var spi_mem_flash_hpm_dly_128: SPI_MEM_FLASH_HPM_DLY_128
 
         /// 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 128) SPI_CLK cycles after RES command is sent. 0: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4) SPI_CLK cycles after RES command is sent.
         @ReadWrite(bits: 3..<4)
-        public var flash_res_dly_128: FLASH_RES_DLY_128
+        public var spi_mem_flash_res_dly_128: SPI_MEM_FLASH_RES_DLY_128
 
         /// 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 128) SPI_CLK cycles after DP command is sent. 0: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4) SPI_CLK cycles after DP command is sent.
         @ReadWrite(bits: 4..<5)
-        public var flash_dp_dly_128: FLASH_DP_DLY_128
+        public var spi_mem_flash_dp_dly_128: SPI_MEM_FLASH_DP_DLY_128
 
         /// Valid when SPI_MEM_FLASH_PER_WAIT_EN is 1. 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 128) SPI_CLK cycles after PER command is sent. 0: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4) SPI_CLK cycles after PER command is sent.
         @ReadWrite(bits: 5..<6)
-        public var flash_per_dly_128: FLASH_PER_DLY_128
+        public var spi_mem_flash_per_dly_128: SPI_MEM_FLASH_PER_DLY_128
 
         /// Valid when SPI_MEM_FLASH_PES_WAIT_EN is 1. 1: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 128) SPI_CLK cycles after PES command is sent. 0: SPI1 waits (SPI_MEM_CS_HOLD_DELAY_RES[9:0] * 4) SPI_CLK cycles after PES command is sent.
         @ReadWrite(bits: 6..<7)
-        public var flash_pes_dly_128: FLASH_PES_DLY_128
+        public var spi_mem_flash_pes_dly_128: SPI_MEM_FLASH_PES_DLY_128
 
         /// 1: Enable SPI0 lock SPI0/1 arbiter option. 0: Disable it.
         @ReadWrite(bits: 7..<8)
-        public var spi0_lock_en: SPI0_LOCK_EN
+        public var spi_mem_spi0_lock_en: SPI_MEM_SPI0_LOCK_EN
 
         /// 1: The bit length of Program/Erase Suspend/Resume command is 16. 0: The bit length of Program/Erase Suspend/Resume command is 8.
         @ReadWrite(bits: 15..<16)
-        public var flash_pesr_cmd_2b: FLASH_PESR_CMD_2B
+        public var spi_mem_flash_pesr_cmd_2b: SPI_MEM_FLASH_PESR_CMD_2B
 
         /// Program/Erase resume command.
         @ReadWrite(bits: 16..<32)
-        public var flash_per_command: FLASH_PER_COMMAND
+        public var spi_mem_flash_per_command: SPI_MEM_FLASH_PER_COMMAND
     }
 
     /// SPI1 interrupt enable register
     @Register(bitWidth: 32)
-    public struct INT_ENA {
+    public struct SPI_MEM_INT_ENA {
         /// The enable bit for SPI_MEM_PER_END_INT interrupt.
         @ReadWrite(bits: 0..<1)
-        public var per_end: PER_END
+        public var spi_mem_per_end_int_ena: SPI_MEM_PER_END_INT_ENA
 
         /// The enable bit for SPI_MEM_PES_END_INT interrupt.
         @ReadWrite(bits: 1..<2)
-        public var pes_end: PES_END
+        public var spi_mem_pes_end_int_ena: SPI_MEM_PES_END_INT_ENA
 
         /// The enable bit for SPI_MEM_WPE_END_INT interrupt.
         @ReadWrite(bits: 2..<3)
-        public var wpe_end: WPE_END
+        public var spi_mem_wpe_end_int_ena: SPI_MEM_WPE_END_INT_ENA
 
         /// The enable bit for SPI_MEM_SLV_ST_END_INT interrupt.
         @ReadWrite(bits: 3..<4)
-        public var slv_st_end: SLV_ST_END
+        public var spi_mem_slv_st_end_int_ena: SPI_MEM_SLV_ST_END_INT_ENA
 
         /// The enable bit for SPI_MEM_MST_ST_END_INT interrupt.
         @ReadWrite(bits: 4..<5)
-        public var mst_st_end: MST_ST_END
+        public var spi_mem_mst_st_end_int_ena: SPI_MEM_MST_ST_END_INT_ENA
 
         /// The enable bit for SPI_MEM_BROWN_OUT_INT interrupt.
         @ReadWrite(bits: 10..<11)
-        public var brown_out: BROWN_OUT
+        public var spi_mem_brown_out_int_ena: SPI_MEM_BROWN_OUT_INT_ENA
     }
 
     /// SPI1 interrupt clear register
     @Register(bitWidth: 32)
-    public struct INT_CLR {
+    public struct SPI_MEM_INT_CLR {
         /// The clear bit for SPI_MEM_PER_END_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var per_end: PER_END
+        public var spi_mem_per_end_int_clr: SPI_MEM_PER_END_INT_CLR
 
         /// The clear bit for SPI_MEM_PES_END_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var pes_end: PES_END
+        public var spi_mem_pes_end_int_clr: SPI_MEM_PES_END_INT_CLR
 
         /// The clear bit for SPI_MEM_WPE_END_INT interrupt.
         @WriteOnly(bits: 2..<3)
-        public var wpe_end: WPE_END
+        public var spi_mem_wpe_end_int_clr: SPI_MEM_WPE_END_INT_CLR
 
         /// The clear bit for SPI_MEM_SLV_ST_END_INT interrupt.
         @WriteOnly(bits: 3..<4)
-        public var slv_st_end: SLV_ST_END
+        public var spi_mem_slv_st_end_int_clr: SPI_MEM_SLV_ST_END_INT_CLR
 
         /// The clear bit for SPI_MEM_MST_ST_END_INT interrupt.
         @WriteOnly(bits: 4..<5)
-        public var mst_st_end: MST_ST_END
+        public var spi_mem_mst_st_end_int_clr: SPI_MEM_MST_ST_END_INT_CLR
 
         /// The status bit for SPI_MEM_BROWN_OUT_INT interrupt.
         @WriteOnly(bits: 10..<11)
-        public var brown_out: BROWN_OUT
+        public var spi_mem_brown_out_int_clr: SPI_MEM_BROWN_OUT_INT_CLR
     }
 
     /// SPI1 interrupt raw register
     @Register(bitWidth: 32)
-    public struct INT_RAW {
+    public struct SPI_MEM_INT_RAW {
         /// The raw bit for SPI_MEM_PER_END_INT interrupt. 1: Triggered when Auto Resume command (0x7A) is sent and flash is resumed successfully. 0: Others.
         @ReadWrite(bits: 0..<1)
-        public var per_end: PER_END
+        public var spi_mem_per_end_int_raw: SPI_MEM_PER_END_INT_RAW
 
         /// The raw bit for SPI_MEM_PES_END_INT interrupt.1: Triggered when Auto Suspend command (0x75) is sent and flash is suspended successfully. 0: Others.
         @ReadWrite(bits: 1..<2)
-        public var pes_end: PES_END
+        public var spi_mem_pes_end_int_raw: SPI_MEM_PES_END_INT_RAW
 
         /// The raw bit for SPI_MEM_WPE_END_INT interrupt. 1: Triggered when WRSR/PP/SE/BE/CE is sent and flash is already idle. 0: Others.
         @ReadWrite(bits: 2..<3)
-        public var wpe_end: WPE_END
+        public var spi_mem_wpe_end_int_raw: SPI_MEM_WPE_END_INT_RAW
 
         /// The raw bit for SPI_MEM_SLV_ST_END_INT interrupt. 1: Triggered when spi1_slv_st is changed from non idle state to idle state. It means that SPI_CS raises high. 0: Others
         @ReadWrite(bits: 3..<4)
-        public var slv_st_end: SLV_ST_END
+        public var spi_mem_slv_st_end_int_raw: SPI_MEM_SLV_ST_END_INT_RAW
 
         /// The raw bit for SPI_MEM_MST_ST_END_INT interrupt. 1: Triggered when spi1_mst_st is changed from non idle state to idle state. 0: Others.
         @ReadWrite(bits: 4..<5)
-        public var mst_st_end: MST_ST_END
+        public var spi_mem_mst_st_end_int_raw: SPI_MEM_MST_ST_END_INT_RAW
 
         /// The raw bit for SPI_MEM_BROWN_OUT_INT interrupt. 1: Triggered condition is that chip is loosing power and RTC module sends out brown out close flash request to SPI1. After SPI1 sends out suspend command to flash, this interrupt is triggered and MSPI returns to idle state. 0: Others.
         @ReadWrite(bits: 10..<11)
-        public var brown_out: BROWN_OUT
+        public var spi_mem_brown_out_int_raw: SPI_MEM_BROWN_OUT_INT_RAW
     }
 
     /// SPI1 interrupt status register
     @Register(bitWidth: 32)
-    public struct INT_ST {
+    public struct SPI_MEM_INT_ST {
         /// The status bit for SPI_MEM_PER_END_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var per_end: PER_END
+        public var spi_mem_per_end_int_st: SPI_MEM_PER_END_INT_ST
 
         /// The status bit for SPI_MEM_PES_END_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var pes_end: PES_END
+        public var spi_mem_pes_end_int_st: SPI_MEM_PES_END_INT_ST
 
         /// The status bit for SPI_MEM_WPE_END_INT interrupt.
         @ReadOnly(bits: 2..<3)
-        public var wpe_end: WPE_END
+        public var spi_mem_wpe_end_int_st: SPI_MEM_WPE_END_INT_ST
 
         /// The status bit for SPI_MEM_SLV_ST_END_INT interrupt.
         @ReadOnly(bits: 3..<4)
-        public var slv_st_end: SLV_ST_END
+        public var spi_mem_slv_st_end_int_st: SPI_MEM_SLV_ST_END_INT_ST
 
         /// The status bit for SPI_MEM_MST_ST_END_INT interrupt.
         @ReadOnly(bits: 4..<5)
-        public var mst_st_end: MST_ST_END
+        public var spi_mem_mst_st_end_int_st: SPI_MEM_MST_ST_END_INT_ST
 
         /// The status bit for SPI_MEM_BROWN_OUT_INT interrupt.
         @ReadOnly(bits: 10..<11)
-        public var brown_out: BROWN_OUT
+        public var spi_mem_brown_out_int_st: SPI_MEM_BROWN_OUT_INT_ST
     }
 
     /// SPI1 DDR control register
     @Register(bitWidth: 32)
-    public struct DDR {
+    public struct SPI_MEM_DDR {
         /// 1: in ddr mode, 0 in sdr mode
         @ReadOnly(bits: 0..<1)
         public var spi_fmem_ddr_en: SPI_FMEM_DDR_EN
@@ -805,29 +985,29 @@ extension SPI1 {
 
     /// SPI1 timing control register
     @Register(bitWidth: 32)
-    public struct TIMING_CALI {
+    public struct SPI_MEM_TIMING_CALI {
         /// The bit is used to enable timing auto-calibration for all reading operations.
         @ReadWrite(bits: 1..<2)
-        public var timing_cali_field: TIMING_CALI_FIELD
+        public var spi_mem_timing_cali_field: SPI_MEM_TIMING_CALI_FIELD
 
         /// add extra dummy spi clock cycle length for spi clock calibration.
         @ReadWrite(bits: 2..<5)
-        public var extra_dummy_cyclelen: EXTRA_DUMMY_CYCLELEN
+        public var spi_mem_extra_dummy_cyclelen: SPI_MEM_EXTRA_DUMMY_CYCLELEN
     }
 
     /// SPI1 clk_gate register
     @Register(bitWidth: 32)
-    public struct CLOCK_GATE {
+    public struct SPI_MEM_CLOCK_GATE {
         /// Register clock gate enable signal. 1: Enable. 0: Disable.
         @ReadWrite(bits: 0..<1)
-        public var clk_en: CLK_EN
+        public var spi_mem_clk_en: SPI_MEM_CLK_EN
     }
 
     /// Version control register
     @Register(bitWidth: 32)
-    public struct DATE {
+    public struct SPI_MEM_DATE {
         /// Version control register
         @ReadWrite(bits: 0..<28)
-        public var date_field: DATE_FIELD
+        public var spi_mem_date_field: SPI_MEM_DATE_FIELD
     }
 }

@@ -27,7 +27,7 @@ public struct UART0 {
 
     /// Clock divider configuration
     @RegisterBlock(offset: 0x14)
-    public var clkdiv: Register<CLKDIV>
+    public var clkdiv_sync: Register<CLKDIV_SYNC>
 
     /// Rx Filter configuration
     @RegisterBlock(offset: 0x18)
@@ -39,7 +39,7 @@ public struct UART0 {
 
     /// a
     @RegisterBlock(offset: 0x20)
-    public var conf0: Register<CONF0>
+    public var conf0_sync: Register<CONF0_SYNC>
 
     /// Configuration register 1
     @RegisterBlock(offset: 0x24)
@@ -47,7 +47,7 @@ public struct UART0 {
 
     /// Hardware flow-control configuration
     @RegisterBlock(offset: 0x2c)
-    public var hwfc_conf: Register<HWFC_CONF>
+    public var hwfc_conf_sync: Register<HWFC_CONF_SYNC>
 
     /// UART sleep configure register 0
     @RegisterBlock(offset: 0x30)
@@ -63,7 +63,7 @@ public struct UART0 {
 
     /// Software flow-control character configuration
     @RegisterBlock(offset: 0x3c)
-    public var swfc_conf0: Register<SWFC_CONF0>
+    public var swfc_conf0_sync: Register<SWFC_CONF0_SYNC>
 
     /// Software flow-control character configuration
     @RegisterBlock(offset: 0x40)
@@ -71,31 +71,31 @@ public struct UART0 {
 
     /// Tx Break character configuration
     @RegisterBlock(offset: 0x44)
-    public var txbrk_conf: Register<TXBRK_CONF>
+    public var txbrk_conf_sync: Register<TXBRK_CONF_SYNC>
 
     /// Frame-end idle configuration
     @RegisterBlock(offset: 0x48)
-    public var idle_conf: Register<IDLE_CONF>
+    public var idle_conf_sync: Register<IDLE_CONF_SYNC>
 
     /// RS485 mode configuration
     @RegisterBlock(offset: 0x4c)
-    public var rs485_conf: Register<RS485_CONF>
+    public var rs485_conf_sync: Register<RS485_CONF_SYNC>
 
     /// Pre-sequence timing configuration
     @RegisterBlock(offset: 0x50)
-    public var at_cmd_precnt: Register<AT_CMD_PRECNT>
+    public var at_cmd_precnt_sync: Register<AT_CMD_PRECNT_SYNC>
 
     /// Post-sequence timing configuration
     @RegisterBlock(offset: 0x54)
-    public var at_cmd_postcnt: Register<AT_CMD_POSTCNT>
+    public var at_cmd_postcnt_sync: Register<AT_CMD_POSTCNT_SYNC>
 
     /// Timeout configuration
     @RegisterBlock(offset: 0x58)
-    public var at_cmd_gaptout: Register<AT_CMD_GAPTOUT>
+    public var at_cmd_gaptout_sync: Register<AT_CMD_GAPTOUT_SYNC>
 
     /// AT escape sequence detection configuration
     @RegisterBlock(offset: 0x5c)
-    public var at_cmd_char: Register<AT_CMD_CHAR>
+    public var at_cmd_char_sync: Register<AT_CMD_CHAR_SYNC>
 
     /// UART memory power configuration
     @RegisterBlock(offset: 0x60)
@@ -103,7 +103,7 @@ public struct UART0 {
 
     /// UART threshold and allocation configuration
     @RegisterBlock(offset: 0x64)
-    public var tout_conf: Register<TOUT_CONF>
+    public var tout_conf_sync: Register<TOUT_CONF_SYNC>
 
     /// Tx-SRAM write and read offset address.
     @RegisterBlock(offset: 0x68)
@@ -163,7 +163,7 @@ extension UART0 {
     @Register(bitWidth: 32)
     public struct FIFO {
         /// UART 0 accesses FIFO via this register.
-        @ReadWrite(bits: 0..<8)
+        @ReadOnly(bits: 0..<8)
         public var rxfifo_rd_byte: RXFIFO_RD_BYTE
     }
 
@@ -172,83 +172,83 @@ extension UART0 {
     public struct INT_RAW {
         /// This interrupt raw bit turns to high level when receiver receives more data than what rxfifo_full_thrhd specifies.
         @ReadWrite(bits: 0..<1)
-        public var rxfifo_full: RXFIFO_FULL
+        public var rxfifo_full_int_raw: RXFIFO_FULL_INT_RAW
 
         /// This interrupt raw bit turns to high level when the amount of data in Tx-FIFO is less than what txfifo_empty_thrhd specifies .
         @ReadWrite(bits: 1..<2)
-        public var txfifo_empty: TXFIFO_EMPTY
+        public var txfifo_empty_int_raw: TXFIFO_EMPTY_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a parity error in the data.
         @ReadWrite(bits: 2..<3)
-        public var parity_err: PARITY_ERR
+        public var parity_err_int_raw: PARITY_ERR_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a data frame error .
         @ReadWrite(bits: 3..<4)
-        public var frm_err: FRM_ERR
+        public var frm_err_int_raw: FRM_ERR_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver receives more data than the FIFO can store.
         @ReadWrite(bits: 4..<5)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_raw: RXFIFO_OVF_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects the edge change of DSRn signal.
         @ReadWrite(bits: 5..<6)
-        public var dsr_chg: DSR_CHG
+        public var dsr_chg_int_raw: DSR_CHG_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects the edge change of CTSn signal.
         @ReadWrite(bits: 6..<7)
-        public var cts_chg: CTS_CHG
+        public var cts_chg_int_raw: CTS_CHG_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a 0 after the stop bit.
         @ReadWrite(bits: 7..<8)
-        public var brk_det: BRK_DET
+        public var brk_det_int_raw: BRK_DET_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver takes more time than rx_tout_thrhd to receive a byte.
         @ReadWrite(bits: 8..<9)
-        public var rxfifo_tout: RXFIFO_TOUT
+        public var rxfifo_tout_int_raw: RXFIFO_TOUT_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver recevies Xon char when uart_sw_flow_con_en is set to 1.
         @ReadWrite(bits: 9..<10)
-        public var sw_xon: SW_XON
+        public var sw_xon_int_raw: SW_XON_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver receives Xoff char when uart_sw_flow_con_en is set to 1.
         @ReadWrite(bits: 10..<11)
-        public var sw_xoff: SW_XOFF
+        public var sw_xoff_int_raw: SW_XOFF_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a glitch in the middle of a start bit.
         @ReadWrite(bits: 11..<12)
-        public var glitch_det: GLITCH_DET
+        public var glitch_det_int_raw: GLITCH_DET_INT_RAW
 
         /// This interrupt raw bit turns to high level when transmitter completes sending NULL characters after all data in Tx-FIFO are sent.
         @ReadWrite(bits: 12..<13)
-        public var tx_brk_done: TX_BRK_DONE
+        public var tx_brk_done_int_raw: TX_BRK_DONE_INT_RAW
 
         /// This interrupt raw bit turns to high level when transmitter has kept the shortest duration after sending the last data.
         @ReadWrite(bits: 13..<14)
-        public var tx_brk_idle_done: TX_BRK_IDLE_DONE
+        public var tx_brk_idle_done_int_raw: TX_BRK_IDLE_DONE_INT_RAW
 
         /// This interrupt raw bit turns to high level when transmitter has send out all data in FIFO.
         @ReadWrite(bits: 14..<15)
-        public var tx_done: TX_DONE
+        public var tx_done_int_raw: TX_DONE_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a parity error from the echo of transmitter in rs485 mode.
         @ReadWrite(bits: 15..<16)
-        public var rs485_parity_err: RS485_PARITY_ERR
+        public var rs485_parity_err_int_raw: RS485_PARITY_ERR_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects a data frame error from the echo of transmitter in rs485 mode.
         @ReadWrite(bits: 16..<17)
-        public var rs485_frm_err: RS485_FRM_ERR
+        public var rs485_frm_err_int_raw: RS485_FRM_ERR_INT_RAW
 
         /// This interrupt raw bit turns to high level when detects a clash between transmitter and receiver in rs485 mode.
         @ReadWrite(bits: 17..<18)
-        public var rs485_clash: RS485_CLASH
+        public var rs485_clash_int_raw: RS485_CLASH_INT_RAW
 
         /// This interrupt raw bit turns to high level when receiver detects the configured at_cmd char.
         @ReadWrite(bits: 18..<19)
-        public var at_cmd_char_det: AT_CMD_CHAR_DET
+        public var at_cmd_char_det_int_raw: AT_CMD_CHAR_DET_INT_RAW
 
         /// This interrupt raw bit turns to high level when input rxd edge changes more times than what reg_active_threshold specifies in light sleeping mode.
         @ReadWrite(bits: 19..<20)
-        public var wakeup: WAKEUP
+        public var wakeup_int_raw: WAKEUP_INT_RAW
     }
 
     /// Masked interrupt status
@@ -256,83 +256,83 @@ extension UART0 {
     public struct INT_ST {
         /// This is the status bit for rxfifo_full_int_raw when rxfifo_full_int_ena is set to 1.
         @ReadOnly(bits: 0..<1)
-        public var rxfifo_full: RXFIFO_FULL
+        public var rxfifo_full_int_st: RXFIFO_FULL_INT_ST
 
         /// This is the status bit for txfifo_empty_int_raw when txfifo_empty_int_ena is set to 1.
         @ReadOnly(bits: 1..<2)
-        public var txfifo_empty: TXFIFO_EMPTY
+        public var txfifo_empty_int_st: TXFIFO_EMPTY_INT_ST
 
         /// This is the status bit for parity_err_int_raw when parity_err_int_ena is set to 1.
         @ReadOnly(bits: 2..<3)
-        public var parity_err: PARITY_ERR
+        public var parity_err_int_st: PARITY_ERR_INT_ST
 
         /// This is the status bit for frm_err_int_raw when frm_err_int_ena is set to 1.
         @ReadOnly(bits: 3..<4)
-        public var frm_err: FRM_ERR
+        public var frm_err_int_st: FRM_ERR_INT_ST
 
         /// This is the status bit for rxfifo_ovf_int_raw when rxfifo_ovf_int_ena is set to 1.
         @ReadOnly(bits: 4..<5)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_st: RXFIFO_OVF_INT_ST
 
         /// This is the status bit for dsr_chg_int_raw when dsr_chg_int_ena is set to 1.
         @ReadOnly(bits: 5..<6)
-        public var dsr_chg: DSR_CHG
+        public var dsr_chg_int_st: DSR_CHG_INT_ST
 
         /// This is the status bit for cts_chg_int_raw when cts_chg_int_ena is set to 1.
         @ReadOnly(bits: 6..<7)
-        public var cts_chg: CTS_CHG
+        public var cts_chg_int_st: CTS_CHG_INT_ST
 
         /// This is the status bit for brk_det_int_raw when brk_det_int_ena is set to 1.
         @ReadOnly(bits: 7..<8)
-        public var brk_det: BRK_DET
+        public var brk_det_int_st: BRK_DET_INT_ST
 
         /// This is the status bit for rxfifo_tout_int_raw when rxfifo_tout_int_ena is set to 1.
         @ReadOnly(bits: 8..<9)
-        public var rxfifo_tout: RXFIFO_TOUT
+        public var rxfifo_tout_int_st: RXFIFO_TOUT_INT_ST
 
         /// This is the status bit for sw_xon_int_raw when sw_xon_int_ena is set to 1.
         @ReadOnly(bits: 9..<10)
-        public var sw_xon: SW_XON
+        public var sw_xon_int_st: SW_XON_INT_ST
 
         /// This is the status bit for sw_xoff_int_raw when sw_xoff_int_ena is set to 1.
         @ReadOnly(bits: 10..<11)
-        public var sw_xoff: SW_XOFF
+        public var sw_xoff_int_st: SW_XOFF_INT_ST
 
         /// This is the status bit for glitch_det_int_raw when glitch_det_int_ena is set to 1.
         @ReadOnly(bits: 11..<12)
-        public var glitch_det: GLITCH_DET
+        public var glitch_det_int_st: GLITCH_DET_INT_ST
 
         /// This is the status bit for tx_brk_done_int_raw when tx_brk_done_int_ena is set to 1.
         @ReadOnly(bits: 12..<13)
-        public var tx_brk_done: TX_BRK_DONE
+        public var tx_brk_done_int_st: TX_BRK_DONE_INT_ST
 
         /// This is the stauts bit for tx_brk_idle_done_int_raw when tx_brk_idle_done_int_ena is set to 1.
         @ReadOnly(bits: 13..<14)
-        public var tx_brk_idle_done: TX_BRK_IDLE_DONE
+        public var tx_brk_idle_done_int_st: TX_BRK_IDLE_DONE_INT_ST
 
         /// This is the status bit for tx_done_int_raw when tx_done_int_ena is set to 1.
         @ReadOnly(bits: 14..<15)
-        public var tx_done: TX_DONE
+        public var tx_done_int_st: TX_DONE_INT_ST
 
         /// This is the status bit for rs485_parity_err_int_raw when rs485_parity_int_ena is set to 1.
         @ReadOnly(bits: 15..<16)
-        public var rs485_parity_err: RS485_PARITY_ERR
+        public var rs485_parity_err_int_st: RS485_PARITY_ERR_INT_ST
 
         /// This is the status bit for rs485_frm_err_int_raw when rs485_fm_err_int_ena is set to 1.
         @ReadOnly(bits: 16..<17)
-        public var rs485_frm_err: RS485_FRM_ERR
+        public var rs485_frm_err_int_st: RS485_FRM_ERR_INT_ST
 
         /// This is the status bit for rs485_clash_int_raw when rs485_clash_int_ena is set to 1.
         @ReadOnly(bits: 17..<18)
-        public var rs485_clash: RS485_CLASH
+        public var rs485_clash_int_st: RS485_CLASH_INT_ST
 
         /// This is the status bit for at_cmd_det_int_raw when at_cmd_char_det_int_ena is set to 1.
         @ReadOnly(bits: 18..<19)
-        public var at_cmd_char_det: AT_CMD_CHAR_DET
+        public var at_cmd_char_det_int_st: AT_CMD_CHAR_DET_INT_ST
 
         /// This is the status bit for uart_wakeup_int_raw when uart_wakeup_int_ena is set to 1.
         @ReadOnly(bits: 19..<20)
-        public var wakeup: WAKEUP
+        public var wakeup_int_st: WAKEUP_INT_ST
     }
 
     /// Interrupt enable bits
@@ -340,83 +340,83 @@ extension UART0 {
     public struct INT_ENA {
         /// This is the enable bit for rxfifo_full_int_st register.
         @ReadWrite(bits: 0..<1)
-        public var rxfifo_full: RXFIFO_FULL
+        public var rxfifo_full_int_ena: RXFIFO_FULL_INT_ENA
 
         /// This is the enable bit for txfifo_empty_int_st register.
         @ReadWrite(bits: 1..<2)
-        public var txfifo_empty: TXFIFO_EMPTY
+        public var txfifo_empty_int_ena: TXFIFO_EMPTY_INT_ENA
 
         /// This is the enable bit for parity_err_int_st register.
         @ReadWrite(bits: 2..<3)
-        public var parity_err: PARITY_ERR
+        public var parity_err_int_ena: PARITY_ERR_INT_ENA
 
         /// This is the enable bit for frm_err_int_st register.
         @ReadWrite(bits: 3..<4)
-        public var frm_err: FRM_ERR
+        public var frm_err_int_ena: FRM_ERR_INT_ENA
 
         /// This is the enable bit for rxfifo_ovf_int_st register.
         @ReadWrite(bits: 4..<5)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_ena: RXFIFO_OVF_INT_ENA
 
         /// This is the enable bit for dsr_chg_int_st register.
         @ReadWrite(bits: 5..<6)
-        public var dsr_chg: DSR_CHG
+        public var dsr_chg_int_ena: DSR_CHG_INT_ENA
 
         /// This is the enable bit for cts_chg_int_st register.
         @ReadWrite(bits: 6..<7)
-        public var cts_chg: CTS_CHG
+        public var cts_chg_int_ena: CTS_CHG_INT_ENA
 
         /// This is the enable bit for brk_det_int_st register.
         @ReadWrite(bits: 7..<8)
-        public var brk_det: BRK_DET
+        public var brk_det_int_ena: BRK_DET_INT_ENA
 
         /// This is the enable bit for rxfifo_tout_int_st register.
         @ReadWrite(bits: 8..<9)
-        public var rxfifo_tout: RXFIFO_TOUT
+        public var rxfifo_tout_int_ena: RXFIFO_TOUT_INT_ENA
 
         /// This is the enable bit for sw_xon_int_st register.
         @ReadWrite(bits: 9..<10)
-        public var sw_xon: SW_XON
+        public var sw_xon_int_ena: SW_XON_INT_ENA
 
         /// This is the enable bit for sw_xoff_int_st register.
         @ReadWrite(bits: 10..<11)
-        public var sw_xoff: SW_XOFF
+        public var sw_xoff_int_ena: SW_XOFF_INT_ENA
 
         /// This is the enable bit for glitch_det_int_st register.
         @ReadWrite(bits: 11..<12)
-        public var glitch_det: GLITCH_DET
+        public var glitch_det_int_ena: GLITCH_DET_INT_ENA
 
         /// This is the enable bit for tx_brk_done_int_st register.
         @ReadWrite(bits: 12..<13)
-        public var tx_brk_done: TX_BRK_DONE
+        public var tx_brk_done_int_ena: TX_BRK_DONE_INT_ENA
 
         /// This is the enable bit for tx_brk_idle_done_int_st register.
         @ReadWrite(bits: 13..<14)
-        public var tx_brk_idle_done: TX_BRK_IDLE_DONE
+        public var tx_brk_idle_done_int_ena: TX_BRK_IDLE_DONE_INT_ENA
 
         /// This is the enable bit for tx_done_int_st register.
         @ReadWrite(bits: 14..<15)
-        public var tx_done: TX_DONE
+        public var tx_done_int_ena: TX_DONE_INT_ENA
 
         /// This is the enable bit for rs485_parity_err_int_st register.
         @ReadWrite(bits: 15..<16)
-        public var rs485_parity_err: RS485_PARITY_ERR
+        public var rs485_parity_err_int_ena: RS485_PARITY_ERR_INT_ENA
 
         /// This is the enable bit for rs485_parity_err_int_st register.
         @ReadWrite(bits: 16..<17)
-        public var rs485_frm_err: RS485_FRM_ERR
+        public var rs485_frm_err_int_ena: RS485_FRM_ERR_INT_ENA
 
         /// This is the enable bit for rs485_clash_int_st register.
         @ReadWrite(bits: 17..<18)
-        public var rs485_clash: RS485_CLASH
+        public var rs485_clash_int_ena: RS485_CLASH_INT_ENA
 
         /// This is the enable bit for at_cmd_char_det_int_st register.
         @ReadWrite(bits: 18..<19)
-        public var at_cmd_char_det: AT_CMD_CHAR_DET
+        public var at_cmd_char_det_int_ena: AT_CMD_CHAR_DET_INT_ENA
 
         /// This is the enable bit for uart_wakeup_int_st register.
         @ReadWrite(bits: 19..<20)
-        public var wakeup: WAKEUP
+        public var wakeup_int_ena: WAKEUP_INT_ENA
     }
 
     /// Interrupt clear bits
@@ -424,95 +424,95 @@ extension UART0 {
     public struct INT_CLR {
         /// Set this bit to clear the rxfifo_full_int_raw interrupt.
         @WriteOnly(bits: 0..<1)
-        public var rxfifo_full: RXFIFO_FULL
+        public var rxfifo_full_int_clr: RXFIFO_FULL_INT_CLR
 
         /// Set this bit to clear txfifo_empty_int_raw interrupt.
         @WriteOnly(bits: 1..<2)
-        public var txfifo_empty: TXFIFO_EMPTY
+        public var txfifo_empty_int_clr: TXFIFO_EMPTY_INT_CLR
 
         /// Set this bit to clear parity_err_int_raw interrupt.
         @WriteOnly(bits: 2..<3)
-        public var parity_err: PARITY_ERR
+        public var parity_err_int_clr: PARITY_ERR_INT_CLR
 
         /// Set this bit to clear frm_err_int_raw interrupt.
         @WriteOnly(bits: 3..<4)
-        public var frm_err: FRM_ERR
+        public var frm_err_int_clr: FRM_ERR_INT_CLR
 
         /// Set this bit to clear rxfifo_ovf_int_raw interrupt.
         @WriteOnly(bits: 4..<5)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_clr: RXFIFO_OVF_INT_CLR
 
         /// Set this bit to clear the dsr_chg_int_raw interrupt.
         @WriteOnly(bits: 5..<6)
-        public var dsr_chg: DSR_CHG
+        public var dsr_chg_int_clr: DSR_CHG_INT_CLR
 
         /// Set this bit to clear the cts_chg_int_raw interrupt.
         @WriteOnly(bits: 6..<7)
-        public var cts_chg: CTS_CHG
+        public var cts_chg_int_clr: CTS_CHG_INT_CLR
 
         /// Set this bit to clear the brk_det_int_raw interrupt.
         @WriteOnly(bits: 7..<8)
-        public var brk_det: BRK_DET
+        public var brk_det_int_clr: BRK_DET_INT_CLR
 
         /// Set this bit to clear the rxfifo_tout_int_raw interrupt.
         @WriteOnly(bits: 8..<9)
-        public var rxfifo_tout: RXFIFO_TOUT
+        public var rxfifo_tout_int_clr: RXFIFO_TOUT_INT_CLR
 
         /// Set this bit to clear the sw_xon_int_raw interrupt.
         @WriteOnly(bits: 9..<10)
-        public var sw_xon: SW_XON
+        public var sw_xon_int_clr: SW_XON_INT_CLR
 
         /// Set this bit to clear the sw_xoff_int_raw interrupt.
         @WriteOnly(bits: 10..<11)
-        public var sw_xoff: SW_XOFF
+        public var sw_xoff_int_clr: SW_XOFF_INT_CLR
 
         /// Set this bit to clear the glitch_det_int_raw interrupt.
         @WriteOnly(bits: 11..<12)
-        public var glitch_det: GLITCH_DET
+        public var glitch_det_int_clr: GLITCH_DET_INT_CLR
 
         /// Set this bit to clear the tx_brk_done_int_raw interrupt..
         @WriteOnly(bits: 12..<13)
-        public var tx_brk_done: TX_BRK_DONE
+        public var tx_brk_done_int_clr: TX_BRK_DONE_INT_CLR
 
         /// Set this bit to clear the tx_brk_idle_done_int_raw interrupt.
         @WriteOnly(bits: 13..<14)
-        public var tx_brk_idle_done: TX_BRK_IDLE_DONE
+        public var tx_brk_idle_done_int_clr: TX_BRK_IDLE_DONE_INT_CLR
 
         /// Set this bit to clear the tx_done_int_raw interrupt.
         @WriteOnly(bits: 14..<15)
-        public var tx_done: TX_DONE
+        public var tx_done_int_clr: TX_DONE_INT_CLR
 
         /// Set this bit to clear the rs485_parity_err_int_raw interrupt.
         @WriteOnly(bits: 15..<16)
-        public var rs485_parity_err: RS485_PARITY_ERR
+        public var rs485_parity_err_int_clr: RS485_PARITY_ERR_INT_CLR
 
         /// Set this bit to clear the rs485_frm_err_int_raw interrupt.
         @WriteOnly(bits: 16..<17)
-        public var rs485_frm_err: RS485_FRM_ERR
+        public var rs485_frm_err_int_clr: RS485_FRM_ERR_INT_CLR
 
         /// Set this bit to clear the rs485_clash_int_raw interrupt.
         @WriteOnly(bits: 17..<18)
-        public var rs485_clash: RS485_CLASH
+        public var rs485_clash_int_clr: RS485_CLASH_INT_CLR
 
         /// Set this bit to clear the at_cmd_char_det_int_raw interrupt.
         @WriteOnly(bits: 18..<19)
-        public var at_cmd_char_det: AT_CMD_CHAR_DET
+        public var at_cmd_char_det_int_clr: AT_CMD_CHAR_DET_INT_CLR
 
         /// Set this bit to clear the uart_wakeup_int_raw interrupt.
         @WriteOnly(bits: 19..<20)
-        public var wakeup: WAKEUP
+        public var wakeup_int_clr: WAKEUP_INT_CLR
     }
 
     /// Clock divider configuration
     @Register(bitWidth: 32)
-    public struct CLKDIV {
+    public struct CLKDIV_SYNC {
         /// The integral part of the frequency divider factor.
         @ReadWrite(bits: 0..<12)
-        public var clkdiv_field: CLKDIV_FIELD
+        public var clkdiv: CLKDIV
 
         /// The decimal part of the frequency divider factor.
         @ReadWrite(bits: 20..<24)
-        public var frag: FRAG
+        public var clkdiv_frag: CLKDIV_FRAG
     }
 
     /// Rx Filter configuration
@@ -565,7 +565,7 @@ extension UART0 {
 
     /// a
     @Register(bitWidth: 32)
-    public struct CONF0 {
+    public struct CONF0_SYNC {
         /// This register is used to configure the parity check mode.
         @ReadWrite(bits: 0..<1)
         public var parity: PARITY
@@ -693,7 +693,7 @@ extension UART0 {
 
     /// Hardware flow-control configuration
     @Register(bitWidth: 32)
-    public struct HWFC_CONF {
+    public struct HWFC_CONF_SYNC {
         /// This register is used to configure the maximum amount of data that can be received when hardware flow control works.
         @ReadWrite(bits: 0..<8)
         public var rx_flow_thrhd: RX_FLOW_THRHD
@@ -757,7 +757,7 @@ extension UART0 {
 
     /// Software flow-control character configuration
     @Register(bitWidth: 32)
-    public struct SWFC_CONF0 {
+    public struct SWFC_CONF0_SYNC {
         /// This register stores the Xon flow control char.
         @ReadWrite(bits: 0..<8)
         public var xon_char: XON_CHAR
@@ -809,7 +809,7 @@ extension UART0 {
 
     /// Tx Break character configuration
     @Register(bitWidth: 32)
-    public struct TXBRK_CONF {
+    public struct TXBRK_CONF_SYNC {
         /// This register is used to configure the number of 0 to be sent after the process of sending data is done. It is active when txd_brk is set to 1.
         @ReadWrite(bits: 0..<8)
         public var tx_brk_num: TX_BRK_NUM
@@ -817,7 +817,7 @@ extension UART0 {
 
     /// Frame-end idle configuration
     @Register(bitWidth: 32)
-    public struct IDLE_CONF {
+    public struct IDLE_CONF_SYNC {
         /// It will produce frame end signal when receiver takes more time to receive one byte data than this register value.
         @ReadWrite(bits: 0..<10)
         public var rx_idle_thrhd: RX_IDLE_THRHD
@@ -829,7 +829,7 @@ extension UART0 {
 
     /// RS485 mode configuration
     @Register(bitWidth: 32)
-    public struct RS485_CONF {
+    public struct RS485_CONF_SYNC {
         /// Set this bit to choose the rs485 mode.
         @ReadWrite(bits: 0..<1)
         public var rs485_en: RS485_EN
@@ -861,7 +861,7 @@ extension UART0 {
 
     /// Pre-sequence timing configuration
     @Register(bitWidth: 32)
-    public struct AT_CMD_PRECNT {
+    public struct AT_CMD_PRECNT_SYNC {
         /// This register is used to configure the idle duration time before the first at_cmd is received by receiver.
         @ReadWrite(bits: 0..<16)
         public var pre_idle_num: PRE_IDLE_NUM
@@ -869,7 +869,7 @@ extension UART0 {
 
     /// Post-sequence timing configuration
     @Register(bitWidth: 32)
-    public struct AT_CMD_POSTCNT {
+    public struct AT_CMD_POSTCNT_SYNC {
         /// This register is used to configure the duration time between the last at_cmd and the next data.
         @ReadWrite(bits: 0..<16)
         public var post_idle_num: POST_IDLE_NUM
@@ -877,7 +877,7 @@ extension UART0 {
 
     /// Timeout configuration
     @Register(bitWidth: 32)
-    public struct AT_CMD_GAPTOUT {
+    public struct AT_CMD_GAPTOUT_SYNC {
         /// This register is used to configure the duration time between the at_cmd chars.
         @ReadWrite(bits: 0..<16)
         public var rx_gap_tout: RX_GAP_TOUT
@@ -885,10 +885,10 @@ extension UART0 {
 
     /// AT escape sequence detection configuration
     @Register(bitWidth: 32)
-    public struct AT_CMD_CHAR {
+    public struct AT_CMD_CHAR_SYNC {
         /// This register is used to configure the content of at_cmd char.
         @ReadWrite(bits: 0..<8)
-        public var at_cmd_char_field: AT_CMD_CHAR_FIELD
+        public var at_cmd_char: AT_CMD_CHAR
 
         /// This register is used to configure the num of continuous at_cmd chars received by receiver.
         @ReadWrite(bits: 8..<16)
@@ -909,7 +909,7 @@ extension UART0 {
 
     /// UART threshold and allocation configuration
     @Register(bitWidth: 32)
-    public struct TOUT_CONF {
+    public struct TOUT_CONF_SYNC {
         /// This is the enble bit for uart receiver's timeout function.
         @ReadWrite(bits: 0..<1)
         public var rx_tout_en: RX_TOUT_EN

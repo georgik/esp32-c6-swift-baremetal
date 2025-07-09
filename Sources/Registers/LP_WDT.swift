@@ -7,7 +7,7 @@ import MMIO
 public struct LP_WDT {
     /// need_des
     @RegisterBlock(offset: 0x0)
-    public var wdtconfig0: Register<WDTCONFIG0>
+    public var config0: Register<CONFIG0>
 
     /// need_des
     @RegisterBlock(offset: 0x4)
@@ -27,15 +27,15 @@ public struct LP_WDT {
 
     /// need_des
     @RegisterBlock(offset: 0x14)
-    public var wdtfeed: Register<WDTFEED>
+    public var feed: Register<FEED>
 
     /// need_des
     @RegisterBlock(offset: 0x18)
-    public var wdtwprotect: Register<WDTWPROTECT>
+    public var wprotect: Register<WPROTECT>
 
     /// need_des
     @RegisterBlock(offset: 0x1c)
-    public var swd_conf: Register<SWD_CONF>
+    public var swd_config: Register<SWD_CONFIG>
 
     /// need_des
     @RegisterBlock(offset: 0x20)
@@ -65,7 +65,7 @@ public struct LP_WDT {
 extension LP_WDT {
     /// need_des
     @Register(bitWidth: 32)
-    public struct WDTCONFIG0 {
+    public struct CONFIG0 {
         /// need_des
         @ReadWrite(bits: 0..<8)
         public var wdt_chip_reset_width: WDT_CHIP_RESET_WIDTH
@@ -153,15 +153,15 @@ extension LP_WDT {
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct WDTFEED {
+    public struct FEED {
         /// need_des
         @WriteOnly(bits: 31..<32)
-        public var wdt_feed: WDT_FEED
+        public var rtc_wdt_feed: RTC_WDT_FEED
     }
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct WDTWPROTECT {
+    public struct WPROTECT {
         /// need_des
         @ReadWrite(bits: 0..<32)
         public var wdt_wkey: WDT_WKEY
@@ -169,7 +169,7 @@ extension LP_WDT {
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct SWD_CONF {
+    public struct SWD_CONFIG {
         /// need_des
         @ReadOnly(bits: 0..<1)
         public var swd_reset_flag: SWD_RESET_FLAG
@@ -208,11 +208,11 @@ extension LP_WDT {
     public struct INT_RAW {
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var super_wdt: SUPER_WDT
+        public var super_wdt_int_raw: SUPER_WDT_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var lp_wdt: LP_WDT
+        public var lp_wdt_int_raw: LP_WDT_INT_RAW
     }
 
     /// need_des
@@ -220,11 +220,11 @@ extension LP_WDT {
     public struct INT_ST {
         /// need_des
         @ReadOnly(bits: 30..<31)
-        public var super_wdt: SUPER_WDT
+        public var super_wdt_int_st: SUPER_WDT_INT_ST
 
         /// need_des
         @ReadOnly(bits: 31..<32)
-        public var wdt: WDT
+        public var lp_wdt_int_st: LP_WDT_INT_ST
     }
 
     /// need_des
@@ -232,11 +232,11 @@ extension LP_WDT {
     public struct INT_ENA {
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var super_wdt: SUPER_WDT
+        public var super_wdt_int_ena: SUPER_WDT_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var wdt: WDT
+        public var lp_wdt_int_ena: LP_WDT_INT_ENA
     }
 
     /// need_des
@@ -244,11 +244,11 @@ extension LP_WDT {
     public struct INT_CLR {
         /// need_des
         @WriteOnly(bits: 30..<31)
-        public var super_wdt: SUPER_WDT
+        public var super_wdt_int_clr: SUPER_WDT_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 31..<32)
-        public var wdt: WDT
+        public var lp_wdt_int_clr: LP_WDT_INT_CLR
     }
 
     /// need_des

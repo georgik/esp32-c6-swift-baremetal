@@ -51,7 +51,7 @@ public struct I2C0 {
 
     /// Status of captured I2C communication events
     @RegisterBlock(offset: 0x2c)
-    public var int_st: Register<INT_ST>
+    public var int_status: Register<INT_STATUS>
 
     /// Configures the hold time after a negative SCL edge.
     @RegisterBlock(offset: 0x30)
@@ -89,9 +89,37 @@ public struct I2C0 {
     @RegisterBlock(offset: 0x54)
     public var clk_conf: Register<CLK_CONF>
 
-    /// I2C command register %s
-    @RegisterBlock(offset: 0x58, stride: 0x4, count: 8)
-    public var comd: RegisterArray<COMD>
+    /// I2C command register 0
+    @RegisterBlock(offset: 0x58)
+    public var comd0: Register<COMD0>
+
+    /// I2C command register 1
+    @RegisterBlock(offset: 0x5c)
+    public var comd1: Register<COMD1>
+
+    /// I2C command register 2
+    @RegisterBlock(offset: 0x60)
+    public var comd2: Register<COMD2>
+
+    /// I2C command register 3
+    @RegisterBlock(offset: 0x64)
+    public var comd3: Register<COMD3>
+
+    /// I2C command register 4
+    @RegisterBlock(offset: 0x68)
+    public var comd4: Register<COMD4>
+
+    /// I2C command register 5
+    @RegisterBlock(offset: 0x6c)
+    public var comd5: Register<COMD5>
+
+    /// I2C command register 6
+    @RegisterBlock(offset: 0x70)
+    public var comd6: Register<COMD6>
+
+    /// I2C command register 7
+    @RegisterBlock(offset: 0x74)
+    public var comd7: Register<COMD7>
 
     /// SCL status time out register
     @RegisterBlock(offset: 0x78)
@@ -323,7 +351,7 @@ extension I2C0 {
     @Register(bitWidth: 32)
     public struct DATA {
         /// The value of rx FIFO read data.
-        @ReadWrite(bits: 0..<8)
+        @ReadOnly(bits: 0..<8)
         public var fifo_rdata: FIFO_RDATA
     }
 
@@ -332,79 +360,79 @@ extension I2C0 {
     public struct INT_RAW {
         /// The raw interrupt bit for I2C_RXFIFO_WM_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var rxfifo_wm: RXFIFO_WM
+        public var rxfifo_wm_int_raw: RXFIFO_WM_INT_RAW
 
         /// The raw interrupt bit for I2C_TXFIFO_WM_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var txfifo_wm: TXFIFO_WM
+        public var txfifo_wm_int_raw: TXFIFO_WM_INT_RAW
 
         /// The raw interrupt bit for I2C_RXFIFO_OVF_INT interrupt.
         @ReadOnly(bits: 2..<3)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_raw: RXFIFO_OVF_INT_RAW
 
         /// The raw interrupt bit for the I2C_END_DETECT_INT interrupt.
         @ReadOnly(bits: 3..<4)
-        public var end_detect: END_DETECT
+        public var end_detect_int_raw: END_DETECT_INT_RAW
 
         /// The raw interrupt bit for the I2C_END_DETECT_INT interrupt.
         @ReadOnly(bits: 4..<5)
-        public var byte_trans_done: BYTE_TRANS_DONE
+        public var byte_trans_done_int_raw: BYTE_TRANS_DONE_INT_RAW
 
         /// The raw interrupt bit for the I2C_ARBITRATION_LOST_INT interrupt.
         @ReadOnly(bits: 5..<6)
-        public var arbitration_lost: ARBITRATION_LOST
+        public var arbitration_lost_int_raw: ARBITRATION_LOST_INT_RAW
 
         /// The raw interrupt bit for I2C_TRANS_COMPLETE_INT interrupt.
         @ReadOnly(bits: 6..<7)
-        public var mst_txfifo_udf: MST_TXFIFO_UDF
+        public var mst_txfifo_udf_int_raw: MST_TXFIFO_UDF_INT_RAW
 
         /// The raw interrupt bit for the I2C_TRANS_COMPLETE_INT interrupt.
         @ReadOnly(bits: 7..<8)
-        public var trans_complete: TRANS_COMPLETE
+        public var trans_complete_int_raw: TRANS_COMPLETE_INT_RAW
 
         /// The raw interrupt bit for the I2C_TIME_OUT_INT interrupt.
         @ReadOnly(bits: 8..<9)
-        public var time_out: TIME_OUT
+        public var time_out_int_raw: TIME_OUT_INT_RAW
 
         /// The raw interrupt bit for the I2C_TRANS_START_INT interrupt.
         @ReadOnly(bits: 9..<10)
-        public var trans_start: TRANS_START
+        public var trans_start_int_raw: TRANS_START_INT_RAW
 
         /// The raw interrupt bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadOnly(bits: 10..<11)
-        public var nack: NACK
+        public var nack_int_raw: NACK_INT_RAW
 
         /// The raw interrupt bit for I2C_TXFIFO_OVF_INT interrupt.
         @ReadOnly(bits: 11..<12)
-        public var txfifo_ovf: TXFIFO_OVF
+        public var txfifo_ovf_int_raw: TXFIFO_OVF_INT_RAW
 
         /// The raw interrupt bit for I2C_RXFIFO_UDF_INT interrupt.
         @ReadOnly(bits: 12..<13)
-        public var rxfifo_udf: RXFIFO_UDF
+        public var rxfifo_udf_int_raw: RXFIFO_UDF_INT_RAW
 
         /// The raw interrupt bit for I2C_SCL_ST_TO_INT interrupt.
         @ReadOnly(bits: 13..<14)
-        public var scl_st_to: SCL_ST_TO
+        public var scl_st_to_int_raw: SCL_ST_TO_INT_RAW
 
         /// The raw interrupt bit for I2C_SCL_MAIN_ST_TO_INT interrupt.
         @ReadOnly(bits: 14..<15)
-        public var scl_main_st_to: SCL_MAIN_ST_TO
+        public var scl_main_st_to_int_raw: SCL_MAIN_ST_TO_INT_RAW
 
         /// The raw interrupt bit for I2C_DET_START_INT interrupt.
         @ReadOnly(bits: 15..<16)
-        public var det_start: DET_START
+        public var det_start_int_raw: DET_START_INT_RAW
 
         /// The raw interrupt bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadOnly(bits: 16..<17)
-        public var slave_stretch: SLAVE_STRETCH
+        public var slave_stretch_int_raw: SLAVE_STRETCH_INT_RAW
 
         /// The raw interrupt bit for I2C_GENARAL_CALL_INT interrupt.
         @ReadOnly(bits: 17..<18)
-        public var general_call: GENERAL_CALL
+        public var general_call_int_raw: GENERAL_CALL_INT_RAW
 
         /// The raw interrupt bit for I2C_SLAVE_ADDR_UNMATCH_INT_RAW interrupt.
         @ReadOnly(bits: 18..<19)
-        public var slave_addr_unmatch: SLAVE_ADDR_UNMATCH
+        public var slave_addr_unmatch_int_raw: SLAVE_ADDR_UNMATCH_INT_RAW
     }
 
     /// Interrupt clear bits
@@ -412,79 +440,79 @@ extension I2C0 {
     public struct INT_CLR {
         /// Set this bit to clear I2C_RXFIFO_WM_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var rxfifo_wm: RXFIFO_WM
+        public var rxfifo_wm_int_clr: RXFIFO_WM_INT_CLR
 
         /// Set this bit to clear I2C_TXFIFO_WM_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var txfifo_wm: TXFIFO_WM
+        public var txfifo_wm_int_clr: TXFIFO_WM_INT_CLR
 
         /// Set this bit to clear I2C_RXFIFO_OVF_INT interrupt.
         @WriteOnly(bits: 2..<3)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_clr: RXFIFO_OVF_INT_CLR
 
         /// Set this bit to clear the I2C_END_DETECT_INT interrupt.
         @WriteOnly(bits: 3..<4)
-        public var end_detect: END_DETECT
+        public var end_detect_int_clr: END_DETECT_INT_CLR
 
         /// Set this bit to clear the I2C_END_DETECT_INT interrupt.
         @WriteOnly(bits: 4..<5)
-        public var byte_trans_done: BYTE_TRANS_DONE
+        public var byte_trans_done_int_clr: BYTE_TRANS_DONE_INT_CLR
 
         /// Set this bit to clear the I2C_ARBITRATION_LOST_INT interrupt.
         @WriteOnly(bits: 5..<6)
-        public var arbitration_lost: ARBITRATION_LOST
+        public var arbitration_lost_int_clr: ARBITRATION_LOST_INT_CLR
 
         /// Set this bit to clear I2C_TRANS_COMPLETE_INT interrupt.
         @WriteOnly(bits: 6..<7)
-        public var mst_txfifo_udf: MST_TXFIFO_UDF
+        public var mst_txfifo_udf_int_clr: MST_TXFIFO_UDF_INT_CLR
 
         /// Set this bit to clear the I2C_TRANS_COMPLETE_INT interrupt.
         @WriteOnly(bits: 7..<8)
-        public var trans_complete: TRANS_COMPLETE
+        public var trans_complete_int_clr: TRANS_COMPLETE_INT_CLR
 
         /// Set this bit to clear the I2C_TIME_OUT_INT interrupt.
         @WriteOnly(bits: 8..<9)
-        public var time_out: TIME_OUT
+        public var time_out_int_clr: TIME_OUT_INT_CLR
 
         /// Set this bit to clear the I2C_TRANS_START_INT interrupt.
         @WriteOnly(bits: 9..<10)
-        public var trans_start: TRANS_START
+        public var trans_start_int_clr: TRANS_START_INT_CLR
 
         /// Set this bit to clear I2C_SLAVE_STRETCH_INT interrupt.
         @WriteOnly(bits: 10..<11)
-        public var nack: NACK
+        public var nack_int_clr: NACK_INT_CLR
 
         /// Set this bit to clear I2C_TXFIFO_OVF_INT interrupt.
         @WriteOnly(bits: 11..<12)
-        public var txfifo_ovf: TXFIFO_OVF
+        public var txfifo_ovf_int_clr: TXFIFO_OVF_INT_CLR
 
         /// Set this bit to clear I2C_RXFIFO_UDF_INT interrupt.
         @WriteOnly(bits: 12..<13)
-        public var rxfifo_udf: RXFIFO_UDF
+        public var rxfifo_udf_int_clr: RXFIFO_UDF_INT_CLR
 
         /// Set this bit to clear I2C_SCL_ST_TO_INT interrupt.
         @WriteOnly(bits: 13..<14)
-        public var scl_st_to: SCL_ST_TO
+        public var scl_st_to_int_clr: SCL_ST_TO_INT_CLR
 
         /// Set this bit to clear I2C_SCL_MAIN_ST_TO_INT interrupt.
         @WriteOnly(bits: 14..<15)
-        public var scl_main_st_to: SCL_MAIN_ST_TO
+        public var scl_main_st_to_int_clr: SCL_MAIN_ST_TO_INT_CLR
 
         /// Set this bit to clear I2C_DET_START_INT interrupt.
         @WriteOnly(bits: 15..<16)
-        public var det_start: DET_START
+        public var det_start_int_clr: DET_START_INT_CLR
 
         /// Set this bit to clear I2C_SLAVE_STRETCH_INT interrupt.
         @WriteOnly(bits: 16..<17)
-        public var slave_stretch: SLAVE_STRETCH
+        public var slave_stretch_int_clr: SLAVE_STRETCH_INT_CLR
 
         /// Set this bit to clear I2C_GENARAL_CALL_INT interrupt.
         @WriteOnly(bits: 17..<18)
-        public var general_call: GENERAL_CALL
+        public var general_call_int_clr: GENERAL_CALL_INT_CLR
 
         /// Set this bit to clear I2C_SLAVE_ADDR_UNMATCH_INT_RAW interrupt.
         @WriteOnly(bits: 18..<19)
-        public var slave_addr_unmatch: SLAVE_ADDR_UNMATCH
+        public var slave_addr_unmatch_int_clr: SLAVE_ADDR_UNMATCH_INT_CLR
     }
 
     /// Interrupt enable bits
@@ -492,159 +520,159 @@ extension I2C0 {
     public struct INT_ENA {
         /// The interrupt enable bit for I2C_RXFIFO_WM_INT interrupt.
         @ReadWrite(bits: 0..<1)
-        public var rxfifo_wm: RXFIFO_WM
+        public var rxfifo_wm_int_ena: RXFIFO_WM_INT_ENA
 
         /// The interrupt enable bit for I2C_TXFIFO_WM_INT interrupt.
         @ReadWrite(bits: 1..<2)
-        public var txfifo_wm: TXFIFO_WM
+        public var txfifo_wm_int_ena: TXFIFO_WM_INT_ENA
 
         /// The interrupt enable bit for I2C_RXFIFO_OVF_INT interrupt.
         @ReadWrite(bits: 2..<3)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_ena: RXFIFO_OVF_INT_ENA
 
         /// The interrupt enable bit for the I2C_END_DETECT_INT interrupt.
         @ReadWrite(bits: 3..<4)
-        public var end_detect: END_DETECT
+        public var end_detect_int_ena: END_DETECT_INT_ENA
 
         /// The interrupt enable bit for the I2C_END_DETECT_INT interrupt.
         @ReadWrite(bits: 4..<5)
-        public var byte_trans_done: BYTE_TRANS_DONE
+        public var byte_trans_done_int_ena: BYTE_TRANS_DONE_INT_ENA
 
         /// The interrupt enable bit for the I2C_ARBITRATION_LOST_INT interrupt.
         @ReadWrite(bits: 5..<6)
-        public var arbitration_lost: ARBITRATION_LOST
+        public var arbitration_lost_int_ena: ARBITRATION_LOST_INT_ENA
 
         /// The interrupt enable bit for I2C_TRANS_COMPLETE_INT interrupt.
         @ReadWrite(bits: 6..<7)
-        public var mst_txfifo_udf: MST_TXFIFO_UDF
+        public var mst_txfifo_udf_int_ena: MST_TXFIFO_UDF_INT_ENA
 
         /// The interrupt enable bit for the I2C_TRANS_COMPLETE_INT interrupt.
         @ReadWrite(bits: 7..<8)
-        public var trans_complete: TRANS_COMPLETE
+        public var trans_complete_int_ena: TRANS_COMPLETE_INT_ENA
 
         /// The interrupt enable bit for the I2C_TIME_OUT_INT interrupt.
         @ReadWrite(bits: 8..<9)
-        public var time_out: TIME_OUT
+        public var time_out_int_ena: TIME_OUT_INT_ENA
 
         /// The interrupt enable bit for the I2C_TRANS_START_INT interrupt.
         @ReadWrite(bits: 9..<10)
-        public var trans_start: TRANS_START
+        public var trans_start_int_ena: TRANS_START_INT_ENA
 
         /// The interrupt enable bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadWrite(bits: 10..<11)
-        public var nack: NACK
+        public var nack_int_ena: NACK_INT_ENA
 
         /// The interrupt enable bit for I2C_TXFIFO_OVF_INT interrupt.
         @ReadWrite(bits: 11..<12)
-        public var txfifo_ovf: TXFIFO_OVF
+        public var txfifo_ovf_int_ena: TXFIFO_OVF_INT_ENA
 
         /// The interrupt enable bit for I2C_RXFIFO_UDF_INT interrupt.
         @ReadWrite(bits: 12..<13)
-        public var rxfifo_udf: RXFIFO_UDF
+        public var rxfifo_udf_int_ena: RXFIFO_UDF_INT_ENA
 
         /// The interrupt enable bit for I2C_SCL_ST_TO_INT interrupt.
         @ReadWrite(bits: 13..<14)
-        public var scl_st_to: SCL_ST_TO
+        public var scl_st_to_int_ena: SCL_ST_TO_INT_ENA
 
         /// The interrupt enable bit for I2C_SCL_MAIN_ST_TO_INT interrupt.
         @ReadWrite(bits: 14..<15)
-        public var scl_main_st_to: SCL_MAIN_ST_TO
+        public var scl_main_st_to_int_ena: SCL_MAIN_ST_TO_INT_ENA
 
         /// The interrupt enable bit for I2C_DET_START_INT interrupt.
         @ReadWrite(bits: 15..<16)
-        public var det_start: DET_START
+        public var det_start_int_ena: DET_START_INT_ENA
 
         /// The interrupt enable bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadWrite(bits: 16..<17)
-        public var slave_stretch: SLAVE_STRETCH
+        public var slave_stretch_int_ena: SLAVE_STRETCH_INT_ENA
 
         /// The interrupt enable bit for I2C_GENARAL_CALL_INT interrupt.
         @ReadWrite(bits: 17..<18)
-        public var general_call: GENERAL_CALL
+        public var general_call_int_ena: GENERAL_CALL_INT_ENA
 
         /// The interrupt enable bit for I2C_SLAVE_ADDR_UNMATCH_INT interrupt.
         @ReadWrite(bits: 18..<19)
-        public var slave_addr_unmatch: SLAVE_ADDR_UNMATCH
+        public var slave_addr_unmatch_int_ena: SLAVE_ADDR_UNMATCH_INT_ENA
     }
 
     /// Status of captured I2C communication events
     @Register(bitWidth: 32)
-    public struct INT_ST {
+    public struct INT_STATUS {
         /// The masked interrupt status bit for I2C_RXFIFO_WM_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var rxfifo_wm: RXFIFO_WM
+        public var rxfifo_wm_int_st: RXFIFO_WM_INT_ST
 
         /// The masked interrupt status bit for I2C_TXFIFO_WM_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var txfifo_wm: TXFIFO_WM
+        public var txfifo_wm_int_st: TXFIFO_WM_INT_ST
 
         /// The masked interrupt status bit for I2C_RXFIFO_OVF_INT interrupt.
         @ReadOnly(bits: 2..<3)
-        public var rxfifo_ovf: RXFIFO_OVF
+        public var rxfifo_ovf_int_st: RXFIFO_OVF_INT_ST
 
         /// The masked interrupt status bit for the I2C_END_DETECT_INT interrupt.
         @ReadOnly(bits: 3..<4)
-        public var end_detect: END_DETECT
+        public var end_detect_int_st: END_DETECT_INT_ST
 
         /// The masked interrupt status bit for the I2C_END_DETECT_INT interrupt.
         @ReadOnly(bits: 4..<5)
-        public var byte_trans_done: BYTE_TRANS_DONE
+        public var byte_trans_done_int_st: BYTE_TRANS_DONE_INT_ST
 
         /// The masked interrupt status bit for the I2C_ARBITRATION_LOST_INT interrupt.
         @ReadOnly(bits: 5..<6)
-        public var arbitration_lost: ARBITRATION_LOST
+        public var arbitration_lost_int_st: ARBITRATION_LOST_INT_ST
 
         /// The masked interrupt status bit for I2C_TRANS_COMPLETE_INT interrupt.
         @ReadOnly(bits: 6..<7)
-        public var mst_txfifo_udf: MST_TXFIFO_UDF
+        public var mst_txfifo_udf_int_st: MST_TXFIFO_UDF_INT_ST
 
         /// The masked interrupt status bit for the I2C_TRANS_COMPLETE_INT interrupt.
         @ReadOnly(bits: 7..<8)
-        public var trans_complete: TRANS_COMPLETE
+        public var trans_complete_int_st: TRANS_COMPLETE_INT_ST
 
         /// The masked interrupt status bit for the I2C_TIME_OUT_INT interrupt.
         @ReadOnly(bits: 8..<9)
-        public var time_out: TIME_OUT
+        public var time_out_int_st: TIME_OUT_INT_ST
 
         /// The masked interrupt status bit for the I2C_TRANS_START_INT interrupt.
         @ReadOnly(bits: 9..<10)
-        public var trans_start: TRANS_START
+        public var trans_start_int_st: TRANS_START_INT_ST
 
         /// The masked interrupt status bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadOnly(bits: 10..<11)
-        public var nack: NACK
+        public var nack_int_st: NACK_INT_ST
 
         /// The masked interrupt status bit for I2C_TXFIFO_OVF_INT interrupt.
         @ReadOnly(bits: 11..<12)
-        public var txfifo_ovf: TXFIFO_OVF
+        public var txfifo_ovf_int_st: TXFIFO_OVF_INT_ST
 
         /// The masked interrupt status bit for I2C_RXFIFO_UDF_INT interrupt.
         @ReadOnly(bits: 12..<13)
-        public var rxfifo_udf: RXFIFO_UDF
+        public var rxfifo_udf_int_st: RXFIFO_UDF_INT_ST
 
         /// The masked interrupt status bit for I2C_SCL_ST_TO_INT interrupt.
         @ReadOnly(bits: 13..<14)
-        public var scl_st_to: SCL_ST_TO
+        public var scl_st_to_int_st: SCL_ST_TO_INT_ST
 
         /// The masked interrupt status bit for I2C_SCL_MAIN_ST_TO_INT interrupt.
         @ReadOnly(bits: 14..<15)
-        public var scl_main_st_to: SCL_MAIN_ST_TO
+        public var scl_main_st_to_int_st: SCL_MAIN_ST_TO_INT_ST
 
         /// The masked interrupt status bit for I2C_DET_START_INT interrupt.
         @ReadOnly(bits: 15..<16)
-        public var det_start: DET_START
+        public var det_start_int_st: DET_START_INT_ST
 
         /// The masked interrupt status bit for I2C_SLAVE_STRETCH_INT interrupt.
         @ReadOnly(bits: 16..<17)
-        public var slave_stretch: SLAVE_STRETCH
+        public var slave_stretch_int_st: SLAVE_STRETCH_INT_ST
 
         /// The masked interrupt status bit for I2C_GENARAL_CALL_INT interrupt.
         @ReadOnly(bits: 17..<18)
-        public var general_call: GENERAL_CALL
+        public var general_call_int_st: GENERAL_CALL_INT_ST
 
         /// The masked interrupt status bit for I2C_SLAVE_ADDR_UNMATCH_INT interrupt.
         @ReadOnly(bits: 18..<19)
-        public var slave_addr_unmatch: SLAVE_ADDR_UNMATCH
+        public var slave_addr_unmatch_int_st: SLAVE_ADDR_UNMATCH_INT_ST
     }
 
     /// Configures the hold time after a negative SCL edge.
@@ -751,32 +779,100 @@ extension I2C0 {
         public var sclk_active: SCLK_ACTIVE
     }
 
-    /// I2C command register %s
+    /// I2C command register 0
     @Register(bitWidth: 32)
-    public struct COMD {
+    public struct COMD0 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command0: COMMAND0
+
         /// level.
         @ReadWrite(bits: 31..<32)
-        public var command_done: COMMAND_DONE
+        public var command0_done: COMMAND0_DONE
+    }
 
-        /// Opcode part of command %s.
-        @ReadWrite(bits: 11..<14, as: Opcode.self)
-        public var opcode: OPCODE
+    /// I2C command register 1
+    @Register(bitWidth: 32)
+    public struct COMD1 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command1: COMMAND1
 
-        /// Acknowledge value for command %s.
-        @ReadWrite(bits: 10..<11)
-        public var ack_value: ACK_VALUE
+        /// level.
+        @ReadWrite(bits: 31..<32)
+        public var command1_done: COMMAND1_DONE
+    }
 
-        /// Acknowledge expected for command %s.
-        @ReadWrite(bits: 9..<10)
-        public var ack_exp: ACK_EXP
+    /// I2C command register 2
+    @Register(bitWidth: 32)
+    public struct COMD2 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command2: COMMAND2
 
-        /// Acknowledge check enable for command %s.
-        @ReadWrite(bits: 8..<9)
-        public var ack_check_en: ACK_CHECK_EN
+        /// Level.
+        @ReadWrite(bits: 31..<32)
+        public var command2_done: COMMAND2_DONE
+    }
 
-        /// Number of bytes to be sent or received for command %s.
-        @ReadWrite(bits: 0..<8)
-        public var byte_num: BYTE_NUM
+    /// I2C command register 3
+    @Register(bitWidth: 32)
+    public struct COMD3 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command3: COMMAND3
+
+        /// level.
+        @ReadWrite(bits: 31..<32)
+        public var command3_done: COMMAND3_DONE
+    }
+
+    /// I2C command register 4
+    @Register(bitWidth: 32)
+    public struct COMD4 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command4: COMMAND4
+
+        /// level.
+        @ReadWrite(bits: 31..<32)
+        public var command4_done: COMMAND4_DONE
+    }
+
+    /// I2C command register 5
+    @Register(bitWidth: 32)
+    public struct COMD5 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command5: COMMAND5
+
+        /// When command 5 is done in I2C Master mode, this bit changes to high level.
+        @ReadWrite(bits: 31..<32)
+        public var command5_done: COMMAND5_DONE
+    }
+
+    /// I2C command register 6
+    @Register(bitWidth: 32)
+    public struct COMD6 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command6: COMMAND6
+
+        /// When command 6 is done in I2C Master mode, this bit changes to high level.
+        @ReadWrite(bits: 31..<32)
+        public var command6_done: COMMAND6_DONE
+    }
+
+    /// I2C command register 7
+    @Register(bitWidth: 32)
+    public struct COMD7 {
+        /// Information.
+        @ReadWrite(bits: 0..<14)
+        public var command7: COMMAND7
+
+        /// When command 7 is done in I2C Master mode, this bit changes to high level.
+        @ReadWrite(bits: 31..<32)
+        public var command7_done: COMMAND7_DONE
     }
 
     /// SCL status time out register
@@ -784,7 +880,7 @@ extension I2C0 {
     public struct SCL_ST_TIME_OUT {
         /// The threshold value of SCL_FSM state unchanged period. It should be o more than 23
         @ReadWrite(bits: 0..<5)
-        public var scl_st_to: SCL_ST_TO
+        public var scl_st_to_i2c: SCL_ST_TO_I2C
     }
 
     /// SCL main status time out register
@@ -792,7 +888,7 @@ extension I2C0 {
     public struct SCL_MAIN_ST_TIME_OUT {
         /// The threshold value of SCL_MAIN_FSM state unchanged period.nIt should be o more than 23
         @ReadWrite(bits: 0..<5)
-        public var scl_main_st_to: SCL_MAIN_ST_TO
+        public var scl_main_st_to_i2c: SCL_MAIN_ST_TO_I2C
     }
 
     /// Power configuration register
@@ -861,33 +957,5 @@ extension I2C0 {
         /// This is the I2C rxfifo first address.
         @ReadOnly(bits: 0..<32)
         public var rxfifo_start_addr_field: RXFIFO_START_ADDR_FIELD
-    }
-}
-
-extension I2C0.COMD {
-    public struct Opcode: BitFieldProjectable, RawRepresentable {
-        public static let bitWidth = 3
-
-        /// WRITE opcode
-        public nonisolated(unsafe) static let Write = Self(rawValue: 0x1)
-
-        /// STOP opcode
-        public nonisolated(unsafe) static let Stop = Self(rawValue: 0x2)
-
-        /// READ opcode
-        public nonisolated(unsafe) static let Read = Self(rawValue: 0x3)
-
-        /// END opcode
-        public nonisolated(unsafe) static let End = Self(rawValue: 0x4)
-
-        /// RSTART opcode
-        public nonisolated(unsafe) static let Rstart = Self(rawValue: 0x6)
-
-        public var rawValue: UInt8
-
-        @inlinable @inline(__always)
-        public init(rawValue: Self.RawValue) {
-            self.rawValue = rawValue
-        }
     }
 }

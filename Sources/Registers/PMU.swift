@@ -359,15 +359,15 @@ public struct PMU {
 
     /// need_des
     @RegisterBlock(offset: 0x160)
-    public var int_st: Register<INT_ST>
+    public var hp_int_st: Register<HP_INT_ST>
 
     /// need_des
     @RegisterBlock(offset: 0x164)
-    public var int_ena: Register<INT_ENA>
+    public var hp_int_ena: Register<HP_INT_ENA>
 
     /// need_des
     @RegisterBlock(offset: 0x168)
-    public var int_clr: Register<INT_CLR>
+    public var hp_int_clr: Register<HP_INT_CLR>
 
     /// need_des
     @RegisterBlock(offset: 0x16c)
@@ -1964,95 +1964,95 @@ extension PMU {
     public struct INT_RAW {
         /// need_des
         @ReadWrite(bits: 27..<28)
-        public var lp_cpu_exc: LP_CPU_EXC
+        public var lp_cpu_exc_int_raw: LP_CPU_EXC_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 28..<29)
-        public var sdio_idle: SDIO_IDLE
+        public var sdio_idle_int_raw: SDIO_IDLE_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 29..<30)
-        public var sw: SW
+        public var sw_int_raw: SW_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var soc_sleep_reject: SOC_SLEEP_REJECT
+        public var soc_sleep_reject_int_raw: SOC_SLEEP_REJECT_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var soc_wakeup: SOC_WAKEUP
+        public var soc_wakeup_int_raw: SOC_WAKEUP_INT_RAW
     }
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct INT_ST {
+    public struct HP_INT_ST {
         /// need_des
         @ReadOnly(bits: 27..<28)
-        public var lp_cpu_exc: LP_CPU_EXC
+        public var lp_cpu_exc_int_st: LP_CPU_EXC_INT_ST
 
         /// need_des
         @ReadOnly(bits: 28..<29)
-        public var sdio_idle: SDIO_IDLE
+        public var sdio_idle_int_st: SDIO_IDLE_INT_ST
 
         /// need_des
         @ReadOnly(bits: 29..<30)
-        public var sw: SW
+        public var sw_int_st: SW_INT_ST
 
         /// need_des
         @ReadOnly(bits: 30..<31)
-        public var soc_sleep_reject: SOC_SLEEP_REJECT
+        public var soc_sleep_reject_int_st: SOC_SLEEP_REJECT_INT_ST
 
         /// need_des
         @ReadOnly(bits: 31..<32)
-        public var soc_wakeup: SOC_WAKEUP
+        public var soc_wakeup_int_st: SOC_WAKEUP_INT_ST
     }
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct INT_ENA {
+    public struct HP_INT_ENA {
         /// need_des
         @ReadWrite(bits: 27..<28)
-        public var lp_cpu_exc: LP_CPU_EXC
+        public var lp_cpu_exc_int_ena: LP_CPU_EXC_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 28..<29)
-        public var sdio_idle: SDIO_IDLE
+        public var sdio_idle_int_ena: SDIO_IDLE_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 29..<30)
-        public var sw: SW
+        public var sw_int_ena: SW_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var soc_sleep_reject: SOC_SLEEP_REJECT
+        public var soc_sleep_reject_int_ena: SOC_SLEEP_REJECT_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var soc_wakeup: SOC_WAKEUP
+        public var soc_wakeup_int_ena: SOC_WAKEUP_INT_ENA
     }
 
     /// need_des
     @Register(bitWidth: 32)
-    public struct INT_CLR {
+    public struct HP_INT_CLR {
         /// need_des
         @WriteOnly(bits: 27..<28)
-        public var lp_cpu_exc: LP_CPU_EXC
+        public var lp_cpu_exc_int_clr: LP_CPU_EXC_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 28..<29)
-        public var sdio_idle: SDIO_IDLE
+        public var sdio_idle_int_clr: SDIO_IDLE_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 29..<30)
-        public var sw: SW
+        public var sw_int_clr: SW_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 30..<31)
-        public var soc_sleep_reject: SOC_SLEEP_REJECT
+        public var soc_sleep_reject_int_clr: SOC_SLEEP_REJECT_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 31..<32)
-        public var soc_wakeup: SOC_WAKEUP
+        public var soc_wakeup_int_clr: SOC_WAKEUP_INT_CLR
     }
 
     /// need_des
@@ -2060,51 +2060,51 @@ extension PMU {
     public struct LP_INT_RAW {
         /// need_des
         @ReadWrite(bits: 20..<21)
-        public var lp_cpu_wakeup: LP_CPU_WAKEUP
+        public var lp_cpu_wakeup_int_raw: LP_CPU_WAKEUP_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 21..<22)
-        public var modem_switch_active_end: MODEM_SWITCH_ACTIVE_END
+        public var modem_switch_active_end_int_raw: MODEM_SWITCH_ACTIVE_END_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 22..<23)
-        public var sleep_switch_active_end: SLEEP_SWITCH_ACTIVE_END
+        public var sleep_switch_active_end_int_raw: SLEEP_SWITCH_ACTIVE_END_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 23..<24)
-        public var sleep_switch_modem_end: SLEEP_SWITCH_MODEM_END
+        public var sleep_switch_modem_end_int_raw: SLEEP_SWITCH_MODEM_END_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 24..<25)
-        public var modem_switch_sleep_end: MODEM_SWITCH_SLEEP_END
+        public var modem_switch_sleep_end_int_raw: MODEM_SWITCH_SLEEP_END_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 25..<26)
-        public var active_switch_sleep_end: ACTIVE_SWITCH_SLEEP_END
+        public var active_switch_sleep_end_int_raw: ACTIVE_SWITCH_SLEEP_END_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 26..<27)
-        public var modem_switch_active_start: MODEM_SWITCH_ACTIVE_START
+        public var modem_switch_active_start_int_raw: MODEM_SWITCH_ACTIVE_START_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 27..<28)
-        public var sleep_switch_active_start: SLEEP_SWITCH_ACTIVE_START
+        public var sleep_switch_active_start_int_raw: SLEEP_SWITCH_ACTIVE_START_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 28..<29)
-        public var sleep_switch_modem_start: SLEEP_SWITCH_MODEM_START
+        public var sleep_switch_modem_start_int_raw: SLEEP_SWITCH_MODEM_START_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 29..<30)
-        public var modem_switch_sleep_start: MODEM_SWITCH_SLEEP_START
+        public var modem_switch_sleep_start_int_raw: MODEM_SWITCH_SLEEP_START_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var active_switch_sleep_start: ACTIVE_SWITCH_SLEEP_START
+        public var active_switch_sleep_start_int_raw: ACTIVE_SWITCH_SLEEP_START_INT_RAW
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var hp_sw_trigger: HP_SW_TRIGGER
+        public var hp_sw_trigger_int_raw: HP_SW_TRIGGER_INT_RAW
     }
 
     /// need_des
@@ -2112,51 +2112,51 @@ extension PMU {
     public struct LP_INT_ST {
         /// need_des
         @ReadOnly(bits: 20..<21)
-        public var lp_cpu_wakeup: LP_CPU_WAKEUP
+        public var lp_cpu_wakeup_int_st: LP_CPU_WAKEUP_INT_ST
 
         /// need_des
         @ReadOnly(bits: 21..<22)
-        public var modem_switch_active_end: MODEM_SWITCH_ACTIVE_END
+        public var modem_switch_active_end_int_st: MODEM_SWITCH_ACTIVE_END_INT_ST
 
         /// need_des
         @ReadOnly(bits: 22..<23)
-        public var sleep_switch_active_end: SLEEP_SWITCH_ACTIVE_END
+        public var sleep_switch_active_end_int_st: SLEEP_SWITCH_ACTIVE_END_INT_ST
 
         /// need_des
         @ReadOnly(bits: 23..<24)
-        public var sleep_switch_modem_end: SLEEP_SWITCH_MODEM_END
+        public var sleep_switch_modem_end_int_st: SLEEP_SWITCH_MODEM_END_INT_ST
 
         /// need_des
         @ReadOnly(bits: 24..<25)
-        public var modem_switch_sleep_end: MODEM_SWITCH_SLEEP_END
+        public var modem_switch_sleep_end_int_st: MODEM_SWITCH_SLEEP_END_INT_ST
 
         /// need_des
         @ReadOnly(bits: 25..<26)
-        public var active_switch_sleep_end: ACTIVE_SWITCH_SLEEP_END
+        public var active_switch_sleep_end_int_st: ACTIVE_SWITCH_SLEEP_END_INT_ST
 
         /// need_des
         @ReadOnly(bits: 26..<27)
-        public var modem_switch_active_start: MODEM_SWITCH_ACTIVE_START
+        public var modem_switch_active_start_int_st: MODEM_SWITCH_ACTIVE_START_INT_ST
 
         /// need_des
         @ReadOnly(bits: 27..<28)
-        public var sleep_switch_active_start: SLEEP_SWITCH_ACTIVE_START
+        public var sleep_switch_active_start_int_st: SLEEP_SWITCH_ACTIVE_START_INT_ST
 
         /// need_des
         @ReadOnly(bits: 28..<29)
-        public var sleep_switch_modem_start: SLEEP_SWITCH_MODEM_START
+        public var sleep_switch_modem_start_int_st: SLEEP_SWITCH_MODEM_START_INT_ST
 
         /// need_des
         @ReadOnly(bits: 29..<30)
-        public var modem_switch_sleep_start: MODEM_SWITCH_SLEEP_START
+        public var modem_switch_sleep_start_int_st: MODEM_SWITCH_SLEEP_START_INT_ST
 
         /// need_des
         @ReadOnly(bits: 30..<31)
-        public var active_switch_sleep_start: ACTIVE_SWITCH_SLEEP_START
+        public var active_switch_sleep_start_int_st: ACTIVE_SWITCH_SLEEP_START_INT_ST
 
         /// need_des
         @ReadOnly(bits: 31..<32)
-        public var hp_sw_trigger: HP_SW_TRIGGER
+        public var hp_sw_trigger_int_st: HP_SW_TRIGGER_INT_ST
     }
 
     /// need_des
@@ -2164,51 +2164,51 @@ extension PMU {
     public struct LP_INT_ENA {
         /// need_des
         @ReadWrite(bits: 20..<21)
-        public var lp_cpu_wakeup: LP_CPU_WAKEUP
+        public var lp_cpu_wakeup_int_ena: LP_CPU_WAKEUP_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 21..<22)
-        public var modem_switch_active_end: MODEM_SWITCH_ACTIVE_END
+        public var modem_switch_active_end_int_ena: MODEM_SWITCH_ACTIVE_END_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 22..<23)
-        public var sleep_switch_active_end: SLEEP_SWITCH_ACTIVE_END
+        public var sleep_switch_active_end_int_ena: SLEEP_SWITCH_ACTIVE_END_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 23..<24)
-        public var sleep_switch_modem_end: SLEEP_SWITCH_MODEM_END
+        public var sleep_switch_modem_end_int_ena: SLEEP_SWITCH_MODEM_END_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 24..<25)
-        public var modem_switch_sleep_end: MODEM_SWITCH_SLEEP_END
+        public var modem_switch_sleep_end_int_ena: MODEM_SWITCH_SLEEP_END_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 25..<26)
-        public var active_switch_sleep_end: ACTIVE_SWITCH_SLEEP_END
+        public var active_switch_sleep_end_int_ena: ACTIVE_SWITCH_SLEEP_END_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 26..<27)
-        public var modem_switch_active_start: MODEM_SWITCH_ACTIVE_START
+        public var modem_switch_active_start_int_ena: MODEM_SWITCH_ACTIVE_START_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 27..<28)
-        public var sleep_switch_active_start: SLEEP_SWITCH_ACTIVE_START
+        public var sleep_switch_active_start_int_ena: SLEEP_SWITCH_ACTIVE_START_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 28..<29)
-        public var sleep_switch_modem_start: SLEEP_SWITCH_MODEM_START
+        public var sleep_switch_modem_start_int_ena: SLEEP_SWITCH_MODEM_START_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 29..<30)
-        public var modem_switch_sleep_start: MODEM_SWITCH_SLEEP_START
+        public var modem_switch_sleep_start_int_ena: MODEM_SWITCH_SLEEP_START_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 30..<31)
-        public var active_switch_sleep_start: ACTIVE_SWITCH_SLEEP_START
+        public var active_switch_sleep_start_int_ena: ACTIVE_SWITCH_SLEEP_START_INT_ENA
 
         /// need_des
         @ReadWrite(bits: 31..<32)
-        public var hp_sw_trigger: HP_SW_TRIGGER
+        public var hp_sw_trigger_int_ena: HP_SW_TRIGGER_INT_ENA
     }
 
     /// need_des
@@ -2216,51 +2216,51 @@ extension PMU {
     public struct LP_INT_CLR {
         /// need_des
         @WriteOnly(bits: 20..<21)
-        public var lp_cpu_wakeup: LP_CPU_WAKEUP
+        public var lp_cpu_wakeup_int_clr: LP_CPU_WAKEUP_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 21..<22)
-        public var modem_switch_active_end: MODEM_SWITCH_ACTIVE_END
+        public var modem_switch_active_end_int_clr: MODEM_SWITCH_ACTIVE_END_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 22..<23)
-        public var sleep_switch_active_end: SLEEP_SWITCH_ACTIVE_END
+        public var sleep_switch_active_end_int_clr: SLEEP_SWITCH_ACTIVE_END_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 23..<24)
-        public var sleep_switch_modem_end: SLEEP_SWITCH_MODEM_END
+        public var sleep_switch_modem_end_int_clr: SLEEP_SWITCH_MODEM_END_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 24..<25)
-        public var modem_switch_sleep_end: MODEM_SWITCH_SLEEP_END
+        public var modem_switch_sleep_end_int_clr: MODEM_SWITCH_SLEEP_END_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 25..<26)
-        public var active_switch_sleep_end: ACTIVE_SWITCH_SLEEP_END
+        public var active_switch_sleep_end_int_clr: ACTIVE_SWITCH_SLEEP_END_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 26..<27)
-        public var modem_switch_active_start: MODEM_SWITCH_ACTIVE_START
+        public var modem_switch_active_start_int_clr: MODEM_SWITCH_ACTIVE_START_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 27..<28)
-        public var sleep_switch_active_start: SLEEP_SWITCH_ACTIVE_START
+        public var sleep_switch_active_start_int_clr: SLEEP_SWITCH_ACTIVE_START_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 28..<29)
-        public var sleep_switch_modem_start: SLEEP_SWITCH_MODEM_START
+        public var sleep_switch_modem_start_int_clr: SLEEP_SWITCH_MODEM_START_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 29..<30)
-        public var modem_switch_sleep_start: MODEM_SWITCH_SLEEP_START
+        public var modem_switch_sleep_start_int_clr: MODEM_SWITCH_SLEEP_START_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 30..<31)
-        public var active_switch_sleep_start: ACTIVE_SWITCH_SLEEP_START
+        public var active_switch_sleep_start_int_clr: ACTIVE_SWITCH_SLEEP_START_INT_CLR
 
         /// need_des
         @WriteOnly(bits: 31..<32)
-        public var hp_sw_trigger: HP_SW_TRIGGER
+        public var hp_sw_trigger_int_clr: HP_SW_TRIGGER_INT_CLR
     }
 
     /// need_des

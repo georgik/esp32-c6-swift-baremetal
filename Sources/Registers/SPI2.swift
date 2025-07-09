@@ -7,1068 +7,1248 @@ import MMIO
 public struct SPI2 {
     /// Command control register
     @RegisterBlock(offset: 0x0)
-    public var cmd: Register<CMD>
+    public var spi_cmd: Register<SPI_CMD>
 
     /// Address value register
     @RegisterBlock(offset: 0x4)
-    public var addr: Register<ADDR>
+    public var spi_addr: Register<SPI_ADDR>
 
     /// SPI control register
     @RegisterBlock(offset: 0x8)
-    public var ctrl: Register<CTRL>
+    public var spi_ctrl: Register<SPI_CTRL>
 
     /// SPI clock control register
     @RegisterBlock(offset: 0xc)
-    public var clock: Register<CLOCK>
+    public var spi_clock: Register<SPI_CLOCK>
 
     /// SPI USER control register
     @RegisterBlock(offset: 0x10)
-    public var user: Register<USER>
+    public var spi_user: Register<SPI_USER>
 
     /// SPI USER control register 1
     @RegisterBlock(offset: 0x14)
-    public var user1: Register<USER1>
+    public var spi_user1: Register<SPI_USER1>
 
     /// SPI USER control register 2
     @RegisterBlock(offset: 0x18)
-    public var user2: Register<USER2>
+    public var spi_user2: Register<SPI_USER2>
 
     /// SPI data bit length control register
     @RegisterBlock(offset: 0x1c)
-    public var ms_dlen: Register<MS_DLEN>
+    public var spi_ms_dlen: Register<SPI_MS_DLEN>
 
     /// SPI misc register
     @RegisterBlock(offset: 0x20)
-    public var misc: Register<MISC>
+    public var spi_misc: Register<SPI_MISC>
 
     /// SPI input delay mode configuration
     @RegisterBlock(offset: 0x24)
-    public var din_mode: Register<DIN_MODE>
+    public var spi_din_mode: Register<SPI_DIN_MODE>
 
     /// SPI input delay number configuration
     @RegisterBlock(offset: 0x28)
-    public var din_num: Register<DIN_NUM>
+    public var spi_din_num: Register<SPI_DIN_NUM>
 
     /// SPI output delay mode configuration
     @RegisterBlock(offset: 0x2c)
-    public var dout_mode: Register<DOUT_MODE>
+    public var spi_dout_mode: Register<SPI_DOUT_MODE>
 
     /// SPI DMA control register
     @RegisterBlock(offset: 0x30)
-    public var dma_conf: Register<DMA_CONF>
+    public var spi_dma_conf: Register<SPI_DMA_CONF>
 
     /// SPI interrupt enable register
     @RegisterBlock(offset: 0x34)
-    public var dma_int_ena: Register<DMA_INT_ENA>
+    public var spi_dma_int_ena: Register<SPI_DMA_INT_ENA>
 
     /// SPI interrupt clear register
     @RegisterBlock(offset: 0x38)
-    public var dma_int_clr: Register<DMA_INT_CLR>
+    public var spi_dma_int_clr: Register<SPI_DMA_INT_CLR>
 
     /// SPI interrupt raw register
     @RegisterBlock(offset: 0x3c)
-    public var dma_int_raw: Register<DMA_INT_RAW>
+    public var spi_dma_int_raw: Register<SPI_DMA_INT_RAW>
 
     /// SPI interrupt status register
     @RegisterBlock(offset: 0x40)
-    public var dma_int_st: Register<DMA_INT_ST>
+    public var spi_dma_int_st: Register<SPI_DMA_INT_ST>
 
     /// SPI interrupt software set register
     @RegisterBlock(offset: 0x44)
-    public var dma_int_set: Register<DMA_INT_SET>
+    public var spi_dma_int_set: Register<SPI_DMA_INT_SET>
 
-    /// SPI CPU-controlled buffer%s
-    @RegisterBlock(offset: 0x98, stride: 0x4, count: 16)
-    public var w: RegisterArray<W>
+    /// SPI CPU-controlled buffer0
+    @RegisterBlock(offset: 0x98)
+    public var spi_w0: Register<SPI_W0>
+
+    /// SPI CPU-controlled buffer1
+    @RegisterBlock(offset: 0x9c)
+    public var spi_w1: Register<SPI_W1>
+
+    /// SPI CPU-controlled buffer2
+    @RegisterBlock(offset: 0xa0)
+    public var spi_w2: Register<SPI_W2>
+
+    /// SPI CPU-controlled buffer3
+    @RegisterBlock(offset: 0xa4)
+    public var spi_w3: Register<SPI_W3>
+
+    /// SPI CPU-controlled buffer4
+    @RegisterBlock(offset: 0xa8)
+    public var spi_w4: Register<SPI_W4>
+
+    /// SPI CPU-controlled buffer5
+    @RegisterBlock(offset: 0xac)
+    public var spi_w5: Register<SPI_W5>
+
+    /// SPI CPU-controlled buffer6
+    @RegisterBlock(offset: 0xb0)
+    public var spi_w6: Register<SPI_W6>
+
+    /// SPI CPU-controlled buffer7
+    @RegisterBlock(offset: 0xb4)
+    public var spi_w7: Register<SPI_W7>
+
+    /// SPI CPU-controlled buffer8
+    @RegisterBlock(offset: 0xb8)
+    public var spi_w8: Register<SPI_W8>
+
+    /// SPI CPU-controlled buffer9
+    @RegisterBlock(offset: 0xbc)
+    public var spi_w9: Register<SPI_W9>
+
+    /// SPI CPU-controlled buffer10
+    @RegisterBlock(offset: 0xc0)
+    public var spi_w10: Register<SPI_W10>
+
+    /// SPI CPU-controlled buffer11
+    @RegisterBlock(offset: 0xc4)
+    public var spi_w11: Register<SPI_W11>
+
+    /// SPI CPU-controlled buffer12
+    @RegisterBlock(offset: 0xc8)
+    public var spi_w12: Register<SPI_W12>
+
+    /// SPI CPU-controlled buffer13
+    @RegisterBlock(offset: 0xcc)
+    public var spi_w13: Register<SPI_W13>
+
+    /// SPI CPU-controlled buffer14
+    @RegisterBlock(offset: 0xd0)
+    public var spi_w14: Register<SPI_W14>
+
+    /// SPI CPU-controlled buffer15
+    @RegisterBlock(offset: 0xd4)
+    public var spi_w15: Register<SPI_W15>
 
     /// SPI slave control register
     @RegisterBlock(offset: 0xe0)
-    public var slave: Register<SLAVE>
+    public var spi_slave: Register<SPI_SLAVE>
 
     /// SPI slave control register 1
     @RegisterBlock(offset: 0xe4)
-    public var slave1: Register<SLAVE1>
+    public var spi_slave1: Register<SPI_SLAVE1>
 
     /// SPI module clock and register clock control
     @RegisterBlock(offset: 0xe8)
-    public var clk_gate: Register<CLK_GATE>
+    public var spi_clk_gate: Register<SPI_CLK_GATE>
 
     /// Version control
     @RegisterBlock(offset: 0xf0)
-    public var date: Register<DATE>
+    public var spi_date: Register<SPI_DATE>
 }
 
 extension SPI2 {
     /// Command control register
     @Register(bitWidth: 32)
-    public struct CMD {
+    public struct SPI_CMD {
         /// Define the APB cycles of SPI_CONF state. Can be configured in CONF state.
         @ReadWrite(bits: 0..<18)
-        public var conf_bitlen: CONF_BITLEN
+        public var spi_conf_bitlen: SPI_CONF_BITLEN
 
         /// Set this bit to synchronize SPI registers from APB clock domain into SPI module clock domain, which is only used in SPI master mode.
-        @ReadWrite(bits: 23..<24)
-        public var update: UPDATE
+        @WriteOnly(bits: 23..<24)
+        public var spi_update: SPI_UPDATE
 
         /// User define command enable. An operation will be triggered when the bit is set. The bit will be cleared once the operation done.1: enable 0: disable. Can not be changed by CONF_buf.
         @ReadWrite(bits: 24..<25)
-        public var usr: USR
+        public var spi_usr: SPI_USR
     }
 
     /// Address value register
     @Register(bitWidth: 32)
-    public struct ADDR {
+    public struct SPI_ADDR {
         /// Address to slave. Can be configured in CONF state.
         @ReadWrite(bits: 0..<32)
-        public var usr_addr_value: USR_ADDR_VALUE
+        public var spi_usr_addr_value: SPI_USR_ADDR_VALUE
     }
 
     /// SPI control register
     @Register(bitWidth: 32)
-    public struct CTRL {
+    public struct SPI_CTRL {
         /// 0: In the dummy phase, the FSPI bus signals are not output. 1: In the dummy phase, the FSPI bus signals are output. Can be configured in CONF state.
         @ReadWrite(bits: 3..<4)
-        public var dummy_out: DUMMY_OUT
+        public var spi_dummy_out: SPI_DUMMY_OUT
 
         /// Apply 2 signals during addr phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 5..<6)
-        public var faddr_dual: FADDR_DUAL
+        public var spi_faddr_dual: SPI_FADDR_DUAL
 
         /// Apply 4 signals during addr phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 6..<7)
-        public var faddr_quad: FADDR_QUAD
+        public var spi_faddr_quad: SPI_FADDR_QUAD
 
         /// Apply 8 signals during addr phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadOnly(bits: 7..<8)
-        public var faddr_oct: FADDR_OCT
+        public var spi_faddr_oct: SPI_FADDR_OCT
 
         /// Apply 2 signals during command phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 8..<9)
-        public var fcmd_dual: FCMD_DUAL
+        public var spi_fcmd_dual: SPI_FCMD_DUAL
 
         /// Apply 4 signals during command phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 9..<10)
-        public var fcmd_quad: FCMD_QUAD
+        public var spi_fcmd_quad: SPI_FCMD_QUAD
 
         /// Apply 8 signals during command phase 1:enable 0: disable. Can be configured in CONF state.
         @ReadOnly(bits: 10..<11)
-        public var fcmd_oct: FCMD_OCT
+        public var spi_fcmd_oct: SPI_FCMD_OCT
 
         /// In the read operations, read-data phase apply 2 signals. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 14..<15)
-        public var fread_dual: FREAD_DUAL
+        public var spi_fread_dual: SPI_FREAD_DUAL
 
         /// In the read operations read-data phase apply 4 signals. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 15..<16)
-        public var fread_quad: FREAD_QUAD
+        public var spi_fread_quad: SPI_FREAD_QUAD
 
         /// In the read operations read-data phase apply 8 signals. 1: enable 0: disable. Can be configured in CONF state.
         @ReadOnly(bits: 16..<17)
-        public var fread_oct: FREAD_OCT
+        public var spi_fread_oct: SPI_FREAD_OCT
 
         /// The bit is used to set MISO line polarity, 1: high 0, low. Can be configured in CONF state.
         @ReadWrite(bits: 18..<19)
-        public var q_pol: Q_POL
+        public var spi_q_pol: SPI_Q_POL
 
         /// The bit is used to set MOSI line polarity, 1: high 0, low. Can be configured in CONF state.
         @ReadWrite(bits: 19..<20)
-        public var d_pol: D_POL
+        public var spi_d_pol: SPI_D_POL
 
         /// SPI_HOLD output value when SPI is idle. 1: output high, 0: output low. Can be configured in CONF state.
         @ReadWrite(bits: 20..<21)
-        public var hold_pol: HOLD_POL
+        public var spi_hold_pol: SPI_HOLD_POL
 
         /// Write protect signal output when SPI is idle. 1: output high, 0: output low. Can be configured in CONF state.
         @ReadWrite(bits: 21..<22)
-        public var wp_pol: WP_POL
+        public var spi_wp_pol: SPI_WP_POL
 
         /// In read-data (MISO) phase 1: LSB first 0: MSB first. Can be configured in CONF state.
         @ReadWrite(bits: 23..<25)
-        public var rd_bit_order: RD_BIT_ORDER
+        public var spi_rd_bit_order: SPI_RD_BIT_ORDER
 
         /// In command address write-data (MOSI) phases 1: LSB firs 0: MSB first. Can be configured in CONF state.
         @ReadWrite(bits: 25..<27)
-        public var wr_bit_order: WR_BIT_ORDER
+        public var spi_wr_bit_order: SPI_WR_BIT_ORDER
     }
 
     /// SPI clock control register
     @Register(bitWidth: 32)
-    public struct CLOCK {
+    public struct SPI_CLOCK {
         /// In the master mode it must be equal to spi_clkcnt_N. In the slave mode it must be 0. Can be configured in CONF state.
         @ReadWrite(bits: 0..<6)
-        public var clkcnt_l: CLKCNT_L
+        public var spi_clkcnt_l: SPI_CLKCNT_L
 
         /// In the master mode it must be floor((spi_clkcnt_N+1)/2-1). In the slave mode it must be 0. Can be configured in CONF state.
         @ReadWrite(bits: 6..<12)
-        public var clkcnt_h: CLKCNT_H
+        public var spi_clkcnt_h: SPI_CLKCNT_H
 
         /// In the master mode it is the divider of spi_clk. So spi_clk frequency is system/(spi_clkdiv_pre+1)/(spi_clkcnt_N+1). Can be configured in CONF state.
         @ReadWrite(bits: 12..<18)
-        public var clkcnt_n: CLKCNT_N
+        public var spi_clkcnt_n: SPI_CLKCNT_N
 
         /// In the master mode it is pre-divider of spi_clk. Can be configured in CONF state.
         @ReadWrite(bits: 18..<22)
-        public var clkdiv_pre: CLKDIV_PRE
+        public var spi_clkdiv_pre: SPI_CLKDIV_PRE
 
         /// In the master mode 1: spi_clk is eqaul to system 0: spi_clk is divided from system clock. Can be configured in CONF state.
         @ReadWrite(bits: 31..<32)
-        public var clk_equ_sysclk: CLK_EQU_SYSCLK
+        public var spi_clk_equ_sysclk: SPI_CLK_EQU_SYSCLK
     }
 
     /// SPI USER control register
     @Register(bitWidth: 32)
-    public struct USER {
+    public struct SPI_USER {
         /// Set the bit to enable full duplex communication. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 0..<1)
-        public var doutdin: DOUTDIN
+        public var spi_doutdin: SPI_DOUTDIN
 
         /// Both for master mode and slave mode. 1: spi controller is in QPI mode. 0: others. Can be configured in CONF state.
         @ReadWrite(bits: 3..<4)
-        public var qpi_mode: QPI_MODE
+        public var spi_qpi_mode: SPI_QPI_MODE
 
         /// Just for master mode. 1: spi controller is in OPI mode (all in 8-b-m). 0: others. Can be configured in CONF state.
         @ReadOnly(bits: 4..<5)
-        public var opi_mode: OPI_MODE
+        public var spi_opi_mode: SPI_OPI_MODE
 
         /// In the slave mode, this bit can be used to change the polarity of tsck. 0: tsck = spi_ck_i. 1:tsck = !spi_ck_i.
         @ReadWrite(bits: 5..<6)
-        public var tsck_i_edge: TSCK_I_EDGE
+        public var spi_tsck_i_edge: SPI_TSCK_I_EDGE
 
         /// spi cs keep low when spi is in done phase. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 6..<7)
-        public var cs_hold: CS_HOLD
+        public var spi_cs_hold: SPI_CS_HOLD
 
         /// spi cs is enable when spi is in prepare phase. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 7..<8)
-        public var cs_setup: CS_SETUP
+        public var spi_cs_setup: SPI_CS_SETUP
 
         /// In the slave mode, this bit can be used to change the polarity of rsck. 0: rsck = !spi_ck_i. 1:rsck = spi_ck_i.
         @ReadWrite(bits: 8..<9)
-        public var rsck_i_edge: RSCK_I_EDGE
+        public var spi_rsck_i_edge: SPI_RSCK_I_EDGE
 
         /// the bit combined with spi_mosi_delay_mode bits to set mosi signal delay mode. Can be configured in CONF state.
         @ReadWrite(bits: 9..<10)
-        public var ck_out_edge: CK_OUT_EDGE
+        public var spi_ck_out_edge: SPI_CK_OUT_EDGE
 
         /// In the write operations read-data phase apply 2 signals. Can be configured in CONF state.
         @ReadWrite(bits: 12..<13)
-        public var fwrite_dual: FWRITE_DUAL
+        public var spi_fwrite_dual: SPI_FWRITE_DUAL
 
         /// In the write operations read-data phase apply 4 signals. Can be configured in CONF state.
         @ReadWrite(bits: 13..<14)
-        public var fwrite_quad: FWRITE_QUAD
+        public var spi_fwrite_quad: SPI_FWRITE_QUAD
 
         /// In the write operations read-data phase apply 8 signals. Can be configured in CONF state.
         @ReadOnly(bits: 14..<15)
-        public var fwrite_oct: FWRITE_OCT
+        public var spi_fwrite_oct: SPI_FWRITE_OCT
 
         /// 1: Enable the DMA CONF phase of next seg-trans operation, which means seg-trans will continue. 0: The seg-trans will end after the current SPI seg-trans or this is not seg-trans mode. Can be configured in CONF state.
         @ReadWrite(bits: 15..<16)
-        public var usr_conf_nxt: USR_CONF_NXT
+        public var spi_usr_conf_nxt: SPI_USR_CONF_NXT
 
         /// Set the bit to enable 3-line half duplex communication mosi and miso signals share the same pin. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 17..<18)
-        public var sio: SIO
+        public var spi_sio: SPI_SIO
 
         /// read-data phase only access to high-part of the buffer spi_w8~spi_w15. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 24..<25)
-        public var usr_miso_highpart: USR_MISO_HIGHPART
+        public var spi_usr_miso_highpart: SPI_USR_MISO_HIGHPART
 
         /// write-data phase only access to high-part of the buffer spi_w8~spi_w15. 1: enable 0: disable. Can be configured in CONF state.
         @ReadWrite(bits: 25..<26)
-        public var usr_mosi_highpart: USR_MOSI_HIGHPART
+        public var spi_usr_mosi_highpart: SPI_USR_MOSI_HIGHPART
 
         /// spi clock is disable in dummy phase when the bit is enable. Can be configured in CONF state.
         @ReadWrite(bits: 26..<27)
-        public var usr_dummy_idle: USR_DUMMY_IDLE
+        public var spi_usr_dummy_idle: SPI_USR_DUMMY_IDLE
 
         /// This bit enable the write-data phase of an operation. Can be configured in CONF state.
         @ReadWrite(bits: 27..<28)
-        public var usr_mosi: USR_MOSI
+        public var spi_usr_mosi: SPI_USR_MOSI
 
         /// This bit enable the read-data phase of an operation. Can be configured in CONF state.
         @ReadWrite(bits: 28..<29)
-        public var usr_miso: USR_MISO
+        public var spi_usr_miso: SPI_USR_MISO
 
         /// This bit enable the dummy phase of an operation. Can be configured in CONF state.
         @ReadWrite(bits: 29..<30)
-        public var usr_dummy: USR_DUMMY
+        public var spi_usr_dummy: SPI_USR_DUMMY
 
         /// This bit enable the address phase of an operation. Can be configured in CONF state.
         @ReadWrite(bits: 30..<31)
-        public var usr_addr: USR_ADDR
+        public var spi_usr_addr: SPI_USR_ADDR
 
         /// This bit enable the command phase of an operation. Can be configured in CONF state.
         @ReadWrite(bits: 31..<32)
-        public var usr_command: USR_COMMAND
+        public var spi_usr_command: SPI_USR_COMMAND
     }
 
     /// SPI USER control register 1
     @Register(bitWidth: 32)
-    public struct USER1 {
+    public struct SPI_USER1 {
         /// The length in spi_clk cycles of dummy phase. The register value shall be (cycle_num-1). Can be configured in CONF state.
         @ReadWrite(bits: 0..<8)
-        public var usr_dummy_cyclelen: USR_DUMMY_CYCLELEN
+        public var spi_usr_dummy_cyclelen: SPI_USR_DUMMY_CYCLELEN
 
         /// 1: SPI transfer is ended when SPI RX AFIFO wfull error is valid in GP-SPI master FD/HD-mode. 0: SPI transfer is not ended when SPI RX AFIFO wfull error is valid in GP-SPI master FD/HD-mode.
         @ReadWrite(bits: 16..<17)
-        public var mst_wfull_err_end_en: MST_WFULL_ERR_END_EN
+        public var spi_mst_wfull_err_end_en: SPI_MST_WFULL_ERR_END_EN
 
         /// (cycles+1) of prepare phase by spi clock this bits are combined with spi_cs_setup bit. Can be configured in CONF state.
         @ReadWrite(bits: 17..<22)
-        public var cs_setup_time: CS_SETUP_TIME
+        public var spi_cs_setup_time: SPI_CS_SETUP_TIME
 
         /// delay cycles of cs pin by spi clock this bits are combined with spi_cs_hold bit. Can be configured in CONF state.
         @ReadWrite(bits: 22..<27)
-        public var cs_hold_time: CS_HOLD_TIME
+        public var spi_cs_hold_time: SPI_CS_HOLD_TIME
 
         /// The length in bits of address phase. The register value shall be (bit_num-1). Can be configured in CONF state.
         @ReadWrite(bits: 27..<32)
-        public var usr_addr_bitlen: USR_ADDR_BITLEN
+        public var spi_usr_addr_bitlen: SPI_USR_ADDR_BITLEN
     }
 
     /// SPI USER control register 2
     @Register(bitWidth: 32)
-    public struct USER2 {
+    public struct SPI_USER2 {
         /// The value of command. Can be configured in CONF state.
         @ReadWrite(bits: 0..<16)
-        public var usr_command_value: USR_COMMAND_VALUE
+        public var spi_usr_command_value: SPI_USR_COMMAND_VALUE
 
         /// 1: SPI transfer is ended when SPI TX AFIFO read empty error is valid in GP-SPI master FD/HD-mode. 0: SPI transfer is not ended when SPI TX AFIFO read empty error is valid in GP-SPI master FD/HD-mode.
         @ReadWrite(bits: 27..<28)
-        public var mst_rempty_err_end_en: MST_REMPTY_ERR_END_EN
+        public var spi_mst_rempty_err_end_en: SPI_MST_REMPTY_ERR_END_EN
 
         /// The length in bits of command phase. The register value shall be (bit_num-1). Can be configured in CONF state.
         @ReadWrite(bits: 28..<32)
-        public var usr_command_bitlen: USR_COMMAND_BITLEN
+        public var spi_usr_command_bitlen: SPI_USR_COMMAND_BITLEN
     }
 
     /// SPI data bit length control register
     @Register(bitWidth: 32)
-    public struct MS_DLEN {
+    public struct SPI_MS_DLEN {
         /// The value of these bits is the configured SPI transmission data bit length in master mode DMA controlled transfer or CPU controlled transfer. The value is also the configured bit length in slave mode DMA RX controlled transfer. The register value shall be (bit_num-1). Can be configured in CONF state.
         @ReadWrite(bits: 0..<18)
-        public var ms_data_bitlen: MS_DATA_BITLEN
+        public var spi_ms_data_bitlen: SPI_MS_DATA_BITLEN
     }
 
     /// SPI misc register
     @Register(bitWidth: 32)
-    public struct MISC {
+    public struct SPI_MISC {
         /// SPI CS0 pin enable, 1: disable CS0, 0: spi_cs0 signal is from/to CS0 pin. Can be configured in CONF state.
         @ReadWrite(bits: 0..<1)
-        public var cs0_dis: CS0_DIS
+        public var spi_cs0_dis: SPI_CS0_DIS
 
         /// SPI CS1 pin enable, 1: disable CS1, 0: spi_cs1 signal is from/to CS1 pin. Can be configured in CONF state.
         @ReadWrite(bits: 1..<2)
-        public var cs1_dis: CS1_DIS
+        public var spi_cs1_dis: SPI_CS1_DIS
 
         /// SPI CS2 pin enable, 1: disable CS2, 0: spi_cs2 signal is from/to CS2 pin. Can be configured in CONF state.
         @ReadWrite(bits: 2..<3)
-        public var cs2_dis: CS2_DIS
+        public var spi_cs2_dis: SPI_CS2_DIS
 
         /// SPI CS3 pin enable, 1: disable CS3, 0: spi_cs3 signal is from/to CS3 pin. Can be configured in CONF state.
         @ReadWrite(bits: 3..<4)
-        public var cs3_dis: CS3_DIS
+        public var spi_cs3_dis: SPI_CS3_DIS
 
         /// SPI CS4 pin enable, 1: disable CS4, 0: spi_cs4 signal is from/to CS4 pin. Can be configured in CONF state.
         @ReadWrite(bits: 4..<5)
-        public var cs4_dis: CS4_DIS
+        public var spi_cs4_dis: SPI_CS4_DIS
 
         /// SPI CS5 pin enable, 1: disable CS5, 0: spi_cs5 signal is from/to CS5 pin. Can be configured in CONF state.
         @ReadWrite(bits: 5..<6)
-        public var cs5_dis: CS5_DIS
+        public var spi_cs5_dis: SPI_CS5_DIS
 
         /// 1: spi clk out disable, 0: spi clk out enable. Can be configured in CONF state.
         @ReadWrite(bits: 6..<7)
-        public var ck_dis: CK_DIS
+        public var spi_ck_dis: SPI_CK_DIS
 
         /// In the master mode the bits are the polarity of spi cs line, the value is equivalent to spi_cs ^ spi_master_cs_pol. Can be configured in CONF state.
         @ReadWrite(bits: 7..<13)
-        public var master_cs_pol: MASTER_CS_POL
+        public var spi_master_cs_pol: SPI_MASTER_CS_POL
 
         /// 1: SPI master DTR mode is applied to SPI clk, data and spi_dqs. 0: SPI master DTR mode is only applied to spi_dqs. This bit should be used with bit 17/18/19.
         @ReadOnly(bits: 16..<17)
-        public var clk_data_dtr_en: CLK_DATA_DTR_EN
+        public var spi_clk_data_dtr_en: SPI_CLK_DATA_DTR_EN
 
         /// 1: SPI clk and data of SPI_DOUT and SPI_DIN state are in DTR mode, including master 1/2/4/8-bm. 0: SPI clk and data of SPI_DOUT and SPI_DIN state are in STR mode. Can be configured in CONF state.
         @ReadOnly(bits: 17..<18)
-        public var data_dtr_en: DATA_DTR_EN
+        public var spi_data_dtr_en: SPI_DATA_DTR_EN
 
         /// 1: SPI clk and data of SPI_SEND_ADDR state are in DTR mode, including master 1/2/4/8-bm. 0: SPI clk and data of SPI_SEND_ADDR state are in STR mode. Can be configured in CONF state.
         @ReadOnly(bits: 18..<19)
-        public var addr_dtr_en: ADDR_DTR_EN
+        public var spi_addr_dtr_en: SPI_ADDR_DTR_EN
 
         /// 1: SPI clk and data of SPI_SEND_CMD state are in DTR mode, including master 1/2/4/8-bm. 0: SPI clk and data of SPI_SEND_CMD state are in STR mode. Can be configured in CONF state.
         @ReadOnly(bits: 19..<20)
-        public var cmd_dtr_en: CMD_DTR_EN
+        public var spi_cmd_dtr_en: SPI_CMD_DTR_EN
 
         /// spi slave input cs polarity select. 1: inv 0: not change. Can be configured in CONF state.
         @ReadWrite(bits: 23..<24)
-        public var slave_cs_pol: SLAVE_CS_POL
+        public var spi_slave_cs_pol: SPI_SLAVE_CS_POL
 
         /// The default value of spi_dqs. Can be configured in CONF state.
         @ReadOnly(bits: 24..<25)
-        public var dqs_idle_edge: DQS_IDLE_EDGE
+        public var spi_dqs_idle_edge: SPI_DQS_IDLE_EDGE
 
         /// 1: spi clk line is high when idle 0: spi clk line is low when idle. Can be configured in CONF state.
         @ReadWrite(bits: 29..<30)
-        public var ck_idle_edge: CK_IDLE_EDGE
+        public var spi_ck_idle_edge: SPI_CK_IDLE_EDGE
 
         /// spi cs line keep low when the bit is set. Can be configured in CONF state.
         @ReadWrite(bits: 30..<31)
-        public var cs_keep_active: CS_KEEP_ACTIVE
+        public var spi_cs_keep_active: SPI_CS_KEEP_ACTIVE
 
         /// 1: SPI quad input swap enable, swap FSPID with FSPIQ, swap FSPIWP with FSPIHD. 0: spi quad input swap disable. Can be configured in CONF state.
         @ReadWrite(bits: 31..<32)
-        public var quad_din_pin_swap: QUAD_DIN_PIN_SWAP
+        public var spi_quad_din_pin_swap: SPI_QUAD_DIN_PIN_SWAP
     }
 
     /// SPI input delay mode configuration
     @Register(bitWidth: 32)
-    public struct DIN_MODE {
+    public struct SPI_DIN_MODE {
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadWrite(bits: 0..<2)
-        public var din0_mode: DIN0_MODE
+        public var spi_din0_mode: SPI_DIN0_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadWrite(bits: 2..<4)
-        public var din1_mode: DIN1_MODE
+        public var spi_din1_mode: SPI_DIN1_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadWrite(bits: 4..<6)
-        public var din2_mode: DIN2_MODE
+        public var spi_din2_mode: SPI_DIN2_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadWrite(bits: 6..<8)
-        public var din3_mode: DIN3_MODE
+        public var spi_din3_mode: SPI_DIN3_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadOnly(bits: 8..<10)
-        public var din4_mode: DIN4_MODE
+        public var spi_din4_mode: SPI_DIN4_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadOnly(bits: 10..<12)
-        public var din5_mode: DIN5_MODE
+        public var spi_din5_mode: SPI_DIN5_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadOnly(bits: 12..<14)
-        public var din6_mode: DIN6_MODE
+        public var spi_din6_mode: SPI_DIN6_MODE
 
         /// the input signals are delayed by SPI module clock cycles, 0: input without delayed, 1: input with the posedge of clk_apb,2 input with the negedge of clk_apb, 3: input with the spi_clk. Can be configured in CONF state.
         @ReadOnly(bits: 14..<16)
-        public var din7_mode: DIN7_MODE
+        public var spi_din7_mode: SPI_DIN7_MODE
 
         /// 1:enable hclk in SPI input timing module. 0: disable it. Can be configured in CONF state.
         @ReadWrite(bits: 16..<17)
-        public var timing_hclk_active: TIMING_HCLK_ACTIVE
+        public var spi_timing_hclk_active: SPI_TIMING_HCLK_ACTIVE
     }
 
     /// SPI input delay number configuration
     @Register(bitWidth: 32)
-    public struct DIN_NUM {
+    public struct SPI_DIN_NUM {
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadWrite(bits: 0..<2)
-        public var din0_num: DIN0_NUM
+        public var spi_din0_num: SPI_DIN0_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadWrite(bits: 2..<4)
-        public var din1_num: DIN1_NUM
+        public var spi_din1_num: SPI_DIN1_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadWrite(bits: 4..<6)
-        public var din2_num: DIN2_NUM
+        public var spi_din2_num: SPI_DIN2_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadWrite(bits: 6..<8)
-        public var din3_num: DIN3_NUM
+        public var spi_din3_num: SPI_DIN3_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadOnly(bits: 8..<10)
-        public var din4_num: DIN4_NUM
+        public var spi_din4_num: SPI_DIN4_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadOnly(bits: 10..<12)
-        public var din5_num: DIN5_NUM
+        public var spi_din5_num: SPI_DIN5_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadOnly(bits: 12..<14)
-        public var din6_num: DIN6_NUM
+        public var spi_din6_num: SPI_DIN6_NUM
 
         /// the input signals are delayed by SPI module clock cycles, 0: delayed by 1 cycle, 1: delayed by 2 cycles,... Can be configured in CONF state.
         @ReadOnly(bits: 14..<16)
-        public var din7_num: DIN7_NUM
+        public var spi_din7_num: SPI_DIN7_NUM
     }
 
     /// SPI output delay mode configuration
     @Register(bitWidth: 32)
-    public struct DOUT_MODE {
+    public struct SPI_DOUT_MODE {
         /// The output signal 0 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadWrite(bits: 0..<1)
-        public var dout0_mode: DOUT0_MODE
+        public var spi_dout0_mode: SPI_DOUT0_MODE
 
         /// The output signal 1 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadWrite(bits: 1..<2)
-        public var dout1_mode: DOUT1_MODE
+        public var spi_dout1_mode: SPI_DOUT1_MODE
 
         /// The output signal 2 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadWrite(bits: 2..<3)
-        public var dout2_mode: DOUT2_MODE
+        public var spi_dout2_mode: SPI_DOUT2_MODE
 
         /// The output signal 3 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadWrite(bits: 3..<4)
-        public var dout3_mode: DOUT3_MODE
+        public var spi_dout3_mode: SPI_DOUT3_MODE
 
         /// The output signal 4 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadOnly(bits: 4..<5)
-        public var dout4_mode: DOUT4_MODE
+        public var spi_dout4_mode: SPI_DOUT4_MODE
 
         /// The output signal 5 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadOnly(bits: 5..<6)
-        public var dout5_mode: DOUT5_MODE
+        public var spi_dout5_mode: SPI_DOUT5_MODE
 
         /// The output signal 6 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadOnly(bits: 6..<7)
-        public var dout6_mode: DOUT6_MODE
+        public var spi_dout6_mode: SPI_DOUT6_MODE
 
         /// The output signal 7 is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadOnly(bits: 7..<8)
-        public var dout7_mode: DOUT7_MODE
+        public var spi_dout7_mode: SPI_DOUT7_MODE
 
         /// The output signal SPI_DQS is delayed by the SPI module clock, 0: output without delayed, 1: output delay for a SPI module clock cycle at its negative edge. Can be configured in CONF state.
         @ReadOnly(bits: 8..<9)
-        public var d_dqs_mode: D_DQS_MODE
+        public var spi_d_dqs_mode: SPI_D_DQS_MODE
     }
 
     /// SPI DMA control register
     @Register(bitWidth: 32)
-    public struct DMA_CONF {
+    public struct SPI_DMA_CONF {
         /// Records the status of DMA TX FIFO. 1: DMA TX FIFO is not ready for sending data. 0: DMA TX FIFO is ready for sending data.
         @ReadOnly(bits: 0..<1)
-        public var dma_outfifo_empty: DMA_OUTFIFO_EMPTY
+        public var spi_dma_outfifo_empty: SPI_DMA_OUTFIFO_EMPTY
 
         /// Records the status of DMA RX FIFO. 1: DMA RX FIFO is not ready for receiving data. 0: DMA RX FIFO is ready for receiving data.
         @ReadOnly(bits: 1..<2)
-        public var dma_infifo_full: DMA_INFIFO_FULL
+        public var spi_dma_infifo_full: SPI_DMA_INFIFO_FULL
 
         /// Enable dma segment transfer in spi dma half slave mode. 1: enable. 0: disable.
         @ReadWrite(bits: 18..<19)
-        public var dma_slv_seg_trans_en: DMA_SLV_SEG_TRANS_EN
+        public var spi_dma_slv_seg_trans_en: SPI_DMA_SLV_SEG_TRANS_EN
 
         /// 1: spi_dma_infifo_full_vld is cleared by spi slave cmd 5. 0: spi_dma_infifo_full_vld is cleared by spi_trans_done.
         @ReadWrite(bits: 19..<20)
-        public var slv_rx_seg_trans_clr_en: SLV_RX_SEG_TRANS_CLR_EN
+        public var spi_slv_rx_seg_trans_clr_en: SPI_SLV_RX_SEG_TRANS_CLR_EN
 
         /// 1: spi_dma_outfifo_empty_vld is cleared by spi slave cmd 6. 0: spi_dma_outfifo_empty_vld is cleared by spi_trans_done.
         @ReadWrite(bits: 20..<21)
-        public var slv_tx_seg_trans_clr_en: SLV_TX_SEG_TRANS_CLR_EN
+        public var spi_slv_tx_seg_trans_clr_en: SPI_SLV_TX_SEG_TRANS_CLR_EN
 
         /// 1: spi_dma_inlink_eof is set when the number of dma pushed data bytes is equal to the value of spi_slv/mst_dma_rd_bytelen[19:0] in spi dma transition. 0: spi_dma_inlink_eof is set by spi_trans_done in non-seg-trans or spi_dma_seg_trans_done in seg-trans.
         @ReadWrite(bits: 21..<22)
-        public var rx_eof_en: RX_EOF_EN
+        public var spi_rx_eof_en: SPI_RX_EOF_EN
 
         /// Set this bit to enable SPI DMA controlled receive data mode.
         @ReadWrite(bits: 27..<28)
-        public var dma_rx_ena: DMA_RX_ENA
+        public var spi_dma_rx_ena: SPI_DMA_RX_ENA
 
         /// Set this bit to enable SPI DMA controlled send data mode.
         @ReadWrite(bits: 28..<29)
-        public var dma_tx_ena: DMA_TX_ENA
+        public var spi_dma_tx_ena: SPI_DMA_TX_ENA
 
         /// Set this bit to reset RX AFIFO, which is used to receive data in SPI master and slave mode transfer.
         @WriteOnly(bits: 29..<30)
-        public var rx_afifo_rst: RX_AFIFO_RST
+        public var spi_rx_afifo_rst: SPI_RX_AFIFO_RST
 
         /// Set this bit to reset BUF TX AFIFO, which is used send data out in SPI slave CPU controlled mode transfer and master mode transfer.
         @WriteOnly(bits: 30..<31)
-        public var buf_afifo_rst: BUF_AFIFO_RST
+        public var spi_buf_afifo_rst: SPI_BUF_AFIFO_RST
 
         /// Set this bit to reset DMA TX AFIFO, which is used to send data out in SPI slave DMA controlled mode transfer.
         @WriteOnly(bits: 31..<32)
-        public var dma_afifo_rst: DMA_AFIFO_RST
+        public var spi_dma_afifo_rst: SPI_DMA_AFIFO_RST
     }
 
     /// SPI interrupt enable register
     @Register(bitWidth: 32)
-    public struct DMA_INT_ENA {
+    public struct SPI_DMA_INT_ENA {
         /// The enable bit for SPI_DMA_INFIFO_FULL_ERR_INT interrupt.
         @ReadWrite(bits: 0..<1)
-        public var dma_infifo_full_err: DMA_INFIFO_FULL_ERR
+        public var spi_dma_infifo_full_err_int_ena: SPI_DMA_INFIFO_FULL_ERR_INT_ENA
 
         /// The enable bit for SPI_DMA_OUTFIFO_EMPTY_ERR_INT interrupt.
         @ReadWrite(bits: 1..<2)
-        public var dma_outfifo_empty_err: DMA_OUTFIFO_EMPTY_ERR
+        public var spi_dma_outfifo_empty_err_int_ena: SPI_DMA_OUTFIFO_EMPTY_ERR_INT_ENA
 
         /// The enable bit for SPI slave Ex_QPI interrupt.
         @ReadWrite(bits: 2..<3)
-        public var slv_ex_qpi: SLV_EX_QPI
+        public var spi_slv_ex_qpi_int_ena: SPI_SLV_EX_QPI_INT_ENA
 
         /// The enable bit for SPI slave En_QPI interrupt.
         @ReadWrite(bits: 3..<4)
-        public var slv_en_qpi: SLV_EN_QPI
+        public var spi_slv_en_qpi_int_ena: SPI_SLV_EN_QPI_INT_ENA
 
         /// The enable bit for SPI slave CMD7 interrupt.
         @ReadWrite(bits: 4..<5)
-        public var slv_cmd7: SLV_CMD7
+        public var spi_slv_cmd7_int_ena: SPI_SLV_CMD7_INT_ENA
 
         /// The enable bit for SPI slave CMD8 interrupt.
         @ReadWrite(bits: 5..<6)
-        public var slv_cmd8: SLV_CMD8
+        public var spi_slv_cmd8_int_ena: SPI_SLV_CMD8_INT_ENA
 
         /// The enable bit for SPI slave CMD9 interrupt.
         @ReadWrite(bits: 6..<7)
-        public var slv_cmd9: SLV_CMD9
+        public var spi_slv_cmd9_int_ena: SPI_SLV_CMD9_INT_ENA
 
         /// The enable bit for SPI slave CMDA interrupt.
         @ReadWrite(bits: 7..<8)
-        public var slv_cmda: SLV_CMDA
+        public var spi_slv_cmda_int_ena: SPI_SLV_CMDA_INT_ENA
 
         /// The enable bit for SPI_SLV_RD_DMA_DONE_INT interrupt.
         @ReadWrite(bits: 8..<9)
-        public var slv_rd_dma_done: SLV_RD_DMA_DONE
+        public var spi_slv_rd_dma_done_int_ena: SPI_SLV_RD_DMA_DONE_INT_ENA
 
         /// The enable bit for SPI_SLV_WR_DMA_DONE_INT interrupt.
         @ReadWrite(bits: 9..<10)
-        public var slv_wr_dma_done: SLV_WR_DMA_DONE
+        public var spi_slv_wr_dma_done_int_ena: SPI_SLV_WR_DMA_DONE_INT_ENA
 
         /// The enable bit for SPI_SLV_RD_BUF_DONE_INT interrupt.
         @ReadWrite(bits: 10..<11)
-        public var slv_rd_buf_done: SLV_RD_BUF_DONE
+        public var spi_slv_rd_buf_done_int_ena: SPI_SLV_RD_BUF_DONE_INT_ENA
 
         /// The enable bit for SPI_SLV_WR_BUF_DONE_INT interrupt.
         @ReadWrite(bits: 11..<12)
-        public var slv_wr_buf_done: SLV_WR_BUF_DONE
+        public var spi_slv_wr_buf_done_int_ena: SPI_SLV_WR_BUF_DONE_INT_ENA
 
         /// The enable bit for SPI_TRANS_DONE_INT interrupt.
         @ReadWrite(bits: 12..<13)
-        public var trans_done: TRANS_DONE
+        public var spi_trans_done_int_ena: SPI_TRANS_DONE_INT_ENA
 
         /// The enable bit for SPI_DMA_SEG_TRANS_DONE_INT interrupt.
         @ReadWrite(bits: 13..<14)
-        public var dma_seg_trans_done: DMA_SEG_TRANS_DONE
+        public var spi_dma_seg_trans_done_int_ena: SPI_DMA_SEG_TRANS_DONE_INT_ENA
 
         /// The enable bit for SPI_SEG_MAGIC_ERR_INT interrupt.
         @ReadWrite(bits: 14..<15)
-        public var seg_magic_err: SEG_MAGIC_ERR
+        public var spi_seg_magic_err_int_ena: SPI_SEG_MAGIC_ERR_INT_ENA
 
         /// The enable bit for SPI_SLV_BUF_ADDR_ERR_INT interrupt.
         @ReadWrite(bits: 15..<16)
-        public var slv_buf_addr_err: SLV_BUF_ADDR_ERR
+        public var spi_slv_buf_addr_err_int_ena: SPI_SLV_BUF_ADDR_ERR_INT_ENA
 
         /// The enable bit for SPI_SLV_CMD_ERR_INT interrupt.
         @ReadWrite(bits: 16..<17)
-        public var slv_cmd_err: SLV_CMD_ERR
+        public var spi_slv_cmd_err_int_ena: SPI_SLV_CMD_ERR_INT_ENA
 
         /// The enable bit for SPI_MST_RX_AFIFO_WFULL_ERR_INT interrupt.
         @ReadWrite(bits: 17..<18)
-        public var mst_rx_afifo_wfull_err: MST_RX_AFIFO_WFULL_ERR
+        public var spi_mst_rx_afifo_wfull_err_int_ena: SPI_MST_RX_AFIFO_WFULL_ERR_INT_ENA
 
         /// The enable bit for SPI_MST_TX_AFIFO_REMPTY_ERR_INT interrupt.
         @ReadWrite(bits: 18..<19)
-        public var mst_tx_afifo_rempty_err: MST_TX_AFIFO_REMPTY_ERR
+        public var spi_mst_tx_afifo_rempty_err_int_ena: SPI_MST_TX_AFIFO_REMPTY_ERR_INT_ENA
 
         /// The enable bit for SPI_APP2_INT interrupt.
         @ReadWrite(bits: 19..<20)
-        public var app2: APP2
+        public var spi_app2_int_ena: SPI_APP2_INT_ENA
 
         /// The enable bit for SPI_APP1_INT interrupt.
         @ReadWrite(bits: 20..<21)
-        public var app1: APP1
+        public var spi_app1_int_ena: SPI_APP1_INT_ENA
     }
 
     /// SPI interrupt clear register
     @Register(bitWidth: 32)
-    public struct DMA_INT_CLR {
+    public struct SPI_DMA_INT_CLR {
         /// The clear bit for SPI_DMA_INFIFO_FULL_ERR_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var dma_infifo_full_err: DMA_INFIFO_FULL_ERR
+        public var spi_dma_infifo_full_err_int_clr: SPI_DMA_INFIFO_FULL_ERR_INT_CLR
 
         /// The clear bit for SPI_DMA_OUTFIFO_EMPTY_ERR_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var dma_outfifo_empty_err: DMA_OUTFIFO_EMPTY_ERR
+        public var spi_dma_outfifo_empty_err_int_clr: SPI_DMA_OUTFIFO_EMPTY_ERR_INT_CLR
 
         /// The clear bit for SPI slave Ex_QPI interrupt.
         @WriteOnly(bits: 2..<3)
-        public var slv_ex_qpi: SLV_EX_QPI
+        public var spi_slv_ex_qpi_int_clr: SPI_SLV_EX_QPI_INT_CLR
 
         /// The clear bit for SPI slave En_QPI interrupt.
         @WriteOnly(bits: 3..<4)
-        public var slv_en_qpi: SLV_EN_QPI
+        public var spi_slv_en_qpi_int_clr: SPI_SLV_EN_QPI_INT_CLR
 
         /// The clear bit for SPI slave CMD7 interrupt.
         @WriteOnly(bits: 4..<5)
-        public var slv_cmd7: SLV_CMD7
+        public var spi_slv_cmd7_int_clr: SPI_SLV_CMD7_INT_CLR
 
         /// The clear bit for SPI slave CMD8 interrupt.
         @WriteOnly(bits: 5..<6)
-        public var slv_cmd8: SLV_CMD8
+        public var spi_slv_cmd8_int_clr: SPI_SLV_CMD8_INT_CLR
 
         /// The clear bit for SPI slave CMD9 interrupt.
         @WriteOnly(bits: 6..<7)
-        public var slv_cmd9: SLV_CMD9
+        public var spi_slv_cmd9_int_clr: SPI_SLV_CMD9_INT_CLR
 
         /// The clear bit for SPI slave CMDA interrupt.
         @WriteOnly(bits: 7..<8)
-        public var slv_cmda: SLV_CMDA
+        public var spi_slv_cmda_int_clr: SPI_SLV_CMDA_INT_CLR
 
         /// The clear bit for SPI_SLV_RD_DMA_DONE_INT interrupt.
         @WriteOnly(bits: 8..<9)
-        public var slv_rd_dma_done: SLV_RD_DMA_DONE
+        public var spi_slv_rd_dma_done_int_clr: SPI_SLV_RD_DMA_DONE_INT_CLR
 
         /// The clear bit for SPI_SLV_WR_DMA_DONE_INT interrupt.
         @WriteOnly(bits: 9..<10)
-        public var slv_wr_dma_done: SLV_WR_DMA_DONE
+        public var spi_slv_wr_dma_done_int_clr: SPI_SLV_WR_DMA_DONE_INT_CLR
 
         /// The clear bit for SPI_SLV_RD_BUF_DONE_INT interrupt.
         @WriteOnly(bits: 10..<11)
-        public var slv_rd_buf_done: SLV_RD_BUF_DONE
+        public var spi_slv_rd_buf_done_int_clr: SPI_SLV_RD_BUF_DONE_INT_CLR
 
         /// The clear bit for SPI_SLV_WR_BUF_DONE_INT interrupt.
         @WriteOnly(bits: 11..<12)
-        public var slv_wr_buf_done: SLV_WR_BUF_DONE
+        public var spi_slv_wr_buf_done_int_clr: SPI_SLV_WR_BUF_DONE_INT_CLR
 
         /// The clear bit for SPI_TRANS_DONE_INT interrupt.
         @WriteOnly(bits: 12..<13)
-        public var trans_done: TRANS_DONE
+        public var spi_trans_done_int_clr: SPI_TRANS_DONE_INT_CLR
 
         /// The clear bit for SPI_DMA_SEG_TRANS_DONE_INT interrupt.
         @WriteOnly(bits: 13..<14)
-        public var dma_seg_trans_done: DMA_SEG_TRANS_DONE
+        public var spi_dma_seg_trans_done_int_clr: SPI_DMA_SEG_TRANS_DONE_INT_CLR
 
         /// The clear bit for SPI_SEG_MAGIC_ERR_INT interrupt.
         @WriteOnly(bits: 14..<15)
-        public var seg_magic_err: SEG_MAGIC_ERR
+        public var spi_seg_magic_err_int_clr: SPI_SEG_MAGIC_ERR_INT_CLR
 
         /// The clear bit for SPI_SLV_BUF_ADDR_ERR_INT interrupt.
         @WriteOnly(bits: 15..<16)
-        public var slv_buf_addr_err: SLV_BUF_ADDR_ERR
+        public var spi_slv_buf_addr_err_int_clr: SPI_SLV_BUF_ADDR_ERR_INT_CLR
 
         /// The clear bit for SPI_SLV_CMD_ERR_INT interrupt.
         @WriteOnly(bits: 16..<17)
-        public var slv_cmd_err: SLV_CMD_ERR
+        public var spi_slv_cmd_err_int_clr: SPI_SLV_CMD_ERR_INT_CLR
 
         /// The clear bit for SPI_MST_RX_AFIFO_WFULL_ERR_INT interrupt.
         @WriteOnly(bits: 17..<18)
-        public var mst_rx_afifo_wfull_err: MST_RX_AFIFO_WFULL_ERR
+        public var spi_mst_rx_afifo_wfull_err_int_clr: SPI_MST_RX_AFIFO_WFULL_ERR_INT_CLR
 
         /// The clear bit for SPI_MST_TX_AFIFO_REMPTY_ERR_INT interrupt.
         @WriteOnly(bits: 18..<19)
-        public var mst_tx_afifo_rempty_err: MST_TX_AFIFO_REMPTY_ERR
+        public var spi_mst_tx_afifo_rempty_err_int_clr: SPI_MST_TX_AFIFO_REMPTY_ERR_INT_CLR
 
         /// The clear bit for SPI_APP2_INT interrupt.
         @WriteOnly(bits: 19..<20)
-        public var app2: APP2
+        public var spi_app2_int_clr: SPI_APP2_INT_CLR
 
         /// The clear bit for SPI_APP1_INT interrupt.
         @WriteOnly(bits: 20..<21)
-        public var app1: APP1
+        public var spi_app1_int_clr: SPI_APP1_INT_CLR
     }
 
     /// SPI interrupt raw register
     @Register(bitWidth: 32)
-    public struct DMA_INT_RAW {
+    public struct SPI_DMA_INT_RAW {
         /// 1: The current data rate of DMA Rx is smaller than that of SPI, which will lose the receive data. 0: Others.
         @ReadWrite(bits: 0..<1)
-        public var dma_infifo_full_err: DMA_INFIFO_FULL_ERR
+        public var spi_dma_infifo_full_err_int_raw: SPI_DMA_INFIFO_FULL_ERR_INT_RAW
 
         /// 1: The current data rate of DMA TX is smaller than that of SPI. SPI will stop in master mode and send out all 0 in slave mode. 0: Others.
         @ReadWrite(bits: 1..<2)
-        public var dma_outfifo_empty_err: DMA_OUTFIFO_EMPTY_ERR
+        public var spi_dma_outfifo_empty_err_int_raw: SPI_DMA_OUTFIFO_EMPTY_ERR_INT_RAW
 
         /// The raw bit for SPI slave Ex_QPI interrupt. 1: SPI slave mode Ex_QPI transmission is ended. 0: Others.
         @ReadWrite(bits: 2..<3)
-        public var slv_ex_qpi: SLV_EX_QPI
+        public var spi_slv_ex_qpi_int_raw: SPI_SLV_EX_QPI_INT_RAW
 
         /// The raw bit for SPI slave En_QPI interrupt. 1: SPI slave mode En_QPI transmission is ended. 0: Others.
         @ReadWrite(bits: 3..<4)
-        public var slv_en_qpi: SLV_EN_QPI
+        public var spi_slv_en_qpi_int_raw: SPI_SLV_EN_QPI_INT_RAW
 
         /// The raw bit for SPI slave CMD7 interrupt. 1: SPI slave mode CMD7 transmission is ended. 0: Others.
         @ReadWrite(bits: 4..<5)
-        public var slv_cmd7: SLV_CMD7
+        public var spi_slv_cmd7_int_raw: SPI_SLV_CMD7_INT_RAW
 
         /// The raw bit for SPI slave CMD8 interrupt. 1: SPI slave mode CMD8 transmission is ended. 0: Others.
         @ReadWrite(bits: 5..<6)
-        public var slv_cmd8: SLV_CMD8
+        public var spi_slv_cmd8_int_raw: SPI_SLV_CMD8_INT_RAW
 
         /// The raw bit for SPI slave CMD9 interrupt. 1: SPI slave mode CMD9 transmission is ended. 0: Others.
         @ReadWrite(bits: 6..<7)
-        public var slv_cmd9: SLV_CMD9
+        public var spi_slv_cmd9_int_raw: SPI_SLV_CMD9_INT_RAW
 
         /// The raw bit for SPI slave CMDA interrupt. 1: SPI slave mode CMDA transmission is ended. 0: Others.
         @ReadWrite(bits: 7..<8)
-        public var slv_cmda: SLV_CMDA
+        public var spi_slv_cmda_int_raw: SPI_SLV_CMDA_INT_RAW
 
         /// The raw bit for SPI_SLV_RD_DMA_DONE_INT interrupt. 1: SPI slave mode Rd_DMA transmission is ended. 0: Others.
         @ReadWrite(bits: 8..<9)
-        public var slv_rd_dma_done: SLV_RD_DMA_DONE
+        public var spi_slv_rd_dma_done_int_raw: SPI_SLV_RD_DMA_DONE_INT_RAW
 
         /// The raw bit for SPI_SLV_WR_DMA_DONE_INT interrupt. 1: SPI slave mode Wr_DMA transmission is ended. 0: Others.
         @ReadWrite(bits: 9..<10)
-        public var slv_wr_dma_done: SLV_WR_DMA_DONE
+        public var spi_slv_wr_dma_done_int_raw: SPI_SLV_WR_DMA_DONE_INT_RAW
 
         /// The raw bit for SPI_SLV_RD_BUF_DONE_INT interrupt. 1: SPI slave mode Rd_BUF transmission is ended. 0: Others.
         @ReadWrite(bits: 10..<11)
-        public var slv_rd_buf_done: SLV_RD_BUF_DONE
+        public var spi_slv_rd_buf_done_int_raw: SPI_SLV_RD_BUF_DONE_INT_RAW
 
         /// The raw bit for SPI_SLV_WR_BUF_DONE_INT interrupt. 1: SPI slave mode Wr_BUF transmission is ended. 0: Others.
         @ReadWrite(bits: 11..<12)
-        public var slv_wr_buf_done: SLV_WR_BUF_DONE
+        public var spi_slv_wr_buf_done_int_raw: SPI_SLV_WR_BUF_DONE_INT_RAW
 
         /// The raw bit for SPI_TRANS_DONE_INT interrupt. 1: SPI master mode transmission is ended. 0: others.
         @ReadWrite(bits: 12..<13)
-        public var trans_done: TRANS_DONE
+        public var spi_trans_done_int_raw: SPI_TRANS_DONE_INT_RAW
 
         /// The raw bit for SPI_DMA_SEG_TRANS_DONE_INT interrupt. 1: spi master DMA full-duplex/half-duplex seg-conf-trans ends or slave half-duplex seg-trans ends. And data has been pushed to corresponding memory. 0: seg-conf-trans or seg-trans is not ended or not occurred.
         @ReadWrite(bits: 13..<14)
-        public var dma_seg_trans_done: DMA_SEG_TRANS_DONE
+        public var spi_dma_seg_trans_done_int_raw: SPI_DMA_SEG_TRANS_DONE_INT_RAW
 
         /// The raw bit for SPI_SEG_MAGIC_ERR_INT interrupt. 1: The magic value in CONF buffer is error in the DMA seg-conf-trans. 0: others.
         @ReadWrite(bits: 14..<15)
-        public var seg_magic_err: SEG_MAGIC_ERR
+        public var spi_seg_magic_err_int_raw: SPI_SEG_MAGIC_ERR_INT_RAW
 
         /// The raw bit for SPI_SLV_BUF_ADDR_ERR_INT interrupt. 1: The accessing data address of the current SPI slave mode CPU controlled FD, Wr_BUF or Rd_BUF transmission is bigger than 63. 0: Others.
         @ReadWrite(bits: 15..<16)
-        public var slv_buf_addr_err: SLV_BUF_ADDR_ERR
+        public var spi_slv_buf_addr_err_int_raw: SPI_SLV_BUF_ADDR_ERR_INT_RAW
 
         /// The raw bit for SPI_SLV_CMD_ERR_INT interrupt. 1: The slave command value in the current SPI slave HD mode transmission is not supported. 0: Others.
         @ReadWrite(bits: 16..<17)
-        public var slv_cmd_err: SLV_CMD_ERR
+        public var spi_slv_cmd_err_int_raw: SPI_SLV_CMD_ERR_INT_RAW
 
         /// The raw bit for SPI_MST_RX_AFIFO_WFULL_ERR_INT interrupt. 1: There is a RX AFIFO write-full error when SPI inputs data in master mode. 0: Others.
         @ReadWrite(bits: 17..<18)
-        public var mst_rx_afifo_wfull_err: MST_RX_AFIFO_WFULL_ERR
+        public var spi_mst_rx_afifo_wfull_err_int_raw: SPI_MST_RX_AFIFO_WFULL_ERR_INT_RAW
 
         /// The raw bit for SPI_MST_TX_AFIFO_REMPTY_ERR_INT interrupt. 1: There is a TX BUF AFIFO read-empty error when SPI outputs data in master mode. 0: Others.
         @ReadWrite(bits: 18..<19)
-        public var mst_tx_afifo_rempty_err: MST_TX_AFIFO_REMPTY_ERR
+        public var spi_mst_tx_afifo_rempty_err_int_raw: SPI_MST_TX_AFIFO_REMPTY_ERR_INT_RAW
 
         /// The raw bit for SPI_APP2_INT interrupt. The value is only controlled by software.
         @ReadWrite(bits: 19..<20)
-        public var app2: APP2
+        public var spi_app2_int_raw: SPI_APP2_INT_RAW
 
         /// The raw bit for SPI_APP1_INT interrupt. The value is only controlled by software.
         @ReadWrite(bits: 20..<21)
-        public var app1: APP1
+        public var spi_app1_int_raw: SPI_APP1_INT_RAW
     }
 
     /// SPI interrupt status register
     @Register(bitWidth: 32)
-    public struct DMA_INT_ST {
+    public struct SPI_DMA_INT_ST {
         /// The status bit for SPI_DMA_INFIFO_FULL_ERR_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var dma_infifo_full_err: DMA_INFIFO_FULL_ERR
+        public var spi_dma_infifo_full_err_int_st: SPI_DMA_INFIFO_FULL_ERR_INT_ST
 
         /// The status bit for SPI_DMA_OUTFIFO_EMPTY_ERR_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var dma_outfifo_empty_err: DMA_OUTFIFO_EMPTY_ERR
+        public var spi_dma_outfifo_empty_err_int_st: SPI_DMA_OUTFIFO_EMPTY_ERR_INT_ST
 
         /// The status bit for SPI slave Ex_QPI interrupt.
         @ReadOnly(bits: 2..<3)
-        public var slv_ex_qpi: SLV_EX_QPI
+        public var spi_slv_ex_qpi_int_st: SPI_SLV_EX_QPI_INT_ST
 
         /// The status bit for SPI slave En_QPI interrupt.
         @ReadOnly(bits: 3..<4)
-        public var slv_en_qpi: SLV_EN_QPI
+        public var spi_slv_en_qpi_int_st: SPI_SLV_EN_QPI_INT_ST
 
         /// The status bit for SPI slave CMD7 interrupt.
         @ReadOnly(bits: 4..<5)
-        public var slv_cmd7: SLV_CMD7
+        public var spi_slv_cmd7_int_st: SPI_SLV_CMD7_INT_ST
 
         /// The status bit for SPI slave CMD8 interrupt.
         @ReadOnly(bits: 5..<6)
-        public var slv_cmd8: SLV_CMD8
+        public var spi_slv_cmd8_int_st: SPI_SLV_CMD8_INT_ST
 
         /// The status bit for SPI slave CMD9 interrupt.
         @ReadOnly(bits: 6..<7)
-        public var slv_cmd9: SLV_CMD9
+        public var spi_slv_cmd9_int_st: SPI_SLV_CMD9_INT_ST
 
         /// The status bit for SPI slave CMDA interrupt.
         @ReadOnly(bits: 7..<8)
-        public var slv_cmda: SLV_CMDA
+        public var spi_slv_cmda_int_st: SPI_SLV_CMDA_INT_ST
 
         /// The status bit for SPI_SLV_RD_DMA_DONE_INT interrupt.
         @ReadOnly(bits: 8..<9)
-        public var slv_rd_dma_done: SLV_RD_DMA_DONE
+        public var spi_slv_rd_dma_done_int_st: SPI_SLV_RD_DMA_DONE_INT_ST
 
         /// The status bit for SPI_SLV_WR_DMA_DONE_INT interrupt.
         @ReadOnly(bits: 9..<10)
-        public var slv_wr_dma_done: SLV_WR_DMA_DONE
+        public var spi_slv_wr_dma_done_int_st: SPI_SLV_WR_DMA_DONE_INT_ST
 
         /// The status bit for SPI_SLV_RD_BUF_DONE_INT interrupt.
         @ReadOnly(bits: 10..<11)
-        public var slv_rd_buf_done: SLV_RD_BUF_DONE
+        public var spi_slv_rd_buf_done_int_st: SPI_SLV_RD_BUF_DONE_INT_ST
 
         /// The status bit for SPI_SLV_WR_BUF_DONE_INT interrupt.
         @ReadOnly(bits: 11..<12)
-        public var slv_wr_buf_done: SLV_WR_BUF_DONE
+        public var spi_slv_wr_buf_done_int_st: SPI_SLV_WR_BUF_DONE_INT_ST
 
         /// The status bit for SPI_TRANS_DONE_INT interrupt.
         @ReadOnly(bits: 12..<13)
-        public var trans_done: TRANS_DONE
+        public var spi_trans_done_int_st: SPI_TRANS_DONE_INT_ST
 
         /// The status bit for SPI_DMA_SEG_TRANS_DONE_INT interrupt.
         @ReadOnly(bits: 13..<14)
-        public var dma_seg_trans_done: DMA_SEG_TRANS_DONE
+        public var spi_dma_seg_trans_done_int_st: SPI_DMA_SEG_TRANS_DONE_INT_ST
 
         /// The status bit for SPI_SEG_MAGIC_ERR_INT interrupt.
         @ReadOnly(bits: 14..<15)
-        public var seg_magic_err: SEG_MAGIC_ERR
+        public var spi_seg_magic_err_int_st: SPI_SEG_MAGIC_ERR_INT_ST
 
         /// The status bit for SPI_SLV_BUF_ADDR_ERR_INT interrupt.
         @ReadOnly(bits: 15..<16)
-        public var slv_buf_addr_err: SLV_BUF_ADDR_ERR
+        public var spi_slv_buf_addr_err_int_st: SPI_SLV_BUF_ADDR_ERR_INT_ST
 
         /// The status bit for SPI_SLV_CMD_ERR_INT interrupt.
         @ReadOnly(bits: 16..<17)
-        public var slv_cmd_err: SLV_CMD_ERR
+        public var spi_slv_cmd_err_int_st: SPI_SLV_CMD_ERR_INT_ST
 
         /// The status bit for SPI_MST_RX_AFIFO_WFULL_ERR_INT interrupt.
         @ReadOnly(bits: 17..<18)
-        public var mst_rx_afifo_wfull_err: MST_RX_AFIFO_WFULL_ERR
+        public var spi_mst_rx_afifo_wfull_err_int_st: SPI_MST_RX_AFIFO_WFULL_ERR_INT_ST
 
         /// The status bit for SPI_MST_TX_AFIFO_REMPTY_ERR_INT interrupt.
         @ReadOnly(bits: 18..<19)
-        public var mst_tx_afifo_rempty_err: MST_TX_AFIFO_REMPTY_ERR
+        public var spi_mst_tx_afifo_rempty_err_int_st: SPI_MST_TX_AFIFO_REMPTY_ERR_INT_ST
 
         /// The status bit for SPI_APP2_INT interrupt.
         @ReadOnly(bits: 19..<20)
-        public var app2: APP2
+        public var spi_app2_int_st: SPI_APP2_INT_ST
 
         /// The status bit for SPI_APP1_INT interrupt.
         @ReadOnly(bits: 20..<21)
-        public var app1: APP1
+        public var spi_app1_int_st: SPI_APP1_INT_ST
     }
 
     /// SPI interrupt software set register
     @Register(bitWidth: 32)
-    public struct DMA_INT_SET {
+    public struct SPI_DMA_INT_SET {
         /// The software set bit for SPI_DMA_INFIFO_FULL_ERR_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var dma_infifo_full_err_int_set: DMA_INFIFO_FULL_ERR_INT_SET
+        public var spi_dma_infifo_full_err_int_set: SPI_DMA_INFIFO_FULL_ERR_INT_SET
 
         /// The software set bit for SPI_DMA_OUTFIFO_EMPTY_ERR_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var dma_outfifo_empty_err_int_set: DMA_OUTFIFO_EMPTY_ERR_INT_SET
+        public var spi_dma_outfifo_empty_err_int_set: SPI_DMA_OUTFIFO_EMPTY_ERR_INT_SET
 
         /// The software set bit for SPI slave Ex_QPI interrupt.
         @WriteOnly(bits: 2..<3)
-        public var slv_ex_qpi_int_set: SLV_EX_QPI_INT_SET
+        public var spi_slv_ex_qpi_int_set: SPI_SLV_EX_QPI_INT_SET
 
         /// The software set bit for SPI slave En_QPI interrupt.
         @WriteOnly(bits: 3..<4)
-        public var slv_en_qpi_int_set: SLV_EN_QPI_INT_SET
+        public var spi_slv_en_qpi_int_set: SPI_SLV_EN_QPI_INT_SET
 
         /// The software set bit for SPI slave CMD7 interrupt.
         @WriteOnly(bits: 4..<5)
-        public var slv_cmd7_int_set: SLV_CMD7_INT_SET
+        public var spi_slv_cmd7_int_set: SPI_SLV_CMD7_INT_SET
 
         /// The software set bit for SPI slave CMD8 interrupt.
         @WriteOnly(bits: 5..<6)
-        public var slv_cmd8_int_set: SLV_CMD8_INT_SET
+        public var spi_slv_cmd8_int_set: SPI_SLV_CMD8_INT_SET
 
         /// The software set bit for SPI slave CMD9 interrupt.
         @WriteOnly(bits: 6..<7)
-        public var slv_cmd9_int_set: SLV_CMD9_INT_SET
+        public var spi_slv_cmd9_int_set: SPI_SLV_CMD9_INT_SET
 
         /// The software set bit for SPI slave CMDA interrupt.
         @WriteOnly(bits: 7..<8)
-        public var slv_cmda_int_set: SLV_CMDA_INT_SET
+        public var spi_slv_cmda_int_set: SPI_SLV_CMDA_INT_SET
 
         /// The software set bit for SPI_SLV_RD_DMA_DONE_INT interrupt.
         @WriteOnly(bits: 8..<9)
-        public var slv_rd_dma_done_int_set: SLV_RD_DMA_DONE_INT_SET
+        public var spi_slv_rd_dma_done_int_set: SPI_SLV_RD_DMA_DONE_INT_SET
 
         /// The software set bit for SPI_SLV_WR_DMA_DONE_INT interrupt.
         @WriteOnly(bits: 9..<10)
-        public var slv_wr_dma_done_int_set: SLV_WR_DMA_DONE_INT_SET
+        public var spi_slv_wr_dma_done_int_set: SPI_SLV_WR_DMA_DONE_INT_SET
 
         /// The software set bit for SPI_SLV_RD_BUF_DONE_INT interrupt.
         @WriteOnly(bits: 10..<11)
-        public var slv_rd_buf_done_int_set: SLV_RD_BUF_DONE_INT_SET
+        public var spi_slv_rd_buf_done_int_set: SPI_SLV_RD_BUF_DONE_INT_SET
 
         /// The software set bit for SPI_SLV_WR_BUF_DONE_INT interrupt.
         @WriteOnly(bits: 11..<12)
-        public var slv_wr_buf_done_int_set: SLV_WR_BUF_DONE_INT_SET
+        public var spi_slv_wr_buf_done_int_set: SPI_SLV_WR_BUF_DONE_INT_SET
 
         /// The software set bit for SPI_TRANS_DONE_INT interrupt.
         @WriteOnly(bits: 12..<13)
-        public var trans_done_int_set: TRANS_DONE_INT_SET
+        public var spi_trans_done_int_set: SPI_TRANS_DONE_INT_SET
 
         /// The software set bit for SPI_DMA_SEG_TRANS_DONE_INT interrupt.
         @WriteOnly(bits: 13..<14)
-        public var dma_seg_trans_done_int_set: DMA_SEG_TRANS_DONE_INT_SET
+        public var spi_dma_seg_trans_done_int_set: SPI_DMA_SEG_TRANS_DONE_INT_SET
 
         /// The software set bit for SPI_SEG_MAGIC_ERR_INT interrupt.
         @WriteOnly(bits: 14..<15)
-        public var seg_magic_err_int_set: SEG_MAGIC_ERR_INT_SET
+        public var spi_seg_magic_err_int_set: SPI_SEG_MAGIC_ERR_INT_SET
 
         /// The software set bit for SPI_SLV_BUF_ADDR_ERR_INT interrupt.
         @WriteOnly(bits: 15..<16)
-        public var slv_buf_addr_err_int_set: SLV_BUF_ADDR_ERR_INT_SET
+        public var spi_slv_buf_addr_err_int_set: SPI_SLV_BUF_ADDR_ERR_INT_SET
 
         /// The software set bit for SPI_SLV_CMD_ERR_INT interrupt.
         @WriteOnly(bits: 16..<17)
-        public var slv_cmd_err_int_set: SLV_CMD_ERR_INT_SET
+        public var spi_slv_cmd_err_int_set: SPI_SLV_CMD_ERR_INT_SET
 
         /// The software set bit for SPI_MST_RX_AFIFO_WFULL_ERR_INT interrupt.
         @WriteOnly(bits: 17..<18)
-        public var mst_rx_afifo_wfull_err_int_set: MST_RX_AFIFO_WFULL_ERR_INT_SET
+        public var spi_mst_rx_afifo_wfull_err_int_set: SPI_MST_RX_AFIFO_WFULL_ERR_INT_SET
 
         /// The software set bit for SPI_MST_TX_AFIFO_REMPTY_ERR_INT interrupt.
         @WriteOnly(bits: 18..<19)
-        public var mst_tx_afifo_rempty_err_int_set: MST_TX_AFIFO_REMPTY_ERR_INT_SET
+        public var spi_mst_tx_afifo_rempty_err_int_set: SPI_MST_TX_AFIFO_REMPTY_ERR_INT_SET
 
         /// The software set bit for SPI_APP2_INT interrupt.
         @WriteOnly(bits: 19..<20)
-        public var app2_int_set: APP2_INT_SET
+        public var spi_app2_int_set: SPI_APP2_INT_SET
 
         /// The software set bit for SPI_APP1_INT interrupt.
         @WriteOnly(bits: 20..<21)
-        public var app1_int_set: APP1_INT_SET
+        public var spi_app1_int_set: SPI_APP1_INT_SET
     }
 
-    /// SPI CPU-controlled buffer%s
+    /// SPI CPU-controlled buffer0
     @Register(bitWidth: 32)
-    public struct W {
+    public struct SPI_W0 {
         /// data buffer
         @ReadWrite(bits: 0..<32)
-        public var buf: BUF
+        public var spi_buf0: SPI_BUF0
+    }
+
+    /// SPI CPU-controlled buffer1
+    @Register(bitWidth: 32)
+    public struct SPI_W1 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf1: SPI_BUF1
+    }
+
+    /// SPI CPU-controlled buffer2
+    @Register(bitWidth: 32)
+    public struct SPI_W2 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf2: SPI_BUF2
+    }
+
+    /// SPI CPU-controlled buffer3
+    @Register(bitWidth: 32)
+    public struct SPI_W3 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf3: SPI_BUF3
+    }
+
+    /// SPI CPU-controlled buffer4
+    @Register(bitWidth: 32)
+    public struct SPI_W4 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf4: SPI_BUF4
+    }
+
+    /// SPI CPU-controlled buffer5
+    @Register(bitWidth: 32)
+    public struct SPI_W5 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf5: SPI_BUF5
+    }
+
+    /// SPI CPU-controlled buffer6
+    @Register(bitWidth: 32)
+    public struct SPI_W6 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf6: SPI_BUF6
+    }
+
+    /// SPI CPU-controlled buffer7
+    @Register(bitWidth: 32)
+    public struct SPI_W7 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf7: SPI_BUF7
+    }
+
+    /// SPI CPU-controlled buffer8
+    @Register(bitWidth: 32)
+    public struct SPI_W8 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf8: SPI_BUF8
+    }
+
+    /// SPI CPU-controlled buffer9
+    @Register(bitWidth: 32)
+    public struct SPI_W9 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf9: SPI_BUF9
+    }
+
+    /// SPI CPU-controlled buffer10
+    @Register(bitWidth: 32)
+    public struct SPI_W10 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf10: SPI_BUF10
+    }
+
+    /// SPI CPU-controlled buffer11
+    @Register(bitWidth: 32)
+    public struct SPI_W11 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf11: SPI_BUF11
+    }
+
+    /// SPI CPU-controlled buffer12
+    @Register(bitWidth: 32)
+    public struct SPI_W12 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf12: SPI_BUF12
+    }
+
+    /// SPI CPU-controlled buffer13
+    @Register(bitWidth: 32)
+    public struct SPI_W13 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf13: SPI_BUF13
+    }
+
+    /// SPI CPU-controlled buffer14
+    @Register(bitWidth: 32)
+    public struct SPI_W14 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf14: SPI_BUF14
+    }
+
+    /// SPI CPU-controlled buffer15
+    @Register(bitWidth: 32)
+    public struct SPI_W15 {
+        /// data buffer
+        @ReadWrite(bits: 0..<32)
+        public var spi_buf15: SPI_BUF15
     }
 
     /// SPI slave control register
     @Register(bitWidth: 32)
-    public struct SLAVE {
+    public struct SPI_SLAVE {
         /// SPI clock mode bits. 0: SPI clock is off when CS inactive 1: SPI clock is delayed one cycle after CS inactive 2: SPI clock is delayed two cycles after CS inactive 3: SPI clock is alwasy on. Can be configured in CONF state.
         @ReadWrite(bits: 0..<2)
-        public var clk_mode: CLK_MODE
+        public var spi_clk_mode: SPI_CLK_MODE
 
         /// {CPOL, CPHA},1: support spi clk mode 1 and 3, first edge output data B[0]/B[7]. 0: support spi clk mode 0 and 2, first edge output data B[1]/B[6].
         @ReadWrite(bits: 2..<3)
-        public var clk_mode_13: CLK_MODE_13
+        public var spi_clk_mode_13: SPI_CLK_MODE_13
 
         /// It saves half a cycle when tsck is the same as rsck. 1: output data at rsck posedge 0: output data at tsck posedge
         @ReadWrite(bits: 3..<4)
-        public var rsck_data_out: RSCK_DATA_OUT
+        public var spi_rsck_data_out: SPI_RSCK_DATA_OUT
 
         /// 1: SPI_SLV_DATA_BITLEN stores data bit length of master-read-slave data length in DMA controlled mode(Rd_DMA). 0: others
         @ReadWrite(bits: 8..<9)
-        public var slv_rddma_bitlen_en: SLV_RDDMA_BITLEN_EN
+        public var spi_slv_rddma_bitlen_en: SPI_SLV_RDDMA_BITLEN_EN
 
         /// 1: SPI_SLV_DATA_BITLEN stores data bit length of master-write-to-slave data length in DMA controlled mode(Wr_DMA). 0: others
         @ReadWrite(bits: 9..<10)
-        public var slv_wrdma_bitlen_en: SLV_WRDMA_BITLEN_EN
+        public var spi_slv_wrdma_bitlen_en: SPI_SLV_WRDMA_BITLEN_EN
 
         /// 1: SPI_SLV_DATA_BITLEN stores data bit length of master-read-slave data length in CPU controlled mode(Rd_BUF). 0: others
         @ReadWrite(bits: 10..<11)
-        public var slv_rdbuf_bitlen_en: SLV_RDBUF_BITLEN_EN
+        public var spi_slv_rdbuf_bitlen_en: SPI_SLV_RDBUF_BITLEN_EN
 
         /// 1: SPI_SLV_DATA_BITLEN stores data bit length of master-write-to-slave data length in CPU controlled mode(Wr_BUF). 0: others
         @ReadWrite(bits: 11..<12)
-        public var slv_wrbuf_bitlen_en: SLV_WRBUF_BITLEN_EN
+        public var spi_slv_wrbuf_bitlen_en: SPI_SLV_WRBUF_BITLEN_EN
 
         /// The magic value of BM table in master DMA seg-trans.
         @ReadWrite(bits: 22..<26)
-        public var dma_seg_magic_value: DMA_SEG_MAGIC_VALUE
+        public var spi_dma_seg_magic_value: SPI_DMA_SEG_MAGIC_VALUE
 
         /// Set SPI work mode. 1: slave mode 0: master mode.
         @ReadWrite(bits: 26..<27)
@@ -1076,54 +1256,54 @@ extension SPI2 {
 
         /// Software reset enable, reset the spi clock line cs line and data lines. Can be configured in CONF state.
         @WriteOnly(bits: 27..<28)
-        public var soft_reset: SOFT_RESET
+        public var spi_soft_reset: SPI_SOFT_RESET
 
         /// 1: Enable the DMA CONF phase of current seg-trans operation, which means seg-trans will start. 0: This is not seg-trans mode.
         @ReadWrite(bits: 28..<29)
-        public var usr_conf: USR_CONF
+        public var spi_usr_conf: SPI_USR_CONF
 
         /// In master full-duplex mode, 1: GP-SPI will wait DMA TX data is ready before starting SPI transfer. 0: GP-SPI does not wait DMA TX data before starting SPI transfer.
         @ReadWrite(bits: 29..<30)
-        public var mst_fd_wait_dma_tx_data: MST_FD_WAIT_DMA_TX_DATA
+        public var spi_mst_fd_wait_dma_tx_data: SPI_MST_FD_WAIT_DMA_TX_DATA
     }
 
     /// SPI slave control register 1
     @Register(bitWidth: 32)
-    public struct SLAVE1 {
+    public struct SPI_SLAVE1 {
         /// The transferred data bit length in SPI slave FD and HD mode.
         @ReadWrite(bits: 0..<18)
-        public var slv_data_bitlen: SLV_DATA_BITLEN
+        public var spi_slv_data_bitlen: SPI_SLV_DATA_BITLEN
 
         /// In the slave mode it is the value of command.
         @ReadWrite(bits: 18..<26)
-        public var slv_last_command: SLV_LAST_COMMAND
+        public var spi_slv_last_command: SPI_SLV_LAST_COMMAND
 
         /// In the slave mode it is the value of address.
         @ReadWrite(bits: 26..<32)
-        public var slv_last_addr: SLV_LAST_ADDR
+        public var spi_slv_last_addr: SPI_SLV_LAST_ADDR
     }
 
     /// SPI module clock and register clock control
     @Register(bitWidth: 32)
-    public struct CLK_GATE {
+    public struct SPI_CLK_GATE {
         /// Set this bit to enable clk gate
         @ReadWrite(bits: 0..<1)
-        public var clk_en: CLK_EN
+        public var spi_clk_en: SPI_CLK_EN
 
         /// Set this bit to power on the SPI module clock.
         @ReadWrite(bits: 1..<2)
-        public var mst_clk_active: MST_CLK_ACTIVE
+        public var spi_mst_clk_active: SPI_MST_CLK_ACTIVE
 
         /// This bit is used to select SPI module clock source in master mode. 1: PLL_CLK_80M. 0: XTAL CLK.
         @ReadWrite(bits: 2..<3)
-        public var mst_clk_sel: MST_CLK_SEL
+        public var spi_mst_clk_sel: SPI_MST_CLK_SEL
     }
 
     /// Version control
     @Register(bitWidth: 32)
-    public struct DATE {
+    public struct SPI_DATE {
         /// SPI register version.
         @ReadWrite(bits: 0..<28)
-        public var date_field: DATE_FIELD
+        public var spi_date_field: SPI_DATE_FIELD
     }
 }

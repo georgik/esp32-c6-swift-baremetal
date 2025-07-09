@@ -69,6 +69,10 @@ public func swiftMain() {
     // Initialize and test SPI
     putLine("Initializing SPI for display communication...")
     runDisplayApplication()
+    
+    // Initialize WiFi and scan for networks
+    WiFiManager.initializeWiFi()
+    WiFiManager.scanNetworks()
 
     // IMPORTANT: Initialize the LED first!
     initializeLED()
@@ -129,4 +133,10 @@ public func freeEmbedded(_ ptr: UnsafeMutableRawPointer?) {
 @_cdecl("free")
 public func free(_ ptr: UnsafeMutableRawPointer?) {
     // No-op for embedded systems
+}
+
+@_cdecl("putchar")
+public func putchar(_ char: Int32) -> Int32 {
+    putChar(UInt8(char))
+    return char
 }

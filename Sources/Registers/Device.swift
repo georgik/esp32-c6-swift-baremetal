@@ -2,14 +2,14 @@
 
 import MMIO
 
-/// Core Local Interrupts
-public nonisolated(unsafe) let clint = CLINT(unsafeAddress: 0x20000000)
-
 /// General Purpose Input/Output
 public nonisolated(unsafe) let gpio = GPIO(unsafeAddress: 0x60091000)
 
 /// I2C (Inter-Integrated Circuit) Controller 0
 public nonisolated(unsafe) let i2c0 = I2C0(unsafeAddress: 0x60004000)
+
+/// Interrupt Controller (Core 0)
+public nonisolated(unsafe) let interrupt_core0 = INTERRUPT_CORE0(unsafeAddress: 0x60010000)
 
 /// Input/Output Multiplexer
 public nonisolated(unsafe) let io_mux = IO_MUX(unsafeAddress: 0x60090000)
@@ -19,6 +19,12 @@ public nonisolated(unsafe) let ledc = LEDC(unsafeAddress: 0x60007000)
 
 /// Low-power Watchdog Timer
 public nonisolated(unsafe) let lp_wdt = LP_WDT(unsafeAddress: 0x600b1c00)
+
+/// MODEM_LPCON Peripheral
+public nonisolated(unsafe) let modem_lpcon = MODEM_LPCON(unsafeAddress: 0x600af000)
+
+/// MODEM_SYSCON Peripheral
+public nonisolated(unsafe) let modem_syscon = MODEM_SYSCON(unsafeAddress: 0x600a9800)
 
 /// Pulse Count Controller
 public nonisolated(unsafe) let pcnt = PCNT(unsafeAddress: 0x60012000)

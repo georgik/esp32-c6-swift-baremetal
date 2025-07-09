@@ -5,6 +5,42 @@ import MMIO
 /// Timer Group 0
 @RegisterBlock
 public struct TIMG0 {
+    /// Timer %s configuration register
+    @RegisterBlock(offset: 0x0)
+    public var tconfig: Register<TCONFIG>
+
+    /// Timer %s current value, low 32 bits
+    @RegisterBlock(offset: 0x4)
+    public var tlo: Register<TLO>
+
+    /// Timer %s current value, high 22 bits
+    @RegisterBlock(offset: 0x8)
+    public var thi: Register<THI>
+
+    /// Write to copy current timer value to TIMGn_T%s_(LO/HI)_REG
+    @RegisterBlock(offset: 0xc)
+    public var tupdate: Register<TUPDATE>
+
+    /// Timer %s alarm value, low 32 bits
+    @RegisterBlock(offset: 0x10)
+    public var talarmlo: Register<TALARMLO>
+
+    /// Timer %s alarm value, high bits
+    @RegisterBlock(offset: 0x14)
+    public var talarmhi: Register<TALARMHI>
+
+    /// Timer %s reload value, low 32 bits
+    @RegisterBlock(offset: 0x18)
+    public var tloadlo: Register<TLOADLO>
+
+    /// Timer %s reload value, high 22 bits
+    @RegisterBlock(offset: 0x1c)
+    public var tloadhi: Register<TLOADHI>
+
+    /// Write to reload timer from TIMG_T%s_(LOADLOLOADHI)_REG
+    @RegisterBlock(offset: 0x20)
+    public var tload: Register<TLOAD>
+
     /// Watchdog timer configuration register
     @RegisterBlock(offset: 0x48)
     public var wdtconfig0: Register<WDTCONFIG0>
@@ -47,19 +83,19 @@ public struct TIMG0 {
 
     /// Interrupt enable bits
     @RegisterBlock(offset: 0x70)
-    public var int_ena: Register<INT_ENA>
+    public var int_ena_timers: Register<INT_ENA_TIMERS>
 
     /// Raw interrupt status
     @RegisterBlock(offset: 0x74)
-    public var int_raw: Register<INT_RAW>
+    public var int_raw_timers: Register<INT_RAW_TIMERS>
 
     /// Masked interrupt status
     @RegisterBlock(offset: 0x78)
-    public var int_st: Register<INT_ST>
+    public var int_st_timers: Register<INT_ST_TIMERS>
 
     /// Interrupt clear bits
     @RegisterBlock(offset: 0x7c)
-    public var int_clr: Register<INT_CLR>
+    public var int_clr_timers: Register<INT_CLR_TIMERS>
 
     /// Timer group calibration register
     @RegisterBlock(offset: 0x80)
@@ -72,13 +108,105 @@ public struct TIMG0 {
     /// Timer group clock gate register
     @RegisterBlock(offset: 0xfc)
     public var regclk: Register<REGCLK>
-
-    /// Cluster T%s, containing T?CONFIG, T?LO, T?HI, T?UPDATE, T?ALARMLO, T?ALARMHI, T?LOADLO, T?LOADHI, T?LOAD
-    @RegisterBlock(offset: 0x0, stride: 0x24, count: 1)
-    public var t: RegisterArray<T>
 }
 
 extension TIMG0 {
+    /// Timer %s configuration register
+    @Register(bitWidth: 32)
+    public struct TCONFIG {
+        /// 1: Use XTAL_CLK as the source clock of timer group. 0: Use APB_CLK as the source clock of timer group.
+        @ReadWrite(bits: 9..<10)
+        public var t_use_xtal: T_USE_XTAL
+
+        /// alarm occurs.
+        @ReadWrite(bits: 10..<11)
+        public var t_alarm_en: T_ALARM_EN
+
+        /// When set, Timer %s 's clock divider counter will be reset.
+        @WriteOnly(bits: 12..<13)
+        public var t_divcnt_rst: T_DIVCNT_RST
+
+        /// Timer %s clock (T%s_clk) prescaler value.
+        @ReadWrite(bits: 13..<29)
+        public var t_divider: T_DIVIDER
+
+        /// When set, timer %s auto-reload at alarm is enabled.
+        @ReadWrite(bits: 29..<30)
+        public var t_autoreload: T_AUTORELOAD
+
+        /// cleared, the timer %s time-base counter will decrement.
+        @ReadWrite(bits: 30..<31)
+        public var t_increase: T_INCREASE
+
+        /// When set, the timer %s time-base counter is enabled.
+        @ReadWrite(bits: 31..<32)
+        public var t_en: T_EN
+    }
+
+    /// Timer %s current value, low 32 bits
+    @Register(bitWidth: 32)
+    public struct TLO {
+        /// of timer %s can be read here.
+        @ReadOnly(bits: 0..<32)
+        public var t_lo: T_LO
+    }
+
+    /// Timer %s current value, high 22 bits
+    @Register(bitWidth: 32)
+    public struct THI {
+        /// of timer %s can be read here.
+        @ReadOnly(bits: 0..<22)
+        public var t_hi: T_HI
+    }
+
+    /// Write to copy current timer value to TIMGn_T%s_(LO/HI)_REG
+    @Register(bitWidth: 32)
+    public struct TUPDATE {
+        /// After writing 0 or 1 to TIMG_T%sUPDATE_REG, the counter value is latched.
+        @ReadWrite(bits: 31..<32)
+        public var t_update: T_UPDATE
+    }
+
+    /// Timer %s alarm value, low 32 bits
+    @Register(bitWidth: 32)
+    public struct TALARMLO {
+        /// Timer %s alarm trigger time-base counter value, low 32 bits.
+        @ReadWrite(bits: 0..<32)
+        public var t_alarm_lo: T_ALARM_LO
+    }
+
+    /// Timer %s alarm value, high bits
+    @Register(bitWidth: 32)
+    public struct TALARMHI {
+        /// Timer %s alarm trigger time-base counter value, high 22 bits.
+        @ReadWrite(bits: 0..<22)
+        public var t_alarm_hi: T_ALARM_HI
+    }
+
+    /// Timer %s reload value, low 32 bits
+    @Register(bitWidth: 32)
+    public struct TLOADLO {
+        /// Counter.
+        @ReadWrite(bits: 0..<32)
+        public var t_load_lo: T_LOAD_LO
+    }
+
+    /// Timer %s reload value, high 22 bits
+    @Register(bitWidth: 32)
+    public struct TLOADHI {
+        /// counter.
+        @ReadWrite(bits: 0..<22)
+        public var t_load_hi: T_LOAD_HI
+    }
+
+    /// Write to reload timer from TIMG_T%s_(LOADLOLOADHI)_REG
+    @Register(bitWidth: 32)
+    public struct TLOAD {
+        /// Write any value to trigger a timer %s time-base counter reload.
+        @WriteOnly(bits: 0..<32)
+        public var t_load: T_LOAD
+    }
+
     /// Watchdog timer configuration register
     @Register(bitWidth: 32)
     public struct WDTCONFIG0 {
@@ -229,50 +357,50 @@ extension TIMG0 {
 
     /// Interrupt enable bits
     @Register(bitWidth: 32)
-    public struct INT_ENA {
-        /// The interrupt enable bit for the TIMG_T%s_INT interrupt.
+    public struct INT_ENA_TIMERS {
+        /// The interrupt enable bit for the TIMG_T0_INT interrupt.
         @ReadWrite(bits: 0..<1)
-        public var t0: T0
+        public var t0_int_ena: T0_INT_ENA
 
         /// The interrupt enable bit for the TIMG_WDT_INT interrupt.
         @ReadWrite(bits: 1..<2)
-        public var wdt: WDT
+        public var wdt_int_ena: WDT_INT_ENA
     }
 
     /// Raw interrupt status
     @Register(bitWidth: 32)
-    public struct INT_RAW {
-        /// The raw interrupt status bit for the TIMG_T%s_INT interrupt.
+    public struct INT_RAW_TIMERS {
+        /// The raw interrupt status bit for the TIMG_T0_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var t0: T0
+        public var t0_int_raw: T0_INT_RAW
 
         /// The raw interrupt status bit for the TIMG_WDT_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var wdt: WDT
+        public var wdt_int_raw: WDT_INT_RAW
     }
 
     /// Masked interrupt status
     @Register(bitWidth: 32)
-    public struct INT_ST {
-        /// The masked interrupt status bit for the TIMG_T%s_INT interrupt.
+    public struct INT_ST_TIMERS {
+        /// The masked interrupt status bit for the TIMG_T0_INT interrupt.
         @ReadOnly(bits: 0..<1)
-        public var t0: T0
+        public var t0_int_st: T0_INT_ST
 
         /// The masked interrupt status bit for the TIMG_WDT_INT interrupt.
         @ReadOnly(bits: 1..<2)
-        public var wdt: WDT
+        public var wdt_int_st: WDT_INT_ST
     }
 
     /// Interrupt clear bits
     @Register(bitWidth: 32)
-    public struct INT_CLR {
-        /// Set this bit to clear the TIMG_T%s_INT interrupt.
+    public struct INT_CLR_TIMERS {
+        /// Set this bit to clear the TIMG_T0_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var t0: T0
+        public var t0_int_clr: T0_INT_CLR
 
         /// Set this bit to clear the TIMG_WDT_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var wdt: WDT
+        public var wdt_int_clr: WDT_INT_CLR
     }
 
     /// Timer group calibration register
@@ -317,143 +445,5 @@ extension TIMG0 {
         /// Register clock gate signal. 1: Registers can be read and written to by software. 0: Registers can not be read or written to by software.
         @ReadWrite(bits: 31..<32)
         public var clk_en: CLK_EN
-    }
-
-    /// Cluster T%s, containing T?CONFIG, T?LO, T?HI, T?UPDATE, T?ALARMLO, T?ALARMHI, T?LOADLO, T?LOADHI, T?LOAD
-    @RegisterBlock
-    public struct T {
-        /// Timer %s configuration register
-        @RegisterBlock(offset: 0x0)
-        public var config: Register<CONFIG>
-
-        /// Timer %s current value, low 32 bits
-        @RegisterBlock(offset: 0x4)
-        public var lo: Register<LO>
-
-        /// Timer %s current value, high 22 bits
-        @RegisterBlock(offset: 0x8)
-        public var hi: Register<HI>
-
-        /// Write to copy current timer value to TIMGn_T%s_(LO/HI)_REG
-        @RegisterBlock(offset: 0xc)
-        public var update: Register<UPDATE>
-
-        /// Timer %s alarm value, low 32 bits
-        @RegisterBlock(offset: 0x10)
-        public var alarmlo: Register<ALARMLO>
-
-        /// Timer %s alarm value, high bits
-        @RegisterBlock(offset: 0x14)
-        public var alarmhi: Register<ALARMHI>
-
-        /// Timer %s reload value, low 32 bits
-        @RegisterBlock(offset: 0x18)
-        public var loadlo: Register<LOADLO>
-
-        /// Timer %s reload value, high 22 bits
-        @RegisterBlock(offset: 0x1c)
-        public var loadhi: Register<LOADHI>
-
-        /// Write to reload timer from TIMG_T%s_(LOADLOLOADHI)_REG
-        @RegisterBlock(offset: 0x20)
-        public var load: Register<LOAD>
-    }
-}
-
-extension TIMG0.T {
-    /// Timer %s configuration register
-    @Register(bitWidth: 32)
-    public struct CONFIG {
-        /// 1: Use XTAL_CLK as the source clock of timer group. 0: Use APB_CLK as the source clock of timer group.
-        @ReadWrite(bits: 9..<10)
-        public var use_xtal: USE_XTAL
-
-        /// alarm occurs.
-        @ReadWrite(bits: 10..<11)
-        public var alarm_en: ALARM_EN
-
-        /// When set, Timer %s 's clock divider counter will be reset.
-        @WriteOnly(bits: 12..<13)
-        public var divcnt_rst: DIVCNT_RST
-
-        /// Timer %s clock (T%s_clk) prescaler value.
-        @ReadWrite(bits: 13..<29)
-        public var divider: DIVIDER
-
-        /// When set, timer %s auto-reload at alarm is enabled.
-        @ReadWrite(bits: 29..<30)
-        public var autoreload: AUTORELOAD
-
-        /// cleared, the timer %s time-base counter will decrement.
-        @ReadWrite(bits: 30..<31)
-        public var increase: INCREASE
-
-        /// When set, the timer %s time-base counter is enabled.
-        @ReadWrite(bits: 31..<32)
-        public var en: EN
-    }
-
-    /// Timer %s current value, low 32 bits
-    @Register(bitWidth: 32)
-    public struct LO {
-        /// of timer %s can be read here.
-        @ReadOnly(bits: 0..<32)
-        public var lo_field: LO_FIELD
-    }
-
-    /// Timer %s current value, high 22 bits
-    @Register(bitWidth: 32)
-    public struct HI {
-        /// of timer %s can be read here.
-        @ReadOnly(bits: 0..<22)
-        public var hi_field: HI_FIELD
-    }
-
-    /// Write to copy current timer value to TIMGn_T%s_(LO/HI)_REG
-    @Register(bitWidth: 32)
-    public struct UPDATE {
-        /// After writing 0 or 1 to TIMG_T%sUPDATE_REG, the counter value is latched.
-        @ReadWrite(bits: 31..<32)
-        public var update_field: UPDATE_FIELD
-    }
-
-    /// Timer %s alarm value, low 32 bits
-    @Register(bitWidth: 32)
-    public struct ALARMLO {
-        /// Timer %s alarm trigger time-base counter value, low 32 bits.
-        @ReadWrite(bits: 0..<32)
-        public var alarm_lo: ALARM_LO
-    }
-
-    /// Timer %s alarm value, high bits
-    @Register(bitWidth: 32)
-    public struct ALARMHI {
-        /// Timer %s alarm trigger time-base counter value, high 22 bits.
-        @ReadWrite(bits: 0..<22)
-        public var alarm_hi: ALARM_HI
-    }
-
-    /// Timer %s reload value, low 32 bits
-    @Register(bitWidth: 32)
-    public struct LOADLO {
-        /// Counter.
-        @ReadWrite(bits: 0..<32)
-        public var load_lo: LOAD_LO
-    }
-
-    /// Timer %s reload value, high 22 bits
-    @Register(bitWidth: 32)
-    public struct LOADHI {
-        /// counter.
-        @ReadWrite(bits: 0..<22)
-        public var load_hi: LOAD_HI
-    }
-
-    /// Write to reload timer from TIMG_T%s_(LOADLOLOADHI)_REG
-    @Register(bitWidth: 32)
-    public struct LOAD {
-        /// Write any value to trigger a timer %s time-base counter reload.
-        @WriteOnly(bits: 0..<32)
-        public var load_field: LOAD_FIELD
     }
 }

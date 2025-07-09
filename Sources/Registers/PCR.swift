@@ -5,6 +5,30 @@ import MMIO
 /// PCR Peripheral
 @RegisterBlock
 public struct PCR {
+    /// UART0 configuration register
+    @RegisterBlock(offset: 0x0)
+    public var uart0_conf: Register<UART0_CONF>
+
+    /// UART0_SCLK configuration register
+    @RegisterBlock(offset: 0x4)
+    public var uart0_sclk_conf: Register<UART0_SCLK_CONF>
+
+    /// UART0 power control register
+    @RegisterBlock(offset: 0x8)
+    public var uart0_pd_ctrl: Register<UART0_PD_CTRL>
+
+    /// UART1 configuration register
+    @RegisterBlock(offset: 0xc)
+    public var uart1_conf: Register<UART1_CONF>
+
+    /// UART1_SCLK configuration register
+    @RegisterBlock(offset: 0x10)
+    public var uart1_sclk_conf: Register<UART1_SCLK_CONF>
+
+    /// UART1 power control register
+    @RegisterBlock(offset: 0x14)
+    public var uart1_pd_ctrl: Register<UART1_PD_CTRL>
+
     /// MSPI configuration register
     @RegisterBlock(offset: 0x18)
     public var mspi_conf: Register<MSPI_CONF>
@@ -15,7 +39,7 @@ public struct PCR {
 
     /// I2C configuration register
     @RegisterBlock(offset: 0x20)
-    public var i2c0_conf: Register<I2C0_CONF>
+    public var i2c_conf: Register<I2C_CONF>
 
     /// I2C_SCLK configuration register
     @RegisterBlock(offset: 0x24)
@@ -312,13 +336,105 @@ public struct PCR {
     /// Date register.
     @RegisterBlock(offset: 0xffc)
     public var date: Register<DATE>
-
-    /// Cluster UART%s, containing UART?_CONF, UART?_SCLK_CONF, UART?_PD_CTRL
-    @RegisterBlock(offset: 0x0, stride: 0xc, count: 2)
-    public var uart: RegisterArray<UART>
 }
 
 extension PCR {
+    /// UART0 configuration register
+    @Register(bitWidth: 32)
+    public struct UART0_CONF {
+        /// Set 1 to enable uart0 apb clock
+        @ReadWrite(bits: 0..<1)
+        public var uart0_clk_en: UART0_CLK_EN
+
+        /// Set 0 to reset uart0 module
+        @ReadWrite(bits: 1..<2)
+        public var uart0_rst_en: UART0_RST_EN
+    }
+
+    /// UART0_SCLK configuration register
+    @Register(bitWidth: 32)
+    public struct UART0_SCLK_CONF {
+        /// The denominator of the frequency divider factor of the uart0 function clock.
+        @ReadWrite(bits: 0..<6)
+        public var uart0_sclk_div_a: UART0_SCLK_DIV_A
+
+        /// The numerator of the frequency divider factor of the uart0 function clock.
+        @ReadWrite(bits: 6..<12)
+        public var uart0_sclk_div_b: UART0_SCLK_DIV_B
+
+        /// The integral part of the frequency divider factor of the uart0 function clock.
+        @ReadWrite(bits: 12..<20)
+        public var uart0_sclk_div_num: UART0_SCLK_DIV_NUM
+
+        /// set this field to select clock-source. 0: do not select anyone clock, 1: 80MHz, 2: FOSC, 3(default): XTAL.
+        @ReadWrite(bits: 20..<22)
+        public var uart0_sclk_sel: UART0_SCLK_SEL
+
+        /// Set 1 to enable uart0 function clock
+        @ReadWrite(bits: 22..<23)
+        public var uart0_sclk_en: UART0_SCLK_EN
+    }
+
+    /// UART0 power control register
+    @Register(bitWidth: 32)
+    public struct UART0_PD_CTRL {
+        /// Set this bit to force power down UART0 memory.
+        @ReadWrite(bits: 1..<2)
+        public var uart0_mem_force_pu: UART0_MEM_FORCE_PU
+
+        /// Set this bit to force power up UART0 memory.
+        @ReadWrite(bits: 2..<3)
+        public var uart0_mem_force_pd: UART0_MEM_FORCE_PD
+    }
+
+    /// UART1 configuration register
+    @Register(bitWidth: 32)
+    public struct UART1_CONF {
+        /// Set 1 to enable uart1 apb clock
+        @ReadWrite(bits: 0..<1)
+        public var uart1_clk_en: UART1_CLK_EN
+
+        /// Set 0 to reset uart1 module
+        @ReadWrite(bits: 1..<2)
+        public var uart1_rst_en: UART1_RST_EN
+    }
+
+    /// UART1_SCLK configuration register
+    @Register(bitWidth: 32)
+    public struct UART1_SCLK_CONF {
+        /// The denominator of the frequency divider factor of the uart1 function clock.
+        @ReadWrite(bits: 0..<6)
+        public var uart1_sclk_div_a: UART1_SCLK_DIV_A
+
+        /// The numerator of the frequency divider factor of the uart1 function clock.
+        @ReadWrite(bits: 6..<12)
+        public var uart1_sclk_div_b: UART1_SCLK_DIV_B
+
+        /// The integral part of the frequency divider factor of the uart1 function clock.
+        @ReadWrite(bits: 12..<20)
+        public var uart1_sclk_div_num: UART1_SCLK_DIV_NUM
+
+        /// set this field to select clock-source. 0: do not select anyone clock, 1: 80MHz, 2: FOSC, 3(default): XTAL.
+        @ReadWrite(bits: 20..<22)
+        public var uart1_sclk_sel: UART1_SCLK_SEL
+
+        /// Set 1 to enable uart0 function clock
+        @ReadWrite(bits: 22..<23)
+        public var uart1_sclk_en: UART1_SCLK_EN
+    }
+
+    /// UART1 power control register
+    @Register(bitWidth: 32)
+    public struct UART1_PD_CTRL {
+        /// Set this bit to force power down UART1 memory.
+        @ReadWrite(bits: 1..<2)
+        public var uart1_mem_force_pu: UART1_MEM_FORCE_PU
+
+        /// Set this bit to force power up UART1 memory.
+        @ReadWrite(bits: 2..<3)
+        public var uart1_mem_force_pd: UART1_MEM_FORCE_PD
+    }
+
     /// MSPI configuration register
     @Register(bitWidth: 32)
     public struct MSPI_CONF {
@@ -349,14 +465,14 @@ extension PCR {
 
     /// I2C configuration register
     @Register(bitWidth: 32)
-    public struct I2C0_CONF {
+    public struct I2C_CONF {
         /// Set 1 to enable i2c apb clock
         @ReadWrite(bits: 0..<1)
-        public var i2c0_clk_en: I2C0_CLK_EN
+        public var i2c_clk_en: I2C_CLK_EN
 
         /// Set 0 to reset i2c module
         @ReadWrite(bits: 1..<2)
-        public var i2c0_rst_en: I2C0_RST_EN
+        public var i2c_rst_en: I2C_RST_EN
     }
 
     /// I2C_SCLK configuration register
@@ -412,23 +528,23 @@ extension PCR {
     public struct RMT_SCLK_CONF {
         /// The denominator of the frequency divider factor of the rmt function clock.
         @ReadWrite(bits: 0..<6)
-        public var sclk_div_a: SCLK_DIV_A
+        public var rmt_sclk_div_a: RMT_SCLK_DIV_A
 
         /// The numerator of the frequency divider factor of the rmt function clock.
         @ReadWrite(bits: 6..<12)
-        public var sclk_div_b: SCLK_DIV_B
+        public var rmt_sclk_div_b: RMT_SCLK_DIV_B
 
         /// The integral part of the frequency divider factor of the rmt function clock.
         @ReadWrite(bits: 12..<20)
-        public var sclk_div_num: SCLK_DIV_NUM
+        public var rmt_sclk_div_num: RMT_SCLK_DIV_NUM
 
         /// set this field to select clock-source. 0: do not select anyone clock, 1(default): 80MHz, 2: FOSC, 3: XTAL.
         @ReadWrite(bits: 20..<22)
-        public var sclk_sel: SCLK_SEL
+        public var rmt_sclk_sel: RMT_SCLK_SEL
 
         /// Set 1 to enable rmt function clock
         @ReadWrite(bits: 22..<23)
-        public var sclk_en: SCLK_EN
+        public var rmt_sclk_en: RMT_SCLK_EN
     }
 
     /// LEDC configuration register
@@ -1449,71 +1565,5 @@ extension PCR {
         /// PCR version information.
         @ReadWrite(bits: 0..<28)
         public var date_field: DATE_FIELD
-    }
-
-    /// Cluster UART%s, containing UART?_CONF, UART?_SCLK_CONF, UART?_PD_CTRL
-    @RegisterBlock
-    public struct UART {
-        /// UART0 configuration register
-        @RegisterBlock(offset: 0x0)
-        public var conf: Register<CONF>
-
-        /// UART0_SCLK configuration register
-        @RegisterBlock(offset: 0x4)
-        public var clk_conf: Register<CLK_CONF>
-
-        /// UART0 power control register
-        @RegisterBlock(offset: 0x8)
-        public var pd_ctrl: Register<PD_CTRL>
-    }
-}
-
-extension PCR.UART {
-    /// UART0 configuration register
-    @Register(bitWidth: 32)
-    public struct CONF {
-        /// Set 1 to enable uart0 apb clock
-        @ReadWrite(bits: 0..<1)
-        public var clk_en: CLK_EN
-
-        /// Set 0 to reset uart0 module
-        @ReadWrite(bits: 1..<2)
-        public var rst_en: RST_EN
-    }
-
-    /// UART0_SCLK configuration register
-    @Register(bitWidth: 32)
-    public struct CLK_CONF {
-        /// The denominator of the frequency divider factor of the uart0 function clock.
-        @ReadWrite(bits: 0..<6)
-        public var sclk_div_a: SCLK_DIV_A
-
-        /// The numerator of the frequency divider factor of the uart0 function clock.
-        @ReadWrite(bits: 6..<12)
-        public var sclk_div_b: SCLK_DIV_B
-
-        /// The integral part of the frequency divider factor of the uart0 function clock.
-        @ReadWrite(bits: 12..<20)
-        public var sclk_div_num: SCLK_DIV_NUM
-
-        /// set this field to select clock-source. 0: do not select anyone clock, 1: 80MHz, 2: FOSC, 3(default): XTAL.
-        @ReadWrite(bits: 20..<22)
-        public var sclk_sel: SCLK_SEL
-
-        /// Set 1 to enable uart0 function clock
-        @ReadWrite(bits: 22..<23)
-        public var sclk_en: SCLK_EN
-    }
-
-    /// UART0 power control register
-    @Register(bitWidth: 32)
-    public struct PD_CTRL {
-        /// Set this bit to force power down UART0 memory.
-        @ReadWrite(bits: 1..<2)
-        public var mem_force_pu: MEM_FORCE_PU
-
-        /// Set this bit to force power up UART0 memory.
-        @ReadWrite(bits: 2..<3)
-        public var mem_force_pd: MEM_FORCE_PD
     }
 }

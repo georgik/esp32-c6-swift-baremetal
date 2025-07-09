@@ -9,21 +9,101 @@ public struct SYSTIMER {
     @RegisterBlock(offset: 0x0)
     public var conf: Register<CONF>
 
-    /// system timer unit%s value update register
-    @RegisterBlock(offset: 0x4, stride: 0x4, count: 2)
-    public var unit_op: RegisterArray<UNIT_OP>
+    /// system timer unit0 value update register
+    @RegisterBlock(offset: 0x4)
+    public var unit0_op: Register<UNIT0_OP>
 
-    /// system timer comp%s target mode register
-    @RegisterBlock(offset: 0x34, stride: 0x4, count: 3)
-    public var target_conf: RegisterArray<TARGET_CONF>
+    /// system timer unit1 value update register
+    @RegisterBlock(offset: 0x8)
+    public var unit1_op: Register<UNIT1_OP>
 
-    /// system timer comp%s conf sync register
-    @RegisterBlock(offset: 0x50, stride: 0x4, count: 3)
-    public var comp_load: RegisterArray<COMP_LOAD>
+    /// system timer unit0 value high load register
+    @RegisterBlock(offset: 0xc)
+    public var unit0_load_hi: Register<UNIT0_LOAD_HI>
 
-    /// system timer unit%s conf sync register
-    @RegisterBlock(offset: 0x5c, stride: 0x4, count: 2)
-    public var unit_load: RegisterArray<UNIT_LOAD>
+    /// system timer unit0 value low load register
+    @RegisterBlock(offset: 0x10)
+    public var unit0_load_lo: Register<UNIT0_LOAD_LO>
+
+    /// system timer unit1 value high load register
+    @RegisterBlock(offset: 0x14)
+    public var unit1_load_hi: Register<UNIT1_LOAD_HI>
+
+    /// system timer unit1 value low load register
+    @RegisterBlock(offset: 0x18)
+    public var unit1_load_lo: Register<UNIT1_LOAD_LO>
+
+    /// system timer comp0 value high register
+    @RegisterBlock(offset: 0x1c)
+    public var target0_hi: Register<TARGET0_HI>
+
+    /// system timer comp0 value low register
+    @RegisterBlock(offset: 0x20)
+    public var target0_lo: Register<TARGET0_LO>
+
+    /// system timer comp1 value high register
+    @RegisterBlock(offset: 0x24)
+    public var target1_hi: Register<TARGET1_HI>
+
+    /// system timer comp1 value low register
+    @RegisterBlock(offset: 0x28)
+    public var target1_lo: Register<TARGET1_LO>
+
+    /// system timer comp2 value high register
+    @RegisterBlock(offset: 0x2c)
+    public var target2_hi: Register<TARGET2_HI>
+
+    /// system timer comp2 value low register
+    @RegisterBlock(offset: 0x30)
+    public var target2_lo: Register<TARGET2_LO>
+
+    /// system timer comp0 target mode register
+    @RegisterBlock(offset: 0x34)
+    public var target0_conf: Register<TARGET0_CONF>
+
+    /// system timer comp1 target mode register
+    @RegisterBlock(offset: 0x38)
+    public var target1_conf: Register<TARGET1_CONF>
+
+    /// system timer comp2 target mode register
+    @RegisterBlock(offset: 0x3c)
+    public var target2_conf: Register<TARGET2_CONF>
+
+    /// system timer unit0 value high register
+    @RegisterBlock(offset: 0x40)
+    public var unit0_value_hi: Register<UNIT0_VALUE_HI>
+
+    /// system timer unit0 value low register
+    @RegisterBlock(offset: 0x44)
+    public var unit0_value_lo: Register<UNIT0_VALUE_LO>
+
+    /// system timer unit1 value high register
+    @RegisterBlock(offset: 0x48)
+    public var unit1_value_hi: Register<UNIT1_VALUE_HI>
+
+    /// system timer unit1 value low register
+    @RegisterBlock(offset: 0x4c)
+    public var unit1_value_lo: Register<UNIT1_VALUE_LO>
+
+    /// system timer comp0 conf sync register
+    @RegisterBlock(offset: 0x50)
+    public var comp0_load: Register<COMP0_LOAD>
+
+    /// system timer comp1 conf sync register
+    @RegisterBlock(offset: 0x54)
+    public var comp1_load: Register<COMP1_LOAD>
+
+    /// system timer comp2 conf sync register
+    @RegisterBlock(offset: 0x58)
+    public var comp2_load: Register<COMP2_LOAD>
+
+    /// system timer unit0 conf sync register
+    @RegisterBlock(offset: 0x5c)
+    public var unit0_load: Register<UNIT0_LOAD>
+
+    /// system timer unit1 conf sync register
+    @RegisterBlock(offset: 0x60)
+    public var unit1_load: Register<UNIT1_LOAD>
 
     /// systimer interrupt enable register
     @RegisterBlock(offset: 0x64)
@@ -41,25 +121,33 @@ public struct SYSTIMER {
     @RegisterBlock(offset: 0x70)
     public var int_st: Register<INT_ST>
 
+    /// system timer comp0 actual target value low register
+    @RegisterBlock(offset: 0x74)
+    public var real_target0_lo: Register<REAL_TARGET0_LO>
+
+    /// system timer comp0 actual target value high register
+    @RegisterBlock(offset: 0x78)
+    public var real_target0_hi: Register<REAL_TARGET0_HI>
+
+    /// system timer comp1 actual target value low register
+    @RegisterBlock(offset: 0x7c)
+    public var real_target1_lo: Register<REAL_TARGET1_LO>
+
+    /// system timer comp1 actual target value high register
+    @RegisterBlock(offset: 0x80)
+    public var real_target1_hi: Register<REAL_TARGET1_HI>
+
+    /// system timer comp2 actual target value low register
+    @RegisterBlock(offset: 0x84)
+    public var real_target2_lo: Register<REAL_TARGET2_LO>
+
+    /// system timer comp2 actual target value high register
+    @RegisterBlock(offset: 0x88)
+    public var real_target2_hi: Register<REAL_TARGET2_HI>
+
     /// system timer version control register
     @RegisterBlock(offset: 0xfc)
     public var date: Register<DATE>
-
-    /// Cluster UNIT%sLOAD, containing UNIT?_LOAD_HI, UNIT?_LOAD_LO
-    @RegisterBlock(offset: 0xc, stride: 0x8, count: 2)
-    public var unitload: RegisterArray<UNITLOAD>
-
-    /// Cluster TRGT%s, containing TARGET?_HI, TARGET?_LO
-    @RegisterBlock(offset: 0x1c, stride: 0x8, count: 3)
-    public var trgt: RegisterArray<TRGT>
-
-    /// Cluster UNIT%s_VALUE, containing UNIT?_VALUE_HI, UNIT?_VALUE_LO
-    @RegisterBlock(offset: 0x40, stride: 0x8, count: 2)
-    public var unit_value: RegisterArray<UNIT_VALUE>
-
-    /// Cluster REAL_TARGET%s, containing REAL_TARGET?_LO, REAL_TARGET?_HI
-    @RegisterBlock(offset: 0x74, stride: 0x8, count: 3)
-    public var real_target: RegisterArray<REAL_TARGET>
 }
 
 extension SYSTIMER {
@@ -115,112 +203,340 @@ extension SYSTIMER {
         public var clk_en: CLK_EN
     }
 
-    /// system timer unit%s value update register
+    /// system timer unit0 value update register
     @Register(bitWidth: 32)
-    public struct UNIT_OP {
+    public struct UNIT0_OP {
         /// timer value is sync and valid
         @ReadOnly(bits: 29..<30)
-        public var value_valid: VALUE_VALID
+        public var timer_unit0_value_valid: TIMER_UNIT0_VALUE_VALID
 
         /// update timer_unit0
         @WriteOnly(bits: 30..<31)
-        public var update: UPDATE
+        public var timer_unit0_update: TIMER_UNIT0_UPDATE
     }
 
-    /// system timer comp%s target mode register
+    /// system timer unit1 value update register
     @Register(bitWidth: 32)
-    public struct TARGET_CONF {
+    public struct UNIT1_OP {
+        /// timer value is sync and valid
+        @ReadOnly(bits: 29..<30)
+        public var timer_unit1_value_valid: TIMER_UNIT1_VALUE_VALID
+
+        /// update timer unit1
+        @WriteOnly(bits: 30..<31)
+        public var timer_unit1_update: TIMER_UNIT1_UPDATE
+    }
+
+    /// system timer unit0 value high load register
+    @Register(bitWidth: 32)
+    public struct UNIT0_LOAD_HI {
+        /// timer unit0 load high 20 bits
+        @ReadWrite(bits: 0..<20)
+        public var timer_unit0_load_hi: TIMER_UNIT0_LOAD_HI
+    }
+
+    /// system timer unit0 value low load register
+    @Register(bitWidth: 32)
+    public struct UNIT0_LOAD_LO {
+        /// timer unit0 load low 32 bits
+        @ReadWrite(bits: 0..<32)
+        public var timer_unit0_load_lo: TIMER_UNIT0_LOAD_LO
+    }
+
+    /// system timer unit1 value high load register
+    @Register(bitWidth: 32)
+    public struct UNIT1_LOAD_HI {
+        /// timer unit1 load high 20 bits
+        @ReadWrite(bits: 0..<20)
+        public var timer_unit1_load_hi: TIMER_UNIT1_LOAD_HI
+    }
+
+    /// system timer unit1 value low load register
+    @Register(bitWidth: 32)
+    public struct UNIT1_LOAD_LO {
+        /// timer unit1 load low 32 bits
+        @ReadWrite(bits: 0..<32)
+        public var timer_unit1_load_lo: TIMER_UNIT1_LOAD_LO
+    }
+
+    /// system timer comp0 value high register
+    @Register(bitWidth: 32)
+    public struct TARGET0_HI {
+        /// timer taget0 high 20 bits
+        @ReadWrite(bits: 0..<20)
+        public var timer_target0_hi: TIMER_TARGET0_HI
+    }
+
+    /// system timer comp0 value low register
+    @Register(bitWidth: 32)
+    public struct TARGET0_LO {
+        /// timer taget0 low 32 bits
+        @ReadWrite(bits: 0..<32)
+        public var timer_target0_lo: TIMER_TARGET0_LO
+    }
+
+    /// system timer comp1 value high register
+    @Register(bitWidth: 32)
+    public struct TARGET1_HI {
+        /// timer taget1 high 20 bits
+        @ReadWrite(bits: 0..<20)
+        public var timer_target1_hi: TIMER_TARGET1_HI
+    }
+
+    /// system timer comp1 value low register
+    @Register(bitWidth: 32)
+    public struct TARGET1_LO {
+        /// timer taget1 low 32 bits
+        @ReadWrite(bits: 0..<32)
+        public var timer_target1_lo: TIMER_TARGET1_LO
+    }
+
+    /// system timer comp2 value high register
+    @Register(bitWidth: 32)
+    public struct TARGET2_HI {
+        /// timer taget2 high 20 bits
+        @ReadWrite(bits: 0..<20)
+        public var timer_target2_hi: TIMER_TARGET2_HI
+    }
+
+    /// system timer comp2 value low register
+    @Register(bitWidth: 32)
+    public struct TARGET2_LO {
+        /// timer taget2 low 32 bits
+        @ReadWrite(bits: 0..<32)
+        public var timer_target2_lo: TIMER_TARGET2_LO
+    }
+
+    /// system timer comp0 target mode register
+    @Register(bitWidth: 32)
+    public struct TARGET0_CONF {
         /// target0 period
         @ReadWrite(bits: 0..<26)
-        public var period: PERIOD
+        public var target0_period: TARGET0_PERIOD
 
         /// Set target0 to period mode
         @ReadWrite(bits: 30..<31)
-        public var period_mode: PERIOD_MODE
+        public var target0_period_mode: TARGET0_PERIOD_MODE
 
         /// select which unit to compare
         @ReadWrite(bits: 31..<32)
-        public var timer_unit_sel: TIMER_UNIT_SEL
+        public var target0_timer_unit_sel: TARGET0_TIMER_UNIT_SEL
     }
 
-    /// system timer comp%s conf sync register
+    /// system timer comp1 target mode register
     @Register(bitWidth: 32)
-    public struct COMP_LOAD {
+    public struct TARGET1_CONF {
+        /// target1 period
+        @ReadWrite(bits: 0..<26)
+        public var target1_period: TARGET1_PERIOD
+
+        /// Set target1 to period mode
+        @ReadWrite(bits: 30..<31)
+        public var target1_period_mode: TARGET1_PERIOD_MODE
+
+        /// select which unit to compare
+        @ReadWrite(bits: 31..<32)
+        public var target1_timer_unit_sel: TARGET1_TIMER_UNIT_SEL
+    }
+
+    /// system timer comp2 target mode register
+    @Register(bitWidth: 32)
+    public struct TARGET2_CONF {
+        /// target2 period
+        @ReadWrite(bits: 0..<26)
+        public var target2_period: TARGET2_PERIOD
+
+        /// Set target2 to period mode
+        @ReadWrite(bits: 30..<31)
+        public var target2_period_mode: TARGET2_PERIOD_MODE
+
+        /// select which unit to compare
+        @ReadWrite(bits: 31..<32)
+        public var target2_timer_unit_sel: TARGET2_TIMER_UNIT_SEL
+    }
+
+    /// system timer unit0 value high register
+    @Register(bitWidth: 32)
+    public struct UNIT0_VALUE_HI {
+        /// timer read value high 20bits
+        @ReadOnly(bits: 0..<20)
+        public var timer_unit0_value_hi: TIMER_UNIT0_VALUE_HI
+    }
+
+    /// system timer unit0 value low register
+    @Register(bitWidth: 32)
+    public struct UNIT0_VALUE_LO {
+        /// timer read value low 32bits
+        @ReadOnly(bits: 0..<32)
+        public var timer_unit0_value_lo: TIMER_UNIT0_VALUE_LO
+    }
+
+    /// system timer unit1 value high register
+    @Register(bitWidth: 32)
+    public struct UNIT1_VALUE_HI {
+        /// timer read value high 20bits
+        @ReadOnly(bits: 0..<20)
+        public var timer_unit1_value_hi: TIMER_UNIT1_VALUE_HI
+    }
+
+    /// system timer unit1 value low register
+    @Register(bitWidth: 32)
+    public struct UNIT1_VALUE_LO {
+        /// timer read value low 32bits
+        @ReadOnly(bits: 0..<32)
+        public var timer_unit1_value_lo: TIMER_UNIT1_VALUE_LO
+    }
+
+    /// system timer comp0 conf sync register
+    @Register(bitWidth: 32)
+    public struct COMP0_LOAD {
         /// timer comp0 sync enable signal
         @WriteOnly(bits: 0..<1)
-        public var load: LOAD
+        public var timer_comp0_load: TIMER_COMP0_LOAD
     }
 
-    /// system timer unit%s conf sync register
+    /// system timer comp1 conf sync register
     @Register(bitWidth: 32)
-    public struct UNIT_LOAD {
+    public struct COMP1_LOAD {
+        /// timer comp1 sync enable signal
+        @WriteOnly(bits: 0..<1)
+        public var timer_comp1_load: TIMER_COMP1_LOAD
+    }
+
+    /// system timer comp2 conf sync register
+    @Register(bitWidth: 32)
+    public struct COMP2_LOAD {
+        /// timer comp2 sync enable signal
+        @WriteOnly(bits: 0..<1)
+        public var timer_comp2_load: TIMER_COMP2_LOAD
+    }
+
+    /// system timer unit0 conf sync register
+    @Register(bitWidth: 32)
+    public struct UNIT0_LOAD {
         /// timer unit0 sync enable signal
         @WriteOnly(bits: 0..<1)
-        public var load: LOAD
+        public var timer_unit0_load: TIMER_UNIT0_LOAD
+    }
+
+    /// system timer unit1 conf sync register
+    @Register(bitWidth: 32)
+    public struct UNIT1_LOAD {
+        /// timer unit1 sync enable signal
+        @WriteOnly(bits: 0..<1)
+        public var timer_unit1_load: TIMER_UNIT1_LOAD
     }
 
     /// systimer interrupt enable register
     @Register(bitWidth: 32)
     public struct INT_ENA {
-        /// interupt%s enable
+        /// interupt0 enable
         @ReadWrite(bits: 0..<1)
-        public var target0: TARGET0
+        public var target0_int_ena: TARGET0_INT_ENA
 
-        /// interupt%s enable
+        /// interupt1 enable
         @ReadWrite(bits: 1..<2)
-        public var target1: TARGET1
+        public var target1_int_ena: TARGET1_INT_ENA
 
-        /// interupt%s enable
+        /// interupt2 enable
         @ReadWrite(bits: 2..<3)
-        public var target2: TARGET2
+        public var target2_int_ena: TARGET2_INT_ENA
     }
 
     /// systimer interrupt raw register
     @Register(bitWidth: 32)
     public struct INT_RAW {
-        /// interupt%s raw
+        /// interupt0 raw
         @ReadWrite(bits: 0..<1)
-        public var target0: TARGET0
+        public var target0_int_raw: TARGET0_INT_RAW
 
-        /// interupt%s raw
+        /// interupt1 raw
         @ReadWrite(bits: 1..<2)
-        public var target1: TARGET1
+        public var target1_int_raw: TARGET1_INT_RAW
 
-        /// interupt%s raw
+        /// interupt2 raw
         @ReadWrite(bits: 2..<3)
-        public var target2: TARGET2
+        public var target2_int_raw: TARGET2_INT_RAW
     }
 
     /// systimer interrupt clear register
     @Register(bitWidth: 32)
     public struct INT_CLR {
-        /// interupt%s clear
+        /// interupt0 clear
         @WriteOnly(bits: 0..<1)
-        public var target0: TARGET0
+        public var target0_int_clr: TARGET0_INT_CLR
 
-        /// interupt%s clear
+        /// interupt1 clear
         @WriteOnly(bits: 1..<2)
-        public var target1: TARGET1
+        public var target1_int_clr: TARGET1_INT_CLR
 
-        /// interupt%s clear
+        /// interupt2 clear
         @WriteOnly(bits: 2..<3)
-        public var target2: TARGET2
+        public var target2_int_clr: TARGET2_INT_CLR
     }
 
     /// systimer interrupt status register
     @Register(bitWidth: 32)
     public struct INT_ST {
-        /// interupt%s status
+        /// interupt0 status
         @ReadOnly(bits: 0..<1)
-        public var target0: TARGET0
+        public var target0_int_st: TARGET0_INT_ST
 
-        /// interupt%s status
+        /// interupt1 status
         @ReadOnly(bits: 1..<2)
-        public var target1: TARGET1
+        public var target1_int_st: TARGET1_INT_ST
 
-        /// interupt%s status
+        /// interupt2 status
         @ReadOnly(bits: 2..<3)
-        public var target2: TARGET2
+        public var target2_int_st: TARGET2_INT_ST
+    }
+
+    /// system timer comp0 actual target value low register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET0_LO {
+        /// actual target value value low 32bits
+        @ReadOnly(bits: 0..<32)
+        public var target0_lo_ro: TARGET0_LO_RO
+    }
+
+    /// system timer comp0 actual target value high register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET0_HI {
+        /// actual target value value high 20bits
+        @ReadOnly(bits: 0..<20)
+        public var target0_hi_ro: TARGET0_HI_RO
+    }
+
+    /// system timer comp1 actual target value low register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET1_LO {
+        /// actual target value value low 32bits
+        @ReadOnly(bits: 0..<32)
+        public var target1_lo_ro: TARGET1_LO_RO
+    }
+
+    /// system timer comp1 actual target value high register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET1_HI {
+        /// actual target value value high 20bits
+        @ReadOnly(bits: 0..<20)
+        public var target1_hi_ro: TARGET1_HI_RO
+    }
+
+    /// system timer comp2 actual target value low register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET2_LO {
+        /// actual target value value low 32bits
+        @ReadOnly(bits: 0..<32)
+        public var target2_lo_ro: TARGET2_LO_RO
+    }
+
+    /// system timer comp2 actual target value high register
+    @Register(bitWidth: 32)
+    public struct REAL_TARGET2_HI {
+        /// actual target value value high 20bits
+        @ReadOnly(bits: 0..<20)
+        public var target2_hi_ro: TARGET2_HI_RO
     }
 
     /// system timer version control register
@@ -229,125 +545,5 @@ extension SYSTIMER {
         /// systimer register version
         @ReadWrite(bits: 0..<32)
         public var date_field: DATE_FIELD
-    }
-
-    /// Cluster UNIT%sLOAD, containing UNIT?_LOAD_HI, UNIT?_LOAD_LO
-    @RegisterBlock
-    public struct UNITLOAD {
-        /// system timer unit0 value high load register
-        @RegisterBlock(offset: 0x0)
-        public var hi: Register<HI>
-
-        /// system timer unit0 value low load register
-        @RegisterBlock(offset: 0x4)
-        public var lo: Register<LO>
-    }
-
-    /// Cluster TRGT%s, containing TARGET?_HI, TARGET?_LO
-    @RegisterBlock
-    public struct TRGT {
-        /// system timer comp0 value high register
-        @RegisterBlock(offset: 0x0)
-        public var hi: Register<HI>
-
-        /// system timer comp0 value low register
-        @RegisterBlock(offset: 0x4)
-        public var lo: Register<LO>
-    }
-
-    /// Cluster UNIT%s_VALUE, containing UNIT?_VALUE_HI, UNIT?_VALUE_LO
-    @RegisterBlock
-    public struct UNIT_VALUE {
-        /// system timer unit0 value high register
-        @RegisterBlock(offset: 0x0)
-        public var hi: Register<HI>
-
-        /// system timer unit0 value low register
-        @RegisterBlock(offset: 0x4)
-        public var lo: Register<LO>
-    }
-
-    /// Cluster REAL_TARGET%s, containing REAL_TARGET?_LO, REAL_TARGET?_HI
-    @RegisterBlock
-    public struct REAL_TARGET {
-        /// system timer comp0 actual target value low register
-        @RegisterBlock(offset: 0x0)
-        public var lo: Register<LO>
-
-        /// system timer comp0 actual target value high register
-        @RegisterBlock(offset: 0x4)
-        public var hi: Register<HI>
-    }
-}
-
-extension SYSTIMER.UNITLOAD {
-    /// system timer unit0 value high load register
-    @Register(bitWidth: 32)
-    public struct HI {
-        /// timer unit0 load high 20 bits
-        @ReadWrite(bits: 0..<20)
-        public var load_hi: LOAD_HI
-    }
-
-    /// system timer unit0 value low load register
-    @Register(bitWidth: 32)
-    public struct LO {
-        /// timer unit0 load low 32 bits
-        @ReadWrite(bits: 0..<32)
-        public var load_lo: LOAD_LO
-    }
-}
-
-extension SYSTIMER.TRGT {
-    /// system timer comp0 value high register
-    @Register(bitWidth: 32)
-    public struct HI {
-        /// timer taget0 high 20 bits
-        @ReadWrite(bits: 0..<20)
-        public var hi_field: HI_FIELD
-    }
-
-    /// system timer comp0 value low register
-    @Register(bitWidth: 32)
-    public struct LO {
-        /// timer taget0 low 32 bits
-        @ReadWrite(bits: 0..<32)
-        public var lo_field: LO_FIELD
-    }
-}
-
-extension SYSTIMER.UNIT_VALUE {
-    /// system timer unit0 value high register
-    @Register(bitWidth: 32)
-    public struct HI {
-        /// timer read value high 20bits
-        @ReadOnly(bits: 0..<20)
-        public var value_hi: VALUE_HI
-    }
-
-    /// system timer unit0 value low register
-    @Register(bitWidth: 32)
-    public struct LO {
-        /// timer read value low 32bits
-        @ReadOnly(bits: 0..<32)
-        public var value_lo: VALUE_LO
-    }
-}
-
-extension SYSTIMER.REAL_TARGET {
-    /// system timer comp0 actual target value low register
-    @Register(bitWidth: 32)
-    public struct LO {
-        /// actual target value value low 32bits
-        @ReadOnly(bits: 0..<32)
-        public var lo_ro: LO_RO
-    }
-
-    /// system timer comp0 actual target value high register
-    @Register(bitWidth: 32)
-    public struct HI {
-        /// actual target value value high 20bits
-        @ReadOnly(bits: 0..<20)
-        public var hi_ro: HI_RO
     }
 }

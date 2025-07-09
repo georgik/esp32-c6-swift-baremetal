@@ -5,6 +5,34 @@ import MMIO
 /// LED Control PWM (Pulse Width Modulation)
 @RegisterBlock
 public struct LEDC {
+    /// Configuration register 0 for channel %s
+    @RegisterBlock(offset: 0x0, stride: 0x14, count: 6)
+    public var ch_conf0: RegisterArray<CH_CONF0>
+
+    /// High point register for channel %s
+    @RegisterBlock(offset: 0x4, stride: 0x14, count: 6)
+    public var ch_hpoint: RegisterArray<CH_HPOINT>
+
+    /// Initial duty cycle for channel %s
+    @RegisterBlock(offset: 0x8, stride: 0x14, count: 6)
+    public var ch_duty: RegisterArray<CH_DUTY>
+
+    /// Configuration register 1 for channel %s
+    @RegisterBlock(offset: 0xc, stride: 0x14, count: 6)
+    public var ch_conf1: RegisterArray<CH_CONF1>
+
+    /// Current duty cycle for channel %s
+    @RegisterBlock(offset: 0x10, stride: 0x14, count: 6)
+    public var ch_duty_r: RegisterArray<CH_DUTY_R>
+
+    /// Timer %s configuration
+    @RegisterBlock(offset: 0xa0, stride: 0x8, count: 4)
+    public var timer_conf: RegisterArray<TIMER_CONF>
+
+    /// Timer %s current counter value
+    @RegisterBlock(offset: 0xa4, stride: 0x8, count: 4)
+    public var timer_value: RegisterArray<TIMER_VALUE>
+
     /// Raw interrupt status
     @RegisterBlock(offset: 0xc0)
     public var int_raw: Register<INT_RAW>
@@ -68,287 +96,379 @@ public struct LEDC {
     /// Version control register
     @RegisterBlock(offset: 0x1fc)
     public var date: Register<DATE>
-
-    /// Cluster CH%s, containing CH?_CONF0, CH?_HPOINT, CH?_DUTY, CH?_CONF1, CH?_DUTY_R
-    @RegisterBlock(offset: 0x0, stride: 0x14, count: 6)
-    public var ch: RegisterArray<CH>
-
-    /// Cluster TIMER%s, containing TIMER?_CONF, TIMER?_VALUE
-    @RegisterBlock(offset: 0xa0, stride: 0x8, count: 4)
-    public var timer: RegisterArray<TIMER>
 }
 
 extension LEDC {
+    /// Configuration register 0 for channel %s
+    @Register(bitWidth: 32)
+    public struct CH_CONF0 {
+        /// 0: select timer0, 1: select timer1, 2: select timer2, 3: select timer3
+        @ReadWrite(bits: 0..<2)
+        public var timer_sel_ch: TIMER_SEL_CH
+
+        /// Set this bit to enable signal output on channel %s.
+        @ReadWrite(bits: 2..<3)
+        public var sig_out_en_ch: SIG_OUT_EN_CH
+
+        /// This bit is used to control the output value when channel %s is inactive (when LEDC_SIG_OUT_EN_CH%s is 0).
+        @ReadWrite(bits: 3..<4)
+        public var idle_lv_ch: IDLE_LV_CH
+
+        /// This bit is used to update LEDC_HPOINT_CH%s, LEDC_DUTY_START_CH%s, LEDC_SIG_OUT_EN_CH%s, LEDC_TIMER_SEL_CH%s, LEDC_DUTY_NUM_CH%s, LEDC_DUTY_CYCLE_CH%s, LEDC_DUTY_SCALE_CH%s, LEDC_DUTY_INC_CH%s, and LEDC_OVF_CNT_EN_CH%s fields for channel %s, and will be automatically cleared by hardware.
+        @WriteOnly(bits: 4..<5)
+        public var para_up_ch: PARA_UP_CH
+
+        /// The LEDC_OVF_CNT_CH%s_INT interrupt will be triggered when channel %s overflows for (LEDC_OVF_NUM_CH%s + 1) times.
+        @ReadWrite(bits: 5..<15)
+        public var ovf_num_ch: OVF_NUM_CH
+
+        /// This bit is used to enable the ovf_cnt of channel %s.
+        @ReadWrite(bits: 15..<16)
+        public var ovf_cnt_en_ch: OVF_CNT_EN_CH
+
+        /// Set this bit to reset the ovf_cnt of channel %s.
+        @WriteOnly(bits: 16..<17)
+        public var ovf_cnt_reset_ch: OVF_CNT_RESET_CH
+    }
+
+    /// High point register for channel %s
+    @Register(bitWidth: 32)
+    public struct CH_HPOINT {
+        /// The output value changes to high when the selected timers has reached the value specified by this register.
+        @ReadWrite(bits: 0..<20)
+        public var hpoint_ch: HPOINT_CH
+    }
+
+    /// Initial duty cycle for channel %s
+    @Register(bitWidth: 32)
+    public struct CH_DUTY {
+        /// The output value turns to low when the selected timers has reached the Lpoint.
+        @ReadWrite(bits: 0..<25)
+        public var duty_ch: DUTY_CH
+    }
+
+    /// Configuration register 1 for channel %s
+    @Register(bitWidth: 32)
+    public struct CH_CONF1 {
+        /// Other configured fields in LEDC_CH%s_CONF1_REG will start to take effect when this bit is set to 1.
+        @ReadWrite(bits: 31..<32)
+        public var duty_start_ch: DUTY_START_CH
+    }
+
+    /// Current duty cycle for channel %s
+    @Register(bitWidth: 32)
+    public struct CH_DUTY_R {
+        /// This register stores the current duty of output signal on channel %s.
+        @ReadOnly(bits: 0..<25)
+        public var duty_ch_r: DUTY_CH_R
+    }
+
+    /// Timer %s configuration
+    @Register(bitWidth: 32)
+    public struct TIMER_CONF {
+        /// This register is used to control the range of the counter in timer %s.
+        @ReadWrite(bits: 0..<5)
+        public var timer_duty_res: TIMER_DUTY_RES
+
+        /// The least significant eight bits represent the fractional part.
+        @ReadWrite(bits: 5..<23)
+        public var clk_div_timer: CLK_DIV_TIMER
+
+        /// This bit is used to suspend the counter in timer %s.
+        @ReadWrite(bits: 23..<24)
+        public var timer_pause: TIMER_PAUSE
+
+        /// This bit is used to reset timer %s. The counter will show 0 after reset.
+        @ReadWrite(bits: 24..<25)
+        public var timer_rst: TIMER_RST
+
+        /// 1'h0: SLOW_CLK 1'h1: REF_TICK
+        @ReadWrite(bits: 25..<26)
+        public var tick_sel_timer: TICK_SEL_TIMER
+
+        /// Set this bit to update LEDC_CLK_DIV_TIMER%s and LEDC_TIMER%s_DUTY_RES.
+        @WriteOnly(bits: 26..<27)
+        public var timer_para_up: TIMER_PARA_UP
+    }
+
+    /// Timer %s current counter value
+    @Register(bitWidth: 32)
+    public struct TIMER_VALUE {
+        /// This register stores the current counter value of timer %s.
+        @ReadOnly(bits: 0..<20)
+        public var timer_cnt: TIMER_CNT
+    }
+
     /// Raw interrupt status
     @Register(bitWidth: 32)
     public struct INT_RAW {
-        /// Triggered when the timer%s has reached its maximum counter value.
+        /// Triggered when the timer0 has reached its maximum counter value.
         @ReadWrite(bits: 0..<1)
-        public var timer_ovf0: TIMER_OVF0
+        public var timer0_ovf_int_raw: TIMER0_OVF_INT_RAW
 
-        /// Triggered when the timer%s has reached its maximum counter value.
+        /// Triggered when the timer1 has reached its maximum counter value.
         @ReadWrite(bits: 1..<2)
-        public var timer_ovf1: TIMER_OVF1
+        public var timer1_ovf_int_raw: TIMER1_OVF_INT_RAW
 
-        /// Triggered when the timer%s has reached its maximum counter value.
+        /// Triggered when the timer2 has reached its maximum counter value.
         @ReadWrite(bits: 2..<3)
-        public var timer_ovf2: TIMER_OVF2
+        public var timer2_ovf_int_raw: TIMER2_OVF_INT_RAW
 
-        /// Triggered when the timer%s has reached its maximum counter value.
+        /// Triggered when the timer3 has reached its maximum counter value.
         @ReadWrite(bits: 3..<4)
-        public var timer_ovf3: TIMER_OVF3
+        public var timer3_ovf_int_raw: TIMER3_OVF_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 0. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 4..<5)
-        public var duty_chng_end_ch0: DUTY_CHNG_END_CH0
+        public var duty_chng_end_ch0_int_raw: DUTY_CHNG_END_CH0_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 1. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 5..<6)
-        public var duty_chng_end_ch1: DUTY_CHNG_END_CH1
+        public var duty_chng_end_ch1_int_raw: DUTY_CHNG_END_CH1_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 2. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 6..<7)
-        public var duty_chng_end_ch2: DUTY_CHNG_END_CH2
+        public var duty_chng_end_ch2_int_raw: DUTY_CHNG_END_CH2_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 3. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 7..<8)
-        public var duty_chng_end_ch3: DUTY_CHNG_END_CH3
+        public var duty_chng_end_ch3_int_raw: DUTY_CHNG_END_CH3_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 4. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 8..<9)
-        public var duty_chng_end_ch4: DUTY_CHNG_END_CH4
+        public var duty_chng_end_ch4_int_raw: DUTY_CHNG_END_CH4_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the gradual change of duty has finished.
+        /// Interrupt raw bit for channel 5. Triggered when the gradual change of duty has finished.
         @ReadWrite(bits: 9..<10)
-        public var duty_chng_end_ch5: DUTY_CHNG_END_CH5
+        public var duty_chng_end_ch5_int_raw: DUTY_CHNG_END_CH5_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 0. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH0.
         @ReadWrite(bits: 12..<13)
-        public var ovf_cnt_ch0: OVF_CNT_CH0
+        public var ovf_cnt_ch0_int_raw: OVF_CNT_CH0_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 1. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH1.
         @ReadWrite(bits: 13..<14)
-        public var ovf_cnt_ch1: OVF_CNT_CH1
+        public var ovf_cnt_ch1_int_raw: OVF_CNT_CH1_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 2. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH2.
         @ReadWrite(bits: 14..<15)
-        public var ovf_cnt_ch2: OVF_CNT_CH2
+        public var ovf_cnt_ch2_int_raw: OVF_CNT_CH2_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 3. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH3.
         @ReadWrite(bits: 15..<16)
-        public var ovf_cnt_ch3: OVF_CNT_CH3
+        public var ovf_cnt_ch3_int_raw: OVF_CNT_CH3_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 4. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH4.
         @ReadWrite(bits: 16..<17)
-        public var ovf_cnt_ch4: OVF_CNT_CH4
+        public var ovf_cnt_ch4_int_raw: OVF_CNT_CH4_INT_RAW
 
-        /// Interrupt raw bit for channel %s. Triggered when the OVF_CNT has reached the value specified by LEDC.CHx.CONF0.OVF_NUM.
+        /// Interrupt raw bit for channel 5. Triggered when the ovf_cnt has reached the value specified by LEDC_OVF_NUM_CH5.
         @ReadWrite(bits: 17..<18)
-        public var ovf_cnt_ch5: OVF_CNT_CH5
+        public var ovf_cnt_ch5_int_raw: OVF_CNT_CH5_INT_RAW
     }
 
     /// Masked interrupt status
     @Register(bitWidth: 32)
     public struct INT_ST {
-        /// This is the masked interrupt status bit for the TIMER%s_OVF interrupt when LEDC.INT_ENA.TIMERx_OVF is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_TIMER0_OVF_INT interrupt when LEDC_TIMER0_OVF_INT_ENA is set to 1.
         @ReadOnly(bits: 0..<1)
-        public var timer_ovf0: TIMER_OVF0
+        public var timer0_ovf_int_st: TIMER0_OVF_INT_ST
 
-        /// This is the masked interrupt status bit for the TIMER%s_OVF interrupt when LEDC.INT_ENA.TIMERx_OVF is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_TIMER1_OVF_INT interrupt when LEDC_TIMER1_OVF_INT_ENA is set to 1.
         @ReadOnly(bits: 1..<2)
-        public var timer_ovf1: TIMER_OVF1
+        public var timer1_ovf_int_st: TIMER1_OVF_INT_ST
 
-        /// This is the masked interrupt status bit for the TIMER%s_OVF interrupt when LEDC.INT_ENA.TIMERx_OVF is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_TIMER2_OVF_INT interrupt when LEDC_TIMER2_OVF_INT_ENA is set to 1.
         @ReadOnly(bits: 2..<3)
-        public var timer_ovf2: TIMER_OVF2
+        public var timer2_ovf_int_st: TIMER2_OVF_INT_ST
 
-        /// This is the masked interrupt status bit for the TIMER%s_OVF interrupt when LEDC.INT_ENA.TIMERx_OVF is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_TIMER3_OVF_INT interrupt when LEDC_TIMER3_OVF_INT_ENA is set to 1.
         @ReadOnly(bits: 3..<4)
-        public var timer_ovf3: TIMER_OVF3
+        public var timer3_ovf_int_st: TIMER3_OVF_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH0_INT interrupt when LEDC_DUTY_CHNG_END_CH0_INT_ENA is set to 1.
         @ReadOnly(bits: 4..<5)
-        public var duty_chng_end_ch0: DUTY_CHNG_END_CH0
+        public var duty_chng_end_ch0_int_st: DUTY_CHNG_END_CH0_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH1_INT interrupt when LEDC_DUTY_CHNG_END_CH1_INT_ENA is set to 1.
         @ReadOnly(bits: 5..<6)
-        public var duty_chng_end_ch1: DUTY_CHNG_END_CH1
+        public var duty_chng_end_ch1_int_st: DUTY_CHNG_END_CH1_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH2_INT interrupt when LEDC_DUTY_CHNG_END_CH2_INT_ENA is set to 1.
         @ReadOnly(bits: 6..<7)
-        public var duty_chng_end_ch2: DUTY_CHNG_END_CH2
+        public var duty_chng_end_ch2_int_st: DUTY_CHNG_END_CH2_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH3_INT interrupt when LEDC_DUTY_CHNG_END_CH3_INT_ENA is set to 1.
         @ReadOnly(bits: 7..<8)
-        public var duty_chng_end_ch3: DUTY_CHNG_END_CH3
+        public var duty_chng_end_ch3_int_st: DUTY_CHNG_END_CH3_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH4_INT interrupt when LEDC_DUTY_CHNG_END_CH4_INT_ENA is set to 1.
         @ReadOnly(bits: 8..<9)
-        public var duty_chng_end_ch4: DUTY_CHNG_END_CH4
+        public var duty_chng_end_ch4_int_st: DUTY_CHNG_END_CH4_INT_ST
 
-        /// This is the masked interrupt status bit for the DUTY_CHNG_END_CH%s interrupt when LEDC.INT_ENA.DUTY_CHNG_END_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_DUTY_CHNG_END_CH5_INT interrupt when LEDC_DUTY_CHNG_END_CH5_INT_ENA is set to 1.
         @ReadOnly(bits: 9..<10)
-        public var duty_chng_end_ch5: DUTY_CHNG_END_CH5
+        public var duty_chng_end_ch5_int_st: DUTY_CHNG_END_CH5_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH0_INT interrupt when LEDC_OVF_CNT_CH0_INT_ENA is set to 1.
         @ReadOnly(bits: 12..<13)
-        public var ovf_cnt_ch0: OVF_CNT_CH0
+        public var ovf_cnt_ch0_int_st: OVF_CNT_CH0_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH1_INT interrupt when LEDC_OVF_CNT_CH1_INT_ENA is set to 1.
         @ReadOnly(bits: 13..<14)
-        public var ovf_cnt_ch1: OVF_CNT_CH1
+        public var ovf_cnt_ch1_int_st: OVF_CNT_CH1_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH2_INT interrupt when LEDC_OVF_CNT_CH2_INT_ENA is set to 1.
         @ReadOnly(bits: 14..<15)
-        public var ovf_cnt_ch2: OVF_CNT_CH2
+        public var ovf_cnt_ch2_int_st: OVF_CNT_CH2_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH3_INT interrupt when LEDC_OVF_CNT_CH3_INT_ENA is set to 1.
         @ReadOnly(bits: 15..<16)
-        public var ovf_cnt_ch3: OVF_CNT_CH3
+        public var ovf_cnt_ch3_int_st: OVF_CNT_CH3_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH4_INT interrupt when LEDC_OVF_CNT_CH4_INT_ENA is set to 1.
         @ReadOnly(bits: 16..<17)
-        public var ovf_cnt_ch4: OVF_CNT_CH4
+        public var ovf_cnt_ch4_int_st: OVF_CNT_CH4_INT_ST
 
-        /// This is the masked interrupt status bit for the LEDC.INT_RAW.OVF_CNT_CH%s interrupt when LEDC.INT_ENA.OVF_CNT_CHx is set to 1.
+        /// This is the masked interrupt status bit for the LEDC_OVF_CNT_CH5_INT interrupt when LEDC_OVF_CNT_CH5_INT_ENA is set to 1.
         @ReadOnly(bits: 17..<18)
-        public var ovf_cnt_ch5: OVF_CNT_CH5
+        public var ovf_cnt_ch5_int_st: OVF_CNT_CH5_INT_ST
     }
 
     /// Interrupt enable bits
     @Register(bitWidth: 32)
     public struct INT_ENA {
-        /// The interrupt enable bit for the TIMER%s_OVF interrupt.
+        /// The interrupt enable bit for the LEDC_TIMER0_OVF_INT interrupt.
         @ReadWrite(bits: 0..<1)
-        public var timer_ovf0: TIMER_OVF0
+        public var timer0_ovf_int_ena: TIMER0_OVF_INT_ENA
 
-        /// The interrupt enable bit for the TIMER%s_OVF interrupt.
+        /// The interrupt enable bit for the LEDC_TIMER1_OVF_INT interrupt.
         @ReadWrite(bits: 1..<2)
-        public var timer_ovf1: TIMER_OVF1
+        public var timer1_ovf_int_ena: TIMER1_OVF_INT_ENA
 
-        /// The interrupt enable bit for the TIMER%s_OVF interrupt.
+        /// The interrupt enable bit for the LEDC_TIMER2_OVF_INT interrupt.
         @ReadWrite(bits: 2..<3)
-        public var timer_ovf2: TIMER_OVF2
+        public var timer2_ovf_int_ena: TIMER2_OVF_INT_ENA
 
-        /// The interrupt enable bit for the TIMER%s_OVF interrupt.
+        /// The interrupt enable bit for the LEDC_TIMER3_OVF_INT interrupt.
         @ReadWrite(bits: 3..<4)
-        public var timer_ovf3: TIMER_OVF3
+        public var timer3_ovf_int_ena: TIMER3_OVF_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH0_INT interrupt.
         @ReadWrite(bits: 4..<5)
-        public var duty_chng_end_ch0: DUTY_CHNG_END_CH0
+        public var duty_chng_end_ch0_int_ena: DUTY_CHNG_END_CH0_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH1_INT interrupt.
         @ReadWrite(bits: 5..<6)
-        public var duty_chng_end_ch1: DUTY_CHNG_END_CH1
+        public var duty_chng_end_ch1_int_ena: DUTY_CHNG_END_CH1_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH2_INT interrupt.
         @ReadWrite(bits: 6..<7)
-        public var duty_chng_end_ch2: DUTY_CHNG_END_CH2
+        public var duty_chng_end_ch2_int_ena: DUTY_CHNG_END_CH2_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH3_INT interrupt.
         @ReadWrite(bits: 7..<8)
-        public var duty_chng_end_ch3: DUTY_CHNG_END_CH3
+        public var duty_chng_end_ch3_int_ena: DUTY_CHNG_END_CH3_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH4_INT interrupt.
         @ReadWrite(bits: 8..<9)
-        public var duty_chng_end_ch4: DUTY_CHNG_END_CH4
+        public var duty_chng_end_ch4_int_ena: DUTY_CHNG_END_CH4_INT_ENA
 
-        /// The interrupt enable bit for the DUTY_CHNG_END_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_DUTY_CHNG_END_CH5_INT interrupt.
         @ReadWrite(bits: 9..<10)
-        public var duty_chng_end_ch5: DUTY_CHNG_END_CH5
+        public var duty_chng_end_ch5_int_ena: DUTY_CHNG_END_CH5_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH0_INT interrupt.
         @ReadWrite(bits: 12..<13)
-        public var ovf_cnt_ch0: OVF_CNT_CH0
+        public var ovf_cnt_ch0_int_ena: OVF_CNT_CH0_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH1_INT interrupt.
         @ReadWrite(bits: 13..<14)
-        public var ovf_cnt_ch1: OVF_CNT_CH1
+        public var ovf_cnt_ch1_int_ena: OVF_CNT_CH1_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH2_INT interrupt.
         @ReadWrite(bits: 14..<15)
-        public var ovf_cnt_ch2: OVF_CNT_CH2
+        public var ovf_cnt_ch2_int_ena: OVF_CNT_CH2_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH3_INT interrupt.
         @ReadWrite(bits: 15..<16)
-        public var ovf_cnt_ch3: OVF_CNT_CH3
+        public var ovf_cnt_ch3_int_ena: OVF_CNT_CH3_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH4_INT interrupt.
         @ReadWrite(bits: 16..<17)
-        public var ovf_cnt_ch4: OVF_CNT_CH4
+        public var ovf_cnt_ch4_int_ena: OVF_CNT_CH4_INT_ENA
 
-        /// The interrupt enable bit for the OVF_CNT_CH%s interrupt.
+        /// The interrupt enable bit for the LEDC_OVF_CNT_CH5_INT interrupt.
         @ReadWrite(bits: 17..<18)
-        public var ovf_cnt_ch5: OVF_CNT_CH5
+        public var ovf_cnt_ch5_int_ena: OVF_CNT_CH5_INT_ENA
     }
 
     /// Interrupt clear bits
     @Register(bitWidth: 32)
     public struct INT_CLR {
-        /// Set this bit to clear the TIMER%s_OVF interrupt.
+        /// Set this bit to clear the LEDC_TIMER0_OVF_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var timer_ovf0: TIMER_OVF0
+        public var timer0_ovf_int_clr: TIMER0_OVF_INT_CLR
 
-        /// Set this bit to clear the TIMER%s_OVF interrupt.
+        /// Set this bit to clear the LEDC_TIMER1_OVF_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var timer_ovf1: TIMER_OVF1
+        public var timer1_ovf_int_clr: TIMER1_OVF_INT_CLR
 
-        /// Set this bit to clear the TIMER%s_OVF interrupt.
+        /// Set this bit to clear the LEDC_TIMER2_OVF_INT interrupt.
         @WriteOnly(bits: 2..<3)
-        public var timer_ovf2: TIMER_OVF2
+        public var timer2_ovf_int_clr: TIMER2_OVF_INT_CLR
 
-        /// Set this bit to clear the TIMER%s_OVF interrupt.
+        /// Set this bit to clear the LEDC_TIMER3_OVF_INT interrupt.
         @WriteOnly(bits: 3..<4)
-        public var timer_ovf3: TIMER_OVF3
+        public var timer3_ovf_int_clr: TIMER3_OVF_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH0_INT interrupt.
         @WriteOnly(bits: 4..<5)
-        public var duty_chng_end_ch0: DUTY_CHNG_END_CH0
+        public var duty_chng_end_ch0_int_clr: DUTY_CHNG_END_CH0_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH1_INT interrupt.
         @WriteOnly(bits: 5..<6)
-        public var duty_chng_end_ch1: DUTY_CHNG_END_CH1
+        public var duty_chng_end_ch1_int_clr: DUTY_CHNG_END_CH1_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH2_INT interrupt.
         @WriteOnly(bits: 6..<7)
-        public var duty_chng_end_ch2: DUTY_CHNG_END_CH2
+        public var duty_chng_end_ch2_int_clr: DUTY_CHNG_END_CH2_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH3_INT interrupt.
         @WriteOnly(bits: 7..<8)
-        public var duty_chng_end_ch3: DUTY_CHNG_END_CH3
+        public var duty_chng_end_ch3_int_clr: DUTY_CHNG_END_CH3_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH4_INT interrupt.
         @WriteOnly(bits: 8..<9)
-        public var duty_chng_end_ch4: DUTY_CHNG_END_CH4
+        public var duty_chng_end_ch4_int_clr: DUTY_CHNG_END_CH4_INT_CLR
 
-        /// Set this bit to clear the DUTY_CHNG_END_CH%s interrupt.
+        /// Set this bit to clear the LEDC_DUTY_CHNG_END_CH5_INT interrupt.
         @WriteOnly(bits: 9..<10)
-        public var duty_chng_end_ch5: DUTY_CHNG_END_CH5
+        public var duty_chng_end_ch5_int_clr: DUTY_CHNG_END_CH5_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH0_INT interrupt.
         @WriteOnly(bits: 12..<13)
-        public var ovf_cnt_ch0: OVF_CNT_CH0
+        public var ovf_cnt_ch0_int_clr: OVF_CNT_CH0_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH1_INT interrupt.
         @WriteOnly(bits: 13..<14)
-        public var ovf_cnt_ch1: OVF_CNT_CH1
+        public var ovf_cnt_ch1_int_clr: OVF_CNT_CH1_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH2_INT interrupt.
         @WriteOnly(bits: 14..<15)
-        public var ovf_cnt_ch2: OVF_CNT_CH2
+        public var ovf_cnt_ch2_int_clr: OVF_CNT_CH2_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH3_INT interrupt.
         @WriteOnly(bits: 15..<16)
-        public var ovf_cnt_ch3: OVF_CNT_CH3
+        public var ovf_cnt_ch3_int_clr: OVF_CNT_CH3_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH4_INT interrupt.
         @WriteOnly(bits: 16..<17)
-        public var ovf_cnt_ch4: OVF_CNT_CH4
+        public var ovf_cnt_ch4_int_clr: OVF_CNT_CH4_INT_CLR
 
-        /// Set this bit to clear the OVF_CNT_CH%s interrupt.
+        /// Set this bit to clear the LEDC_OVF_CNT_CH5_INT interrupt.
         @WriteOnly(bits: 17..<18)
-        public var ovf_cnt_ch5: OVF_CNT_CH5
+        public var ovf_cnt_ch5_int_clr: OVF_CNT_CH5_INT_CLR
     }
 
     /// Ledc ch%s gamma ram write register.
@@ -769,145 +889,5 @@ extension LEDC {
         /// This is the version control register.
         @ReadWrite(bits: 0..<28)
         public var ledc_date: LEDC_DATE
-    }
-
-    /// Cluster CH%s, containing CH?_CONF0, CH?_HPOINT, CH?_DUTY, CH?_CONF1, CH?_DUTY_R
-    @RegisterBlock
-    public struct CH {
-        /// Configuration register 0 for channel 0
-        @RegisterBlock(offset: 0x0)
-        public var conf0: Register<CONF0>
-
-        /// High point register for channel 0
-        @RegisterBlock(offset: 0x4)
-        public var hpoint: Register<HPOINT>
-
-        /// Initial duty cycle for channel 0
-        @RegisterBlock(offset: 0x8)
-        public var duty: Register<DUTY>
-
-        /// Configuration register 1 for channel 0
-        @RegisterBlock(offset: 0xc)
-        public var conf1: Register<CONF1>
-
-        /// Current duty cycle for channel 0
-        @RegisterBlock(offset: 0x10)
-        public var duty_r: Register<DUTY_R>
-    }
-
-    /// Cluster TIMER%s, containing TIMER?_CONF, TIMER?_VALUE
-    @RegisterBlock
-    public struct TIMER {
-        /// Timer 0 configuration
-        @RegisterBlock(offset: 0x0)
-        public var conf: Register<CONF>
-
-        /// Timer 0 current counter value
-        @RegisterBlock(offset: 0x4)
-        public var value: Register<VALUE>
-    }
-}
-
-extension LEDC.CH {
-    /// Configuration register 0 for channel 0
-    @Register(bitWidth: 32)
-    public struct CONF0 {
-        /// 0: select timer0, 1: select timer1, 2: select timer2, 3: select timer3
-        @ReadWrite(bits: 0..<2)
-        public var timer_sel: TIMER_SEL
-
-        /// Set this bit to enable signal output on channel %s.
-        @ReadWrite(bits: 2..<3)
-        public var sig_out_en: SIG_OUT_EN
-
-        /// This bit is used to control the output value when channel %s is inactive (when LEDC_SIG_OUT_EN_CH%s is 0).
-        @ReadWrite(bits: 3..<4)
-        public var idle_lv: IDLE_LV
-
-        /// This bit is used to update LEDC_HPOINT_CH%s, LEDC_DUTY_START_CH%s, LEDC_SIG_OUT_EN_CH%s, LEDC_TIMER_SEL_CH%s, LEDC_DUTY_NUM_CH%s, LEDC_DUTY_CYCLE_CH%s, LEDC_DUTY_SCALE_CH%s, LEDC_DUTY_INC_CH%s, and LEDC_OVF_CNT_EN_CH%s fields for channel %s, and will be automatically cleared by hardware.
-        @WriteOnly(bits: 4..<5)
-        public var para_up: PARA_UP
-
-        /// The LEDC_OVF_CNT_CH%s_INT interrupt will be triggered when channel %s overflows for (LEDC_OVF_NUM_CH%s + 1) times.
-        @ReadWrite(bits: 5..<15)
-        public var ovf_num: OVF_NUM
-
-        /// This bit is used to enable the ovf_cnt of channel %s.
-        @ReadWrite(bits: 15..<16)
-        public var ovf_cnt_en: OVF_CNT_EN
-
-        /// Set this bit to reset the ovf_cnt of channel %s.
-        @WriteOnly(bits: 16..<17)
-        public var ovf_cnt_reset: OVF_CNT_RESET
-    }
-
-    /// High point register for channel 0
-    @Register(bitWidth: 32)
-    public struct HPOINT {
-        /// The output value changes to high when the selected timers has reached the value specified by this register.
-        @ReadWrite(bits: 0..<20)
-        public var hpoint_field: HPOINT_FIELD
-    }
-
-    /// Initial duty cycle for channel 0
-    @Register(bitWidth: 32)
-    public struct DUTY {
-        /// The output value turns to low when the selected timers has reached the Lpoint.
-        @ReadWrite(bits: 0..<25)
-        public var duty_field: DUTY_FIELD
-    }
-
-    /// Configuration register 1 for channel 0
-    @Register(bitWidth: 32)
-    public struct CONF1 {
-        /// Other configured fields in LEDC_CH%s_CONF1_REG will start to take effect when this bit is set to 1.
-        @ReadWrite(bits: 31..<32)
-        public var duty_start: DUTY_START
-    }
-
-    /// Current duty cycle for channel 0
-    @Register(bitWidth: 32)
-    public struct DUTY_R {
-        /// This register stores the current duty of output signal on channel %s.
-        @ReadOnly(bits: 0..<25)
-        public var duty_r_field: DUTY_R_FIELD
-    }
-}
-
-extension LEDC.TIMER {
-    /// Timer 0 configuration
-    @Register(bitWidth: 32)
-    public struct CONF {
-        /// This register is used to control the range of the counter in timer %s.
-        @ReadWrite(bits: 0..<5)
-        public var duty_res: DUTY_RES
-
-        /// The least significant eight bits represent the fractional part.
-        @ReadWrite(bits: 5..<23)
-        public var clk_div: CLK_DIV
-
-        /// This bit is used to suspend the counter in timer %s.
-        @ReadWrite(bits: 23..<24)
-        public var pause: PAUSE
-
-        /// This bit is used to reset timer %s. The counter will show 0 after reset.
-        @ReadWrite(bits: 24..<25)
-        public var rst: RST
-
-        /// 1'h0: SLOW_CLK 1'h1: REF_TICK
-        @ReadWrite(bits: 25..<26)
-        public var tick_sel: TICK_SEL
-
-        /// Set this bit to update LEDC_CLK_DIV_TIMER%s and LEDC_TIMER%s_DUTY_RES.
-        @WriteOnly(bits: 26..<27)
-        public var para_up: PARA_UP
-    }
-
-    /// Timer 0 current counter value
-    @Register(bitWidth: 32)
-    public struct VALUE {
-        /// This register stores the current counter value of timer %s.
-        @ReadOnly(bits: 0..<20)
-        public var cnt: CNT
     }
 }

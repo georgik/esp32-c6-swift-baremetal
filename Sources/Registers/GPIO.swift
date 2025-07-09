@@ -134,11 +134,519 @@ public struct GPIO {
     public var status_next1: Register<STATUS_NEXT1>
 
     /// GPIO input function configuration register
-    @RegisterBlock(offset: 0x154, stride: 0x4, count: 128)
-    public var func_in_sel_cfg: RegisterArray<FUNC_IN_SEL_CFG>
+    @RegisterBlock(offset: 0x154)
+    public var func0_in_sel_cfg: Register<FUNC0_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x158)
+    public var func1_in_sel_cfg: Register<FUNC1_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x15c)
+    public var func2_in_sel_cfg: Register<FUNC2_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x160)
+    public var func3_in_sel_cfg: Register<FUNC3_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x164)
+    public var func4_in_sel_cfg: Register<FUNC4_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x168)
+    public var func5_in_sel_cfg: Register<FUNC5_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x16c)
+    public var func6_in_sel_cfg: Register<FUNC6_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x170)
+    public var func7_in_sel_cfg: Register<FUNC7_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x174)
+    public var func8_in_sel_cfg: Register<FUNC8_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x178)
+    public var func9_in_sel_cfg: Register<FUNC9_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x17c)
+    public var func10_in_sel_cfg: Register<FUNC10_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x180)
+    public var func11_in_sel_cfg: Register<FUNC11_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x184)
+    public var func12_in_sel_cfg: Register<FUNC12_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x188)
+    public var func13_in_sel_cfg: Register<FUNC13_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x18c)
+    public var func14_in_sel_cfg: Register<FUNC14_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x190)
+    public var func15_in_sel_cfg: Register<FUNC15_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x194)
+    public var func16_in_sel_cfg: Register<FUNC16_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x198)
+    public var func17_in_sel_cfg: Register<FUNC17_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x19c)
+    public var func18_in_sel_cfg: Register<FUNC18_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1a0)
+    public var func19_in_sel_cfg: Register<FUNC19_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1a4)
+    public var func20_in_sel_cfg: Register<FUNC20_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1a8)
+    public var func21_in_sel_cfg: Register<FUNC21_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1ac)
+    public var func22_in_sel_cfg: Register<FUNC22_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1b0)
+    public var func23_in_sel_cfg: Register<FUNC23_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1b4)
+    public var func24_in_sel_cfg: Register<FUNC24_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1b8)
+    public var func25_in_sel_cfg: Register<FUNC25_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1bc)
+    public var func26_in_sel_cfg: Register<FUNC26_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1c0)
+    public var func27_in_sel_cfg: Register<FUNC27_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1c4)
+    public var func28_in_sel_cfg: Register<FUNC28_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1c8)
+    public var func29_in_sel_cfg: Register<FUNC29_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1cc)
+    public var func30_in_sel_cfg: Register<FUNC30_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1d0)
+    public var func31_in_sel_cfg: Register<FUNC31_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1d4)
+    public var func32_in_sel_cfg: Register<FUNC32_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1d8)
+    public var func33_in_sel_cfg: Register<FUNC33_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1dc)
+    public var func34_in_sel_cfg: Register<FUNC34_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1e0)
+    public var func35_in_sel_cfg: Register<FUNC35_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1e4)
+    public var func36_in_sel_cfg: Register<FUNC36_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1e8)
+    public var func37_in_sel_cfg: Register<FUNC37_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1ec)
+    public var func38_in_sel_cfg: Register<FUNC38_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1f0)
+    public var func39_in_sel_cfg: Register<FUNC39_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1f4)
+    public var func40_in_sel_cfg: Register<FUNC40_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1f8)
+    public var func41_in_sel_cfg: Register<FUNC41_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x1fc)
+    public var func42_in_sel_cfg: Register<FUNC42_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x200)
+    public var func43_in_sel_cfg: Register<FUNC43_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x204)
+    public var func44_in_sel_cfg: Register<FUNC44_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x208)
+    public var func45_in_sel_cfg: Register<FUNC45_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x20c)
+    public var func46_in_sel_cfg: Register<FUNC46_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x210)
+    public var func47_in_sel_cfg: Register<FUNC47_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x214)
+    public var func48_in_sel_cfg: Register<FUNC48_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x218)
+    public var func49_in_sel_cfg: Register<FUNC49_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x21c)
+    public var func50_in_sel_cfg: Register<FUNC50_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x220)
+    public var func51_in_sel_cfg: Register<FUNC51_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x224)
+    public var func52_in_sel_cfg: Register<FUNC52_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x228)
+    public var func53_in_sel_cfg: Register<FUNC53_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x22c)
+    public var func54_in_sel_cfg: Register<FUNC54_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x230)
+    public var func55_in_sel_cfg: Register<FUNC55_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x234)
+    public var func56_in_sel_cfg: Register<FUNC56_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x238)
+    public var func57_in_sel_cfg: Register<FUNC57_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x23c)
+    public var func58_in_sel_cfg: Register<FUNC58_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x240)
+    public var func59_in_sel_cfg: Register<FUNC59_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x244)
+    public var func60_in_sel_cfg: Register<FUNC60_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x248)
+    public var func61_in_sel_cfg: Register<FUNC61_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x24c)
+    public var func62_in_sel_cfg: Register<FUNC62_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x250)
+    public var func63_in_sel_cfg: Register<FUNC63_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x254)
+    public var func64_in_sel_cfg: Register<FUNC64_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x258)
+    public var func65_in_sel_cfg: Register<FUNC65_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x25c)
+    public var func66_in_sel_cfg: Register<FUNC66_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x260)
+    public var func67_in_sel_cfg: Register<FUNC67_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x264)
+    public var func68_in_sel_cfg: Register<FUNC68_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x268)
+    public var func69_in_sel_cfg: Register<FUNC69_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x26c)
+    public var func70_in_sel_cfg: Register<FUNC70_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x270)
+    public var func71_in_sel_cfg: Register<FUNC71_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x274)
+    public var func72_in_sel_cfg: Register<FUNC72_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x278)
+    public var func73_in_sel_cfg: Register<FUNC73_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x27c)
+    public var func74_in_sel_cfg: Register<FUNC74_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x280)
+    public var func75_in_sel_cfg: Register<FUNC75_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x284)
+    public var func76_in_sel_cfg: Register<FUNC76_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x288)
+    public var func77_in_sel_cfg: Register<FUNC77_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x28c)
+    public var func78_in_sel_cfg: Register<FUNC78_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x290)
+    public var func79_in_sel_cfg: Register<FUNC79_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x294)
+    public var func80_in_sel_cfg: Register<FUNC80_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x298)
+    public var func81_in_sel_cfg: Register<FUNC81_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x29c)
+    public var func82_in_sel_cfg: Register<FUNC82_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2a0)
+    public var func83_in_sel_cfg: Register<FUNC83_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2a4)
+    public var func84_in_sel_cfg: Register<FUNC84_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2a8)
+    public var func85_in_sel_cfg: Register<FUNC85_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2ac)
+    public var func86_in_sel_cfg: Register<FUNC86_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2b0)
+    public var func87_in_sel_cfg: Register<FUNC87_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2b4)
+    public var func88_in_sel_cfg: Register<FUNC88_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2b8)
+    public var func89_in_sel_cfg: Register<FUNC89_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2bc)
+    public var func90_in_sel_cfg: Register<FUNC90_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2c0)
+    public var func91_in_sel_cfg: Register<FUNC91_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2c4)
+    public var func92_in_sel_cfg: Register<FUNC92_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2c8)
+    public var func93_in_sel_cfg: Register<FUNC93_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2cc)
+    public var func94_in_sel_cfg: Register<FUNC94_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2d0)
+    public var func95_in_sel_cfg: Register<FUNC95_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2d4)
+    public var func96_in_sel_cfg: Register<FUNC96_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2d8)
+    public var func97_in_sel_cfg: Register<FUNC97_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2dc)
+    public var func98_in_sel_cfg: Register<FUNC98_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2e0)
+    public var func99_in_sel_cfg: Register<FUNC99_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2e4)
+    public var func100_in_sel_cfg: Register<FUNC100_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2e8)
+    public var func101_in_sel_cfg: Register<FUNC101_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2ec)
+    public var func102_in_sel_cfg: Register<FUNC102_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2f0)
+    public var func103_in_sel_cfg: Register<FUNC103_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2f4)
+    public var func104_in_sel_cfg: Register<FUNC104_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2f8)
+    public var func105_in_sel_cfg: Register<FUNC105_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x2fc)
+    public var func106_in_sel_cfg: Register<FUNC106_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x300)
+    public var func107_in_sel_cfg: Register<FUNC107_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x304)
+    public var func108_in_sel_cfg: Register<FUNC108_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x308)
+    public var func109_in_sel_cfg: Register<FUNC109_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x30c)
+    public var func110_in_sel_cfg: Register<FUNC110_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x310)
+    public var func111_in_sel_cfg: Register<FUNC111_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x314)
+    public var func112_in_sel_cfg: Register<FUNC112_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x318)
+    public var func113_in_sel_cfg: Register<FUNC113_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x31c)
+    public var func114_in_sel_cfg: Register<FUNC114_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x320)
+    public var func115_in_sel_cfg: Register<FUNC115_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x324)
+    public var func116_in_sel_cfg: Register<FUNC116_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x328)
+    public var func117_in_sel_cfg: Register<FUNC117_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x32c)
+    public var func118_in_sel_cfg: Register<FUNC118_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x330)
+    public var func119_in_sel_cfg: Register<FUNC119_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x334)
+    public var func120_in_sel_cfg: Register<FUNC120_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x338)
+    public var func121_in_sel_cfg: Register<FUNC121_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x33c)
+    public var func122_in_sel_cfg: Register<FUNC122_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x340)
+    public var func123_in_sel_cfg: Register<FUNC123_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x344)
+    public var func124_in_sel_cfg: Register<FUNC124_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x348)
+    public var func125_in_sel_cfg: Register<FUNC125_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x34c)
+    public var func126_in_sel_cfg: Register<FUNC126_IN_SEL_CFG>
+
+    /// GPIO input function configuration register
+    @RegisterBlock(offset: 0x350)
+    public var func127_in_sel_cfg: Register<FUNC127_IN_SEL_CFG>
 
     /// GPIO output function select register
-    @RegisterBlock(offset: 0x554, stride: 0x4, count: 31)
+    @RegisterBlock(offset: 0x554, stride: 0x4, count: 35)
     public var func_out_sel_cfg: RegisterArray<FUNC_OUT_SEL_CFG>
 
     /// GPIO clock gate register
@@ -433,18 +941,2050 @@ extension GPIO {
 
     /// GPIO input function configuration register
     @Register(bitWidth: 32)
-    public struct FUNC_IN_SEL_CFG {
+    public struct FUNC0_IN_SEL_CFG {
         /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
         @ReadWrite(bits: 0..<6)
-        public var in_sel: IN_SEL
+        public var func0_in_sel: FUNC0_IN_SEL
 
         /// set this bit to invert input signal. 1:invert. 0:not invert.
         @ReadWrite(bits: 6..<7)
-        public var in_inv_sel: IN_INV_SEL
+        public var func0_in_inv_sel: FUNC0_IN_INV_SEL
 
         /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
         @ReadWrite(bits: 7..<8)
-        public var sel: SEL
+        public var sig0_in_sel: SIG0_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC1_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func1_in_sel: FUNC1_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func1_in_inv_sel: FUNC1_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig1_in_sel: SIG1_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC2_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func2_in_sel: FUNC2_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func2_in_inv_sel: FUNC2_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig2_in_sel: SIG2_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC3_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func3_in_sel: FUNC3_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func3_in_inv_sel: FUNC3_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig3_in_sel: SIG3_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC4_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func4_in_sel: FUNC4_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func4_in_inv_sel: FUNC4_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig4_in_sel: SIG4_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC5_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func5_in_sel: FUNC5_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func5_in_inv_sel: FUNC5_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig5_in_sel: SIG5_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC6_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func6_in_sel: FUNC6_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func6_in_inv_sel: FUNC6_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig6_in_sel: SIG6_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC7_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func7_in_sel: FUNC7_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func7_in_inv_sel: FUNC7_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig7_in_sel: SIG7_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC8_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func8_in_sel: FUNC8_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func8_in_inv_sel: FUNC8_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig8_in_sel: SIG8_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC9_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func9_in_sel: FUNC9_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func9_in_inv_sel: FUNC9_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig9_in_sel: SIG9_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC10_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func10_in_sel: FUNC10_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func10_in_inv_sel: FUNC10_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig10_in_sel: SIG10_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC11_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func11_in_sel: FUNC11_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func11_in_inv_sel: FUNC11_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig11_in_sel: SIG11_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC12_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func12_in_sel: FUNC12_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func12_in_inv_sel: FUNC12_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig12_in_sel: SIG12_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC13_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func13_in_sel: FUNC13_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func13_in_inv_sel: FUNC13_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig13_in_sel: SIG13_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC14_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func14_in_sel: FUNC14_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func14_in_inv_sel: FUNC14_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig14_in_sel: SIG14_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC15_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func15_in_sel: FUNC15_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func15_in_inv_sel: FUNC15_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig15_in_sel: SIG15_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC16_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func16_in_sel: FUNC16_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func16_in_inv_sel: FUNC16_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig16_in_sel: SIG16_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC17_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func17_in_sel: FUNC17_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func17_in_inv_sel: FUNC17_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig17_in_sel: SIG17_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC18_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func18_in_sel: FUNC18_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func18_in_inv_sel: FUNC18_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig18_in_sel: SIG18_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC19_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func19_in_sel: FUNC19_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func19_in_inv_sel: FUNC19_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig19_in_sel: SIG19_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC20_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func20_in_sel: FUNC20_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func20_in_inv_sel: FUNC20_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig20_in_sel: SIG20_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC21_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func21_in_sel: FUNC21_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func21_in_inv_sel: FUNC21_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig21_in_sel: SIG21_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC22_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func22_in_sel: FUNC22_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func22_in_inv_sel: FUNC22_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig22_in_sel: SIG22_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC23_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func23_in_sel: FUNC23_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func23_in_inv_sel: FUNC23_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig23_in_sel: SIG23_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC24_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func24_in_sel: FUNC24_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func24_in_inv_sel: FUNC24_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig24_in_sel: SIG24_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC25_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func25_in_sel: FUNC25_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func25_in_inv_sel: FUNC25_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig25_in_sel: SIG25_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC26_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func26_in_sel: FUNC26_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func26_in_inv_sel: FUNC26_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig26_in_sel: SIG26_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC27_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func27_in_sel: FUNC27_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func27_in_inv_sel: FUNC27_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig27_in_sel: SIG27_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC28_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func28_in_sel: FUNC28_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func28_in_inv_sel: FUNC28_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig28_in_sel: SIG28_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC29_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func29_in_sel: FUNC29_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func29_in_inv_sel: FUNC29_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig29_in_sel: SIG29_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC30_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func30_in_sel: FUNC30_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func30_in_inv_sel: FUNC30_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig30_in_sel: SIG30_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC31_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func31_in_sel: FUNC31_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func31_in_inv_sel: FUNC31_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig31_in_sel: SIG31_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC32_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func32_in_sel: FUNC32_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func32_in_inv_sel: FUNC32_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig32_in_sel: SIG32_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC33_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func33_in_sel: FUNC33_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func33_in_inv_sel: FUNC33_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig33_in_sel: SIG33_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC34_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func34_in_sel: FUNC34_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func34_in_inv_sel: FUNC34_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig34_in_sel: SIG34_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC35_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func35_in_sel: FUNC35_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func35_in_inv_sel: FUNC35_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig35_in_sel: SIG35_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC36_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func36_in_sel: FUNC36_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func36_in_inv_sel: FUNC36_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig36_in_sel: SIG36_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC37_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func37_in_sel: FUNC37_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func37_in_inv_sel: FUNC37_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig37_in_sel: SIG37_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC38_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func38_in_sel: FUNC38_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func38_in_inv_sel: FUNC38_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig38_in_sel: SIG38_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC39_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func39_in_sel: FUNC39_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func39_in_inv_sel: FUNC39_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig39_in_sel: SIG39_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC40_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func40_in_sel: FUNC40_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func40_in_inv_sel: FUNC40_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig40_in_sel: SIG40_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC41_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func41_in_sel: FUNC41_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func41_in_inv_sel: FUNC41_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig41_in_sel: SIG41_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC42_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func42_in_sel: FUNC42_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func42_in_inv_sel: FUNC42_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig42_in_sel: SIG42_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC43_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func43_in_sel: FUNC43_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func43_in_inv_sel: FUNC43_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig43_in_sel: SIG43_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC44_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func44_in_sel: FUNC44_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func44_in_inv_sel: FUNC44_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig44_in_sel: SIG44_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC45_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func45_in_sel: FUNC45_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func45_in_inv_sel: FUNC45_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig45_in_sel: SIG45_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC46_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func46_in_sel: FUNC46_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func46_in_inv_sel: FUNC46_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig46_in_sel: SIG46_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC47_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func47_in_sel: FUNC47_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func47_in_inv_sel: FUNC47_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig47_in_sel: SIG47_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC48_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func48_in_sel: FUNC48_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func48_in_inv_sel: FUNC48_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig48_in_sel: SIG48_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC49_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func49_in_sel: FUNC49_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func49_in_inv_sel: FUNC49_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig49_in_sel: SIG49_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC50_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func50_in_sel: FUNC50_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func50_in_inv_sel: FUNC50_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig50_in_sel: SIG50_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC51_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func51_in_sel: FUNC51_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func51_in_inv_sel: FUNC51_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig51_in_sel: SIG51_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC52_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func52_in_sel: FUNC52_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func52_in_inv_sel: FUNC52_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig52_in_sel: SIG52_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC53_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func53_in_sel: FUNC53_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func53_in_inv_sel: FUNC53_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig53_in_sel: SIG53_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC54_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func54_in_sel: FUNC54_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func54_in_inv_sel: FUNC54_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig54_in_sel: SIG54_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC55_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func55_in_sel: FUNC55_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func55_in_inv_sel: FUNC55_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig55_in_sel: SIG55_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC56_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func56_in_sel: FUNC56_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func56_in_inv_sel: FUNC56_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig56_in_sel: SIG56_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC57_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func57_in_sel: FUNC57_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func57_in_inv_sel: FUNC57_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig57_in_sel: SIG57_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC58_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func58_in_sel: FUNC58_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func58_in_inv_sel: FUNC58_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig58_in_sel: SIG58_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC59_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func59_in_sel: FUNC59_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func59_in_inv_sel: FUNC59_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig59_in_sel: SIG59_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC60_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func60_in_sel: FUNC60_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func60_in_inv_sel: FUNC60_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig60_in_sel: SIG60_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC61_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func61_in_sel: FUNC61_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func61_in_inv_sel: FUNC61_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig61_in_sel: SIG61_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC62_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func62_in_sel: FUNC62_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func62_in_inv_sel: FUNC62_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig62_in_sel: SIG62_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC63_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func63_in_sel: FUNC63_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func63_in_inv_sel: FUNC63_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig63_in_sel: SIG63_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC64_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func64_in_sel: FUNC64_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func64_in_inv_sel: FUNC64_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig64_in_sel: SIG64_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC65_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func65_in_sel: FUNC65_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func65_in_inv_sel: FUNC65_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig65_in_sel: SIG65_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC66_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func66_in_sel: FUNC66_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func66_in_inv_sel: FUNC66_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig66_in_sel: SIG66_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC67_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func67_in_sel: FUNC67_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func67_in_inv_sel: FUNC67_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig67_in_sel: SIG67_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC68_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func68_in_sel: FUNC68_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func68_in_inv_sel: FUNC68_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig68_in_sel: SIG68_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC69_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func69_in_sel: FUNC69_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func69_in_inv_sel: FUNC69_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig69_in_sel: SIG69_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC70_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func70_in_sel: FUNC70_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func70_in_inv_sel: FUNC70_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig70_in_sel: SIG70_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC71_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func71_in_sel: FUNC71_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func71_in_inv_sel: FUNC71_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig71_in_sel: SIG71_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC72_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func72_in_sel: FUNC72_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func72_in_inv_sel: FUNC72_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig72_in_sel: SIG72_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC73_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func73_in_sel: FUNC73_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func73_in_inv_sel: FUNC73_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig73_in_sel: SIG73_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC74_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func74_in_sel: FUNC74_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func74_in_inv_sel: FUNC74_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig74_in_sel: SIG74_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC75_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func75_in_sel: FUNC75_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func75_in_inv_sel: FUNC75_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig75_in_sel: SIG75_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC76_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func76_in_sel: FUNC76_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func76_in_inv_sel: FUNC76_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig76_in_sel: SIG76_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC77_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func77_in_sel: FUNC77_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func77_in_inv_sel: FUNC77_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig77_in_sel: SIG77_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC78_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func78_in_sel: FUNC78_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func78_in_inv_sel: FUNC78_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig78_in_sel: SIG78_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC79_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func79_in_sel: FUNC79_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func79_in_inv_sel: FUNC79_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig79_in_sel: SIG79_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC80_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func80_in_sel: FUNC80_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func80_in_inv_sel: FUNC80_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig80_in_sel: SIG80_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC81_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func81_in_sel: FUNC81_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func81_in_inv_sel: FUNC81_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig81_in_sel: SIG81_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC82_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func82_in_sel: FUNC82_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func82_in_inv_sel: FUNC82_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig82_in_sel: SIG82_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC83_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func83_in_sel: FUNC83_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func83_in_inv_sel: FUNC83_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig83_in_sel: SIG83_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC84_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func84_in_sel: FUNC84_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func84_in_inv_sel: FUNC84_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig84_in_sel: SIG84_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC85_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func85_in_sel: FUNC85_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func85_in_inv_sel: FUNC85_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig85_in_sel: SIG85_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC86_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func86_in_sel: FUNC86_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func86_in_inv_sel: FUNC86_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig86_in_sel: SIG86_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC87_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func87_in_sel: FUNC87_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func87_in_inv_sel: FUNC87_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig87_in_sel: SIG87_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC88_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func88_in_sel: FUNC88_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func88_in_inv_sel: FUNC88_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig88_in_sel: SIG88_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC89_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func89_in_sel: FUNC89_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func89_in_inv_sel: FUNC89_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig89_in_sel: SIG89_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC90_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func90_in_sel: FUNC90_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func90_in_inv_sel: FUNC90_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig90_in_sel: SIG90_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC91_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func91_in_sel: FUNC91_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func91_in_inv_sel: FUNC91_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig91_in_sel: SIG91_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC92_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func92_in_sel: FUNC92_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func92_in_inv_sel: FUNC92_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig92_in_sel: SIG92_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC93_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func93_in_sel: FUNC93_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func93_in_inv_sel: FUNC93_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig93_in_sel: SIG93_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC94_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func94_in_sel: FUNC94_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func94_in_inv_sel: FUNC94_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig94_in_sel: SIG94_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC95_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func95_in_sel: FUNC95_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func95_in_inv_sel: FUNC95_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig95_in_sel: SIG95_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC96_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func96_in_sel: FUNC96_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func96_in_inv_sel: FUNC96_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig96_in_sel: SIG96_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC97_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func97_in_sel: FUNC97_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func97_in_inv_sel: FUNC97_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig97_in_sel: SIG97_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC98_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func98_in_sel: FUNC98_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func98_in_inv_sel: FUNC98_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig98_in_sel: SIG98_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC99_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func99_in_sel: FUNC99_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func99_in_inv_sel: FUNC99_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig99_in_sel: SIG99_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC100_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func100_in_sel: FUNC100_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func100_in_inv_sel: FUNC100_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig100_in_sel: SIG100_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC101_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func101_in_sel: FUNC101_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func101_in_inv_sel: FUNC101_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig101_in_sel: SIG101_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC102_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func102_in_sel: FUNC102_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func102_in_inv_sel: FUNC102_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig102_in_sel: SIG102_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC103_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func103_in_sel: FUNC103_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func103_in_inv_sel: FUNC103_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig103_in_sel: SIG103_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC104_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func104_in_sel: FUNC104_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func104_in_inv_sel: FUNC104_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig104_in_sel: SIG104_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC105_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func105_in_sel: FUNC105_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func105_in_inv_sel: FUNC105_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig105_in_sel: SIG105_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC106_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func106_in_sel: FUNC106_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func106_in_inv_sel: FUNC106_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig106_in_sel: SIG106_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC107_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func107_in_sel: FUNC107_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func107_in_inv_sel: FUNC107_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig107_in_sel: SIG107_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC108_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func108_in_sel: FUNC108_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func108_in_inv_sel: FUNC108_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig108_in_sel: SIG108_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC109_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func109_in_sel: FUNC109_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func109_in_inv_sel: FUNC109_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig109_in_sel: SIG109_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC110_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func110_in_sel: FUNC110_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func110_in_inv_sel: FUNC110_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig110_in_sel: SIG110_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC111_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func111_in_sel: FUNC111_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func111_in_inv_sel: FUNC111_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig111_in_sel: SIG111_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC112_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func112_in_sel: FUNC112_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func112_in_inv_sel: FUNC112_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig112_in_sel: SIG112_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC113_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func113_in_sel: FUNC113_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func113_in_inv_sel: FUNC113_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig113_in_sel: SIG113_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC114_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func114_in_sel: FUNC114_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func114_in_inv_sel: FUNC114_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig114_in_sel: SIG114_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC115_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func115_in_sel: FUNC115_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func115_in_inv_sel: FUNC115_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig115_in_sel: SIG115_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC116_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func116_in_sel: FUNC116_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func116_in_inv_sel: FUNC116_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig116_in_sel: SIG116_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC117_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func117_in_sel: FUNC117_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func117_in_inv_sel: FUNC117_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig117_in_sel: SIG117_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC118_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func118_in_sel: FUNC118_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func118_in_inv_sel: FUNC118_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig118_in_sel: SIG118_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC119_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func119_in_sel: FUNC119_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func119_in_inv_sel: FUNC119_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig119_in_sel: SIG119_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC120_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func120_in_sel: FUNC120_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func120_in_inv_sel: FUNC120_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig120_in_sel: SIG120_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC121_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func121_in_sel: FUNC121_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func121_in_inv_sel: FUNC121_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig121_in_sel: SIG121_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC122_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func122_in_sel: FUNC122_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func122_in_inv_sel: FUNC122_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig122_in_sel: SIG122_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC123_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func123_in_sel: FUNC123_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func123_in_inv_sel: FUNC123_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig123_in_sel: SIG123_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC124_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func124_in_sel: FUNC124_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func124_in_inv_sel: FUNC124_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig124_in_sel: SIG124_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC125_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func125_in_sel: FUNC125_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func125_in_inv_sel: FUNC125_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig125_in_sel: SIG125_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC126_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func126_in_sel: FUNC126_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func126_in_inv_sel: FUNC126_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig126_in_sel: SIG126_IN_SEL
+    }
+
+    /// GPIO input function configuration register
+    @Register(bitWidth: 32)
+    public struct FUNC127_IN_SEL_CFG {
+        /// set this value: s=0-34: connect GPIO[s] to this port. s=0x38: set this port always high level. s=0x3C: set this port always low level.
+        @ReadWrite(bits: 0..<6)
+        public var func127_in_sel: FUNC127_IN_SEL
+
+        /// set this bit to invert input signal. 1:invert. 0:not invert.
+        @ReadWrite(bits: 6..<7)
+        public var func127_in_inv_sel: FUNC127_IN_INV_SEL
+
+        /// set this bit to bypass GPIO. 1:do not bypass GPIO. 0:bypass GPIO.
+        @ReadWrite(bits: 7..<8)
+        public var sig127_in_sel: SIG127_IN_SEL
     }
 
     /// GPIO output function select register
@@ -452,19 +2992,19 @@ extension GPIO {
     public struct FUNC_OUT_SEL_CFG {
         /// =256. Set the value to select output signal. s=0-127: output of GPIO[n] equals input of peripheral[s]. s=128: output of GPIO[n] equals GPIO_OUT_REG[n].
         @ReadWrite(bits: 0..<8)
-        public var out_sel: OUT_SEL
+        public var func_out_sel: FUNC_OUT_SEL
 
         /// set this bit to invert output signal.1:invert.0:not invert.
         @ReadWrite(bits: 8..<9)
-        public var inv_sel: INV_SEL
+        public var func_out_inv_sel: FUNC_OUT_INV_SEL
 
         /// set this bit to select output enable signal.1:use GPIO_ENABLE_REG[n] as output enable signal.0:use peripheral output enable signal.
         @ReadWrite(bits: 9..<10)
-        public var oen_sel: OEN_SEL
+        public var func_oen_sel: FUNC_OEN_SEL
 
         /// set this bit to invert output enable signal.1:invert.0:not invert.
         @ReadWrite(bits: 10..<11)
-        public var oen_inv_sel: OEN_INV_SEL
+        public var func_oen_inv_sel: FUNC_OEN_INV_SEL
     }
 
     /// GPIO clock gate register

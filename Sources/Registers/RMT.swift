@@ -7,27 +7,27 @@ import MMIO
 public struct RMT {
     /// The read and write data register for CHANNEL%s by apb fifo access.
     @RegisterBlock(offset: 0x0, stride: 0x4, count: 4)
-    public var chdata: RegisterArray<CHDATA>
+    public var tx_chdata: RegisterArray<TX_CHDATA>
 
     /// Channel %s configure register 0
     @RegisterBlock(offset: 0x10, stride: 0x4, count: 2)
-    public var ch_tx_conf0: RegisterArray<CH_TX_CONF0>
+    public var tx_chconf0: RegisterArray<TX_CHCONF0>
 
     /// Channel %s configure register 0
     @RegisterBlock(offset: 0x18, stride: 0x8, count: 2)
-    public var ch_rx_conf0: RegisterArray<CH_RX_CONF0>
+    public var rx_chconf0: RegisterArray<RX_CHCONF0>
 
     /// Channel %s configure register 1
     @RegisterBlock(offset: 0x1c, stride: 0x8, count: 2)
-    public var ch_rx_conf1: RegisterArray<CH_RX_CONF1>
+    public var rx_chconf1: RegisterArray<RX_CHCONF1>
 
     /// Channel %s status register
     @RegisterBlock(offset: 0x28, stride: 0x4, count: 2)
-    public var ch_tx_status: RegisterArray<CH_TX_STATUS>
+    public var tx_chstatus: RegisterArray<TX_CHSTATUS>
 
     /// Channel %s status register
     @RegisterBlock(offset: 0x30, stride: 0x4, count: 2)
-    public var ch_rx_status: RegisterArray<CH_RX_STATUS>
+    public var rx_chstatus: RegisterArray<RX_CHSTATUS>
 
     /// Raw interrupt status
     @RegisterBlock(offset: 0x38)
@@ -81,438 +81,438 @@ public struct RMT {
 extension RMT {
     /// The read and write data register for CHANNEL%s by apb fifo access.
     @Register(bitWidth: 32)
-    public struct CHDATA {
+    public struct TX_CHDATA {
         /// Read and write data for channel %s via APB FIFO.
-        @ReadWrite(bits: 0..<32)
-        public var data: DATA
+        @ReadOnly(bits: 0..<32)
+        public var chdata: CHDATA
     }
 
     /// Channel %s configure register 0
     @Register(bitWidth: 32)
-    public struct CH_TX_CONF0 {
+    public struct TX_CHCONF0 {
         /// Set this bit to start sending data on CHANNEL%s.
         @WriteOnly(bits: 0..<1)
-        public var tx_start: TX_START
+        public var tx_start_ch0: TX_START_CH0
 
         /// Set this bit to reset read ram address for CHANNEL%s by accessing transmitter.
         @WriteOnly(bits: 1..<2)
-        public var mem_rd_rst: MEM_RD_RST
+        public var mem_rd_rst_ch0: MEM_RD_RST_CH0
 
         /// Set this bit to reset W/R ram address for CHANNEL%s by accessing apb fifo.
         @WriteOnly(bits: 2..<3)
-        public var apb_mem_rst: APB_MEM_RST
+        public var apb_mem_rst_ch0: APB_MEM_RST_CH0
 
         /// Set this bit to restart transmission from the first data to the last data in CHANNEL%s.
         @ReadWrite(bits: 3..<4)
-        public var tx_conti_mode: TX_CONTI_MODE
+        public var tx_conti_mode_ch0: TX_CONTI_MODE_CH0
 
         /// This is the channel %s enable bit for wraparound mode: it will resume sending at the start when the data to be sent is more than its memory size.
         @ReadWrite(bits: 4..<5)
-        public var mem_tx_wrap_en: MEM_TX_WRAP_EN
+        public var mem_tx_wrap_en_ch0: MEM_TX_WRAP_EN_CH0
 
         /// This bit configures the level of output signal in CHANNEL%s when the latter is in IDLE state.
         @ReadWrite(bits: 5..<6)
-        public var idle_out_lv: IDLE_OUT_LV
+        public var idle_out_lv_ch0: IDLE_OUT_LV_CH0
 
         /// This is the output enable-control bit for CHANNEL%s in IDLE state.
         @ReadWrite(bits: 6..<7)
-        public var idle_out_en: IDLE_OUT_EN
+        public var idle_out_en_ch0: IDLE_OUT_EN_CH0
 
         /// Set this bit to stop the transmitter of CHANNEL%s sending data out.
         @ReadWrite(bits: 7..<8)
-        public var tx_stop: TX_STOP
+        public var tx_stop_ch0: TX_STOP_CH0
 
         /// This register is used to configure the divider for clock of CHANNEL%s.
         @ReadWrite(bits: 8..<16)
-        public var div_cnt: DIV_CNT
+        public var div_cnt_ch0: DIV_CNT_CH0
 
         /// This register is used to configure the maximum size of memory allocated to CHANNEL%s.
         @ReadWrite(bits: 16..<19)
-        public var mem_size: MEM_SIZE
+        public var mem_size_ch0: MEM_SIZE_CH0
 
         /// 1: Add carrier modulation on the output signal only at the send data state for CHANNEL%s. 0: Add carrier modulation on the output signal at all state for CHANNEL%s. Only valid when RMT_CARRIER_EN_CH%s is 1.
         @ReadWrite(bits: 20..<21)
-        public var carrier_eff_en: CARRIER_EFF_EN
+        public var carrier_eff_en_ch0: CARRIER_EFF_EN_CH0
 
         /// This is the carrier modulation enable-control bit for CHANNEL%s. 1: Add carrier modulation in the output signal. 0: No carrier modulation in sig_out.
         @ReadWrite(bits: 21..<22)
-        public var carrier_en: CARRIER_EN
+        public var carrier_en_ch0: CARRIER_EN_CH0
 
         /// 1'h1: add carrier wave on high level.
         @ReadWrite(bits: 22..<23)
-        public var carrier_out_lv: CARRIER_OUT_LV
+        public var carrier_out_lv_ch0: CARRIER_OUT_LV_CH0
 
         /// Reserved
         @WriteOnly(bits: 23..<24)
-        public var afifo_rst: AFIFO_RST
+        public var afifo_rst_ch0: AFIFO_RST_CH0
 
         /// synchronization bit for CHANNEL%s
         @WriteOnly(bits: 24..<25)
-        public var conf_update: CONF_UPDATE
+        public var conf_update_ch0: CONF_UPDATE_CH0
     }
 
     /// Channel %s configure register 0
     @Register(bitWidth: 32)
-    public struct CH_RX_CONF0 {
+    public struct RX_CHCONF0 {
         /// This register is used to configure the divider for clock of CHANNEL%s.
         @ReadWrite(bits: 0..<8)
-        public var div_cnt: DIV_CNT
+        public var div_cnt_ch2: DIV_CNT_CH2
 
         /// When no edge is detected on the input signal and continuous clock cycles is longer than this register value, received process is finished.
         @ReadWrite(bits: 8..<23)
-        public var idle_thres: IDLE_THRES
+        public var idle_thres_ch2: IDLE_THRES_CH2
 
         /// This register is used to configure the maximum size of memory allocated to CHANNEL%s.
         @ReadWrite(bits: 23..<26)
-        public var mem_size: MEM_SIZE
+        public var mem_size_ch2: MEM_SIZE_CH2
 
         /// This is the carrier modulation enable-control bit for CHANNEL%s. 1: Add carrier modulation in the output signal. 0: No carrier modulation in sig_out.
         @ReadWrite(bits: 28..<29)
-        public var carrier_en: CARRIER_EN
+        public var carrier_en_ch2: CARRIER_EN_CH2
 
         /// 1'h1: add carrier wave on high level.
         @ReadWrite(bits: 29..<30)
-        public var carrier_out_lv: CARRIER_OUT_LV
+        public var carrier_out_lv_ch2: CARRIER_OUT_LV_CH2
     }
 
     /// Channel %s configure register 1
     @Register(bitWidth: 32)
-    public struct CH_RX_CONF1 {
+    public struct RX_CHCONF1 {
         /// Set this bit to enable receiver to receive data on CHANNEL%s.
         @ReadWrite(bits: 0..<1)
-        public var rx_en: RX_EN
+        public var rx_en_ch2: RX_EN_CH2
 
         /// Set this bit to reset write ram address for CHANNEL%s by accessing receiver.
         @WriteOnly(bits: 1..<2)
-        public var mem_wr_rst: MEM_WR_RST
+        public var mem_wr_rst_ch2: MEM_WR_RST_CH2
 
         /// Set this bit to reset W/R ram address for CHANNEL%s by accessing apb fifo.
         @WriteOnly(bits: 2..<3)
-        public var apb_mem_rst: APB_MEM_RST
+        public var apb_mem_rst_ch2: APB_MEM_RST_CH2
 
         /// 1'h0: APB bus is using the ram.
         @ReadWrite(bits: 3..<4)
-        public var mem_owner: MEM_OWNER
+        public var mem_owner_ch2: MEM_OWNER_CH2
 
         /// This is the receive filter's enable bit for CHANNEL%s.
         @ReadWrite(bits: 4..<5)
-        public var rx_filter_en: RX_FILTER_EN
+        public var rx_filter_en_ch2: RX_FILTER_EN_CH2
 
         /// Ignores the input pulse when its width is smaller than this register value in APB clock periods (in receive mode).
         @ReadWrite(bits: 5..<13)
-        public var rx_filter_thres: RX_FILTER_THRES
+        public var rx_filter_thres_ch2: RX_FILTER_THRES_CH2
 
         /// This is the channel %s enable bit for wraparound mode: it will resume receiving at the start when the data to be received is more than its memory size.
         @ReadWrite(bits: 13..<14)
-        public var mem_rx_wrap_en: MEM_RX_WRAP_EN
+        public var mem_rx_wrap_en_ch2: MEM_RX_WRAP_EN_CH2
 
         /// Reserved
         @WriteOnly(bits: 14..<15)
-        public var afifo_rst: AFIFO_RST
+        public var afifo_rst_ch2: AFIFO_RST_CH2
 
         /// synchronization bit for CHANNEL%s
         @WriteOnly(bits: 15..<16)
-        public var conf_update: CONF_UPDATE
+        public var conf_update_ch2: CONF_UPDATE_CH2
     }
 
     /// Channel %s status register
     @Register(bitWidth: 32)
-    public struct CH_TX_STATUS {
+    public struct TX_CHSTATUS {
         /// This register records the memory address offset when transmitter of CHANNEL%s is using the RAM.
         @ReadOnly(bits: 0..<9)
-        public var mem_raddr_ex: MEM_RADDR_EX
+        public var mem_raddr_ex_ch0: MEM_RADDR_EX_CH0
 
         /// This register records the FSM status of CHANNEL%s.
         @ReadOnly(bits: 9..<12)
-        public var state: STATE
+        public var state_ch0: STATE_CH0
 
         /// This register records the memory address offset when writes RAM over APB bus.
         @ReadOnly(bits: 12..<21)
-        public var apb_mem_waddr: APB_MEM_WADDR
+        public var apb_mem_waddr_ch0: APB_MEM_WADDR_CH0
 
         /// This status bit will be set if the offset address out of memory size when reading via APB bus.
         @ReadOnly(bits: 21..<22)
-        public var apb_mem_rd_err: APB_MEM_RD_ERR
+        public var apb_mem_rd_err_ch0: APB_MEM_RD_ERR_CH0
 
         /// This status bit will be set when the data to be set is more than memory size and the wraparound mode is disabled.
         @ReadOnly(bits: 22..<23)
-        public var mem_empty: MEM_EMPTY
+        public var mem_empty_ch0: MEM_EMPTY_CH0
 
         /// This status bit will be set if the offset address out of memory size when writes via APB bus.
         @ReadOnly(bits: 23..<24)
-        public var apb_mem_wr_err: APB_MEM_WR_ERR
+        public var apb_mem_wr_err_ch0: APB_MEM_WR_ERR_CH0
 
         /// This register records the memory address offset when reading RAM over APB bus.
         @ReadOnly(bits: 24..<32)
-        public var apb_mem_raddr: APB_MEM_RADDR
+        public var apb_mem_raddr_ch0: APB_MEM_RADDR_CH0
     }
 
     /// Channel %s status register
     @Register(bitWidth: 32)
-    public struct CH_RX_STATUS {
+    public struct RX_CHSTATUS {
         /// This register records the memory address offset when receiver of CHANNEL%s is using the RAM.
         @ReadOnly(bits: 0..<9)
-        public var mem_waddr_ex: MEM_WADDR_EX
+        public var mem_waddr_ex_ch2: MEM_WADDR_EX_CH2
 
         /// This register records the memory address offset when reads RAM over APB bus.
         @ReadOnly(bits: 12..<21)
-        public var apb_mem_raddr: APB_MEM_RADDR
+        public var apb_mem_raddr_ch2: APB_MEM_RADDR_CH2
 
         /// This register records the FSM status of CHANNEL%s.
         @ReadOnly(bits: 22..<25)
-        public var state: STATE
+        public var state_ch2: STATE_CH2
 
         /// This status bit will be set when the ownership of memory block is wrong.
         @ReadOnly(bits: 25..<26)
-        public var mem_owner_err: MEM_OWNER_ERR
+        public var mem_owner_err_ch2: MEM_OWNER_ERR_CH2
 
         /// This status bit will be set if the receiver receives more data than the memory size.
         @ReadOnly(bits: 26..<27)
-        public var mem_full: MEM_FULL
+        public var mem_full_ch2: MEM_FULL_CH2
 
         /// This status bit will be set if the offset address out of memory size when reads via APB bus.
         @ReadOnly(bits: 27..<28)
-        public var apb_mem_rd_err: APB_MEM_RD_ERR
+        public var apb_mem_rd_err_ch2: APB_MEM_RD_ERR_CH2
     }
 
     /// Raw interrupt status
     @Register(bitWidth: 32)
     public struct INT_RAW {
-        /// The interrupt raw bit for CHANNEL%s. Triggered when transmission done.
+        /// The interrupt raw bit for CHANNEL0. Triggered when transmission done.
         @ReadWrite(bits: 0..<1)
-        public var ch_tx_end0: CH_TX_END0
+        public var ch0_tx_end_int_raw: CH0_TX_END_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL%s. Triggered when transmission done.
+        /// The interrupt raw bit for CHANNEL1. Triggered when transmission done.
         @ReadWrite(bits: 1..<2)
-        public var ch_tx_end1: CH_TX_END1
+        public var ch1_tx_end_int_raw: CH1_TX_END_INT_RAW
 
         /// The interrupt raw bit for CHANNEL2. Triggered when reception done.
         @ReadWrite(bits: 2..<3)
-        public var ch_rx_end0: CH_RX_END0
+        public var ch2_rx_end_int_raw: CH2_RX_END_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL2. Triggered when reception done.
+        /// The interrupt raw bit for CHANNEL3. Triggered when reception done.
         @ReadWrite(bits: 3..<4)
-        public var ch_rx_end1: CH_RX_END1
+        public var ch3_rx_end_int_raw: CH3_RX_END_INT_RAW
 
         /// The interrupt raw bit for CHANNEL4. Triggered when error occurs.
         @ReadWrite(bits: 4..<5)
-        public var ch_tx_err0: CH_TX_ERR0
+        public var tx_ch0_err_int_raw: TX_CH0_ERR_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL4. Triggered when error occurs.
+        /// The interrupt raw bit for CHANNEL5. Triggered when error occurs.
         @ReadWrite(bits: 5..<6)
-        public var ch_tx_err1: CH_TX_ERR1
+        public var tx_ch1_err_int_raw: TX_CH1_ERR_INT_RAW
 
         /// The interrupt raw bit for CHANNEL6. Triggered when error occurs.
         @ReadWrite(bits: 6..<7)
-        public var ch_rx_err0: CH_RX_ERR0
+        public var tx_ch2_err_int_raw: TX_CH2_ERR_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL6. Triggered when error occurs.
+        /// The interrupt raw bit for CHANNEL7. Triggered when error occurs.
         @ReadWrite(bits: 7..<8)
-        public var ch_rx_err1: CH_RX_ERR1
+        public var tx_ch3_err_int_raw: TX_CH3_ERR_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL%s. Triggered when transmitter sent more data than configured value.
+        /// The interrupt raw bit for CHANNEL0. Triggered when transmitter sent more data than configured value.
         @ReadWrite(bits: 8..<9)
-        public var ch_tx_thr_event0: CH_TX_THR_EVENT0
+        public var ch0_tx_thr_event_int_raw: CH0_TX_THR_EVENT_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL%s. Triggered when transmitter sent more data than configured value.
+        /// The interrupt raw bit for CHANNEL1. Triggered when transmitter sent more data than configured value.
         @ReadWrite(bits: 9..<10)
-        public var ch_tx_thr_event1: CH_TX_THR_EVENT1
+        public var ch1_tx_thr_event_int_raw: CH1_TX_THR_EVENT_INT_RAW
 
         /// The interrupt raw bit for CHANNEL2. Triggered when receiver receive more data than configured value.
         @ReadWrite(bits: 10..<11)
-        public var ch_rx_thr_event0: CH_RX_THR_EVENT0
+        public var ch2_rx_thr_event_int_raw: CH2_RX_THR_EVENT_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL2. Triggered when receiver receive more data than configured value.
+        /// The interrupt raw bit for CHANNEL3. Triggered when receiver receive more data than configured value.
         @ReadWrite(bits: 11..<12)
-        public var ch_rx_thr_event1: CH_RX_THR_EVENT1
+        public var ch3_rx_thr_event_int_raw: CH3_RX_THR_EVENT_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL%s. Triggered when the loop count reaches the configured threshold value.
+        /// The interrupt raw bit for CHANNEL0. Triggered when the loop count reaches the configured threshold value.
         @ReadWrite(bits: 12..<13)
-        public var ch_tx_loop0: CH_TX_LOOP0
+        public var ch0_tx_loop_int_raw: CH0_TX_LOOP_INT_RAW
 
-        /// The interrupt raw bit for CHANNEL%s. Triggered when the loop count reaches the configured threshold value.
+        /// The interrupt raw bit for CHANNEL1. Triggered when the loop count reaches the configured threshold value.
         @ReadWrite(bits: 13..<14)
-        public var ch_tx_loop1: CH_TX_LOOP1
+        public var ch1_tx_loop_int_raw: CH1_TX_LOOP_INT_RAW
     }
 
     /// Masked interrupt status
     @Register(bitWidth: 32)
     public struct INT_ST {
-        /// The masked interrupt status bit for CH%s_TX_END_INT.
+        /// The masked interrupt status bit for CH0_TX_END_INT.
         @ReadOnly(bits: 0..<1)
-        public var ch_tx_end0: CH_TX_END0
+        public var ch0_tx_end_int_st: CH0_TX_END_INT_ST
 
-        /// The masked interrupt status bit for CH%s_TX_END_INT.
+        /// The masked interrupt status bit for CH1_TX_END_INT.
         @ReadOnly(bits: 1..<2)
-        public var ch_tx_end1: CH_TX_END1
+        public var ch1_tx_end_int_st: CH1_TX_END_INT_ST
 
         /// The masked interrupt status bit for CH2_RX_END_INT.
         @ReadOnly(bits: 2..<3)
-        public var ch_rx_end0: CH_RX_END0
+        public var ch2_rx_end_int_st: CH2_RX_END_INT_ST
 
-        /// The masked interrupt status bit for CH2_RX_END_INT.
+        /// The masked interrupt status bit for CH3_RX_END_INT.
         @ReadOnly(bits: 3..<4)
-        public var ch_rx_end1: CH_RX_END1
+        public var ch3_rx_end_int_st: CH3_RX_END_INT_ST
 
         /// The masked interrupt status bit for CH4_ERR_INT.
         @ReadOnly(bits: 4..<5)
-        public var ch_tx_err0: CH_TX_ERR0
+        public var rx_ch0_err_int_st: RX_CH0_ERR_INT_ST
 
-        /// The masked interrupt status bit for CH4_ERR_INT.
+        /// The masked interrupt status bit for CH5_ERR_INT.
         @ReadOnly(bits: 5..<6)
-        public var ch_tx_err1: CH_TX_ERR1
+        public var rx_ch1_err_int_st: RX_CH1_ERR_INT_ST
 
         /// The masked interrupt status bit for CH6_ERR_INT.
         @ReadOnly(bits: 6..<7)
-        public var ch_rx_err0: CH_RX_ERR0
+        public var rx_ch2_err_int_st: RX_CH2_ERR_INT_ST
 
-        /// The masked interrupt status bit for CH6_ERR_INT.
+        /// The masked interrupt status bit for CH7_ERR_INT.
         @ReadOnly(bits: 7..<8)
-        public var ch_rx_err1: CH_RX_ERR1
+        public var rx_ch3_err_int_st: RX_CH3_ERR_INT_ST
 
-        /// The masked interrupt status bit for CH%s_TX_THR_EVENT_INT.
+        /// The masked interrupt status bit for CH0_TX_THR_EVENT_INT.
         @ReadOnly(bits: 8..<9)
-        public var ch_tx_thr_event0: CH_TX_THR_EVENT0
+        public var ch0_tx_thr_event_int_st: CH0_TX_THR_EVENT_INT_ST
 
-        /// The masked interrupt status bit for CH%s_TX_THR_EVENT_INT.
+        /// The masked interrupt status bit for CH1_TX_THR_EVENT_INT.
         @ReadOnly(bits: 9..<10)
-        public var ch_tx_thr_event1: CH_TX_THR_EVENT1
+        public var ch1_tx_thr_event_int_st: CH1_TX_THR_EVENT_INT_ST
 
         /// The masked interrupt status bit for CH2_RX_THR_EVENT_INT.
         @ReadOnly(bits: 10..<11)
-        public var ch_rx_thr_event0: CH_RX_THR_EVENT0
+        public var ch2_rx_thr_event_int_st: CH2_RX_THR_EVENT_INT_ST
 
-        /// The masked interrupt status bit for CH2_RX_THR_EVENT_INT.
+        /// The masked interrupt status bit for CH3_RX_THR_EVENT_INT.
         @ReadOnly(bits: 11..<12)
-        public var ch_rx_thr_event1: CH_RX_THR_EVENT1
+        public var ch3_rx_thr_event_int_st: CH3_RX_THR_EVENT_INT_ST
 
-        /// The masked interrupt status bit for CH%s_TX_LOOP_INT.
+        /// The masked interrupt status bit for CH0_TX_LOOP_INT.
         @ReadOnly(bits: 12..<13)
-        public var ch_x_loop0: CH_X_LOOP0
+        public var ch0_tx_loop_int_st: CH0_TX_LOOP_INT_ST
 
-        /// The masked interrupt status bit for CH%s_TX_LOOP_INT.
+        /// The masked interrupt status bit for CH1_TX_LOOP_INT.
         @ReadOnly(bits: 13..<14)
-        public var ch_x_loop1: CH_X_LOOP1
+        public var ch1_tx_loop_int_st: CH1_TX_LOOP_INT_ST
     }
 
     /// Interrupt enable bits
     @Register(bitWidth: 32)
     public struct INT_ENA {
-        /// The interrupt enable bit for CH%s_TX_END_INT.
+        /// The interrupt enable bit for CH0_TX_END_INT.
         @ReadWrite(bits: 0..<1)
-        public var ch_tx_end0: CH_TX_END0
+        public var ch0_tx_end_int_ena: CH0_TX_END_INT_ENA
 
-        /// The interrupt enable bit for CH%s_TX_END_INT.
+        /// The interrupt enable bit for CH1_TX_END_INT.
         @ReadWrite(bits: 1..<2)
-        public var ch_tx_end1: CH_TX_END1
+        public var ch1_tx_end_int_ena: CH1_TX_END_INT_ENA
 
         /// The interrupt enable bit for CH2_RX_END_INT.
         @ReadWrite(bits: 2..<3)
-        public var ch_rx_end0: CH_RX_END0
+        public var ch2_rx_end_int_ena: CH2_RX_END_INT_ENA
 
-        /// The interrupt enable bit for CH2_RX_END_INT.
+        /// The interrupt enable bit for CH3_RX_END_INT.
         @ReadWrite(bits: 3..<4)
-        public var ch_rx_end1: CH_RX_END1
+        public var ch3_rx_end_int_ena: CH3_RX_END_INT_ENA
 
         /// The interrupt enable bit for CH4_ERR_INT.
         @ReadWrite(bits: 4..<5)
-        public var ch_tx_err0: CH_TX_ERR0
+        public var ch0_err_int_ena: CH0_ERR_INT_ENA
 
-        /// The interrupt enable bit for CH4_ERR_INT.
+        /// The interrupt enable bit for CH5_ERR_INT.
         @ReadWrite(bits: 5..<6)
-        public var ch_tx_err1: CH_TX_ERR1
+        public var ch1_err_int_ena: CH1_ERR_INT_ENA
 
         /// The interrupt enable bit for CH6_ERR_INT.
         @ReadWrite(bits: 6..<7)
-        public var ch_rx_err0: CH_RX_ERR0
+        public var ch2_err_int_ena: CH2_ERR_INT_ENA
 
-        /// The interrupt enable bit for CH6_ERR_INT.
+        /// The interrupt enable bit for CH7_ERR_INT.
         @ReadWrite(bits: 7..<8)
-        public var ch_rx_err1: CH_RX_ERR1
+        public var ch3_err_int_ena: CH3_ERR_INT_ENA
 
-        /// The interrupt enable bit for CH%s_TX_THR_EVENT_INT.
+        /// The interrupt enable bit for CH0_TX_THR_EVENT_INT.
         @ReadWrite(bits: 8..<9)
-        public var ch_tx_thr_event0: CH_TX_THR_EVENT0
+        public var ch0_tx_thr_event_int_ena: CH0_TX_THR_EVENT_INT_ENA
 
-        /// The interrupt enable bit for CH%s_TX_THR_EVENT_INT.
+        /// The interrupt enable bit for CH1_TX_THR_EVENT_INT.
         @ReadWrite(bits: 9..<10)
-        public var ch_tx_thr_event1: CH_TX_THR_EVENT1
+        public var ch1_tx_thr_event_int_ena: CH1_TX_THR_EVENT_INT_ENA
 
         /// The interrupt enable bit for CH2_RX_THR_EVENT_INT.
         @ReadWrite(bits: 10..<11)
-        public var ch_rx_thr_event0: CH_RX_THR_EVENT0
+        public var ch2_rx_thr_event_int_ena: CH2_RX_THR_EVENT_INT_ENA
 
-        /// The interrupt enable bit for CH2_RX_THR_EVENT_INT.
+        /// The interrupt enable bit for CH3_RX_THR_EVENT_INT.
         @ReadWrite(bits: 11..<12)
-        public var ch_rx_thr_event1: CH_RX_THR_EVENT1
+        public var ch3_rx_thr_event_int_ena: CH3_RX_THR_EVENT_INT_ENA
 
-        /// The interrupt enable bit for CH%s_TX_LOOP_INT.
+        /// The interrupt enable bit for CH0_TX_LOOP_INT.
         @ReadWrite(bits: 12..<13)
-        public var ch_x_loop0: CH_X_LOOP0
+        public var ch0_tx_loop_int_ena: CH0_TX_LOOP_INT_ENA
 
-        /// The interrupt enable bit for CH%s_TX_LOOP_INT.
+        /// The interrupt enable bit for CH1_TX_LOOP_INT.
         @ReadWrite(bits: 13..<14)
-        public var ch_x_loop1: CH_X_LOOP1
+        public var ch1_tx_loop_int_ena: CH1_TX_LOOP_INT_ENA
     }
 
     /// Interrupt clear bits
     @Register(bitWidth: 32)
     public struct INT_CLR {
-        /// Set this bit to clear theCH%s_TX_END_INT interrupt.
+        /// Set this bit to clear theCH0_TX_END_INT interrupt.
         @WriteOnly(bits: 0..<1)
-        public var ch_tx_end0: CH_TX_END0
+        public var ch0_tx_end_int_clr: CH0_TX_END_INT_CLR
 
-        /// Set this bit to clear theCH%s_TX_END_INT interrupt.
+        /// Set this bit to clear theCH1_TX_END_INT interrupt.
         @WriteOnly(bits: 1..<2)
-        public var ch_tx_end1: CH_TX_END1
+        public var ch1_tx_end_int_clr: CH1_TX_END_INT_CLR
 
         /// Set this bit to clear theCH2_RX_END_INT interrupt.
         @WriteOnly(bits: 2..<3)
-        public var ch_rx_end0: CH_RX_END0
+        public var ch2_rx_end_int_clr: CH2_RX_END_INT_CLR
 
-        /// Set this bit to clear theCH2_RX_END_INT interrupt.
+        /// Set this bit to clear theCH3_RX_END_INT interrupt.
         @WriteOnly(bits: 3..<4)
-        public var ch_rx_end1: CH_RX_END1
+        public var ch3_rx_end_int_clr: CH3_RX_END_INT_CLR
 
         /// Set this bit to clear theCH4_ERR_INT interrupt.
         @WriteOnly(bits: 4..<5)
-        public var ch_tx_err0: CH_TX_ERR0
+        public var rx_ch0_err_int_clr: RX_CH0_ERR_INT_CLR
 
-        /// Set this bit to clear theCH4_ERR_INT interrupt.
+        /// Set this bit to clear theCH5_ERR_INT interrupt.
         @WriteOnly(bits: 5..<6)
-        public var ch_tx_err1: CH_TX_ERR1
+        public var rx_ch1_err_int_clr: RX_CH1_ERR_INT_CLR
 
         /// Set this bit to clear theCH6_ERR_INT interrupt.
         @WriteOnly(bits: 6..<7)
-        public var ch_rx_err0: CH_RX_ERR0
+        public var rx_ch2_err_int_clr: RX_CH2_ERR_INT_CLR
 
-        /// Set this bit to clear theCH6_ERR_INT interrupt.
+        /// Set this bit to clear theCH7_ERR_INT interrupt.
         @WriteOnly(bits: 7..<8)
-        public var ch_rx_err1: CH_RX_ERR1
+        public var rx_ch3_err_int_clr: RX_CH3_ERR_INT_CLR
 
-        /// Set this bit to clear theCH%s_TX_THR_EVENT_INT interrupt.
+        /// Set this bit to clear theCH0_TX_THR_EVENT_INT interrupt.
         @WriteOnly(bits: 8..<9)
-        public var ch_tx_thr_event0: CH_TX_THR_EVENT0
+        public var ch0_tx_thr_event_int_clr: CH0_TX_THR_EVENT_INT_CLR
 
-        /// Set this bit to clear theCH%s_TX_THR_EVENT_INT interrupt.
+        /// Set this bit to clear theCH1_TX_THR_EVENT_INT interrupt.
         @WriteOnly(bits: 9..<10)
-        public var ch_tx_thr_event1: CH_TX_THR_EVENT1
+        public var ch1_tx_thr_event_int_clr: CH1_TX_THR_EVENT_INT_CLR
 
         /// Set this bit to clear theCH2_RX_THR_EVENT_INT interrupt.
         @WriteOnly(bits: 10..<11)
-        public var ch_rx_thr_event0: CH_RX_THR_EVENT0
+        public var ch2_rx_thr_event_int_clr: CH2_RX_THR_EVENT_INT_CLR
 
-        /// Set this bit to clear theCH2_RX_THR_EVENT_INT interrupt.
+        /// Set this bit to clear theCH3_RX_THR_EVENT_INT interrupt.
         @WriteOnly(bits: 11..<12)
-        public var ch_rx_thr_event1: CH_RX_THR_EVENT1
+        public var ch3_rx_thr_event_int_clr: CH3_RX_THR_EVENT_INT_CLR
 
-        /// Set this bit to clear theCH%s_TX_LOOP_INT interrupt.
+        /// Set this bit to clear theCH0_TX_LOOP_INT interrupt.
         @WriteOnly(bits: 12..<13)
-        public var ch_tx_loop0: CH_TX_LOOP0
+        public var ch0_tx_loop_int_clr: CH0_TX_LOOP_INT_CLR
 
-        /// Set this bit to clear theCH%s_TX_LOOP_INT interrupt.
+        /// Set this bit to clear theCH1_TX_LOOP_INT interrupt.
         @WriteOnly(bits: 13..<14)
-        public var ch_tx_loop1: CH_TX_LOOP1
+        public var ch1_tx_loop_int_clr: CH1_TX_LOOP_INT_CLR
     }
 
     /// Channel %s duty cycle configuration register
@@ -520,11 +520,11 @@ extension RMT {
     public struct CHCARRIER_DUTY {
         /// This register is used to configure carrier wave 's low level clock period for CHANNEL%s.
         @ReadWrite(bits: 0..<16)
-        public var carrier_low: CARRIER_LOW
+        public var carrier_low_ch: CARRIER_LOW_CH
 
         /// This register is used to configure carrier wave 's high level clock period for CHANNEL%s.
         @ReadWrite(bits: 16..<32)
-        public var carrier_high: CARRIER_HIGH
+        public var carrier_high_ch: CARRIER_HIGH_CH
     }
 
     /// Channel %s carrier remove register
@@ -532,11 +532,11 @@ extension RMT {
     public struct CH_RX_CARRIER_RM {
         /// The low level period in a carrier modulation mode is (REG_RMT_REG_CARRIER_LOW_THRES_CH%s + 1) for channel %s.
         @ReadWrite(bits: 0..<16)
-        public var carrier_low_thres: CARRIER_LOW_THRES
+        public var carrier_low_thres_ch: CARRIER_LOW_THRES_CH
 
         /// The high level period in a carrier modulation mode is (REG_RMT_REG_CARRIER_HIGH_THRES_CH%s + 1) for channel %s.
         @ReadWrite(bits: 16..<32)
-        public var carrier_high_thres: CARRIER_HIGH_THRES
+        public var carrier_high_thres_ch: CARRIER_HIGH_THRES_CH
     }
 
     /// Channel %s Tx event configuration register
@@ -544,23 +544,23 @@ extension RMT {
     public struct CH_TX_LIM {
         /// This register is used to configure the maximum entries that CHANNEL%s can send out.
         @ReadWrite(bits: 0..<9)
-        public var tx_lim: TX_LIM
+        public var tx_lim_ch: TX_LIM_CH
 
         /// This register is used to configure the maximum loop count when tx_conti_mode is valid.
         @ReadWrite(bits: 9..<19)
-        public var tx_loop_num: TX_LOOP_NUM
+        public var tx_loop_num_ch: TX_LOOP_NUM_CH
 
         /// This register is the enabled bit for loop count.
         @ReadWrite(bits: 19..<20)
-        public var tx_loop_cnt_en: TX_LOOP_CNT_EN
+        public var tx_loop_cnt_en_ch: TX_LOOP_CNT_EN_CH
 
         /// This register is used to reset the loop count when tx_conti_mode is valid.
         @WriteOnly(bits: 20..<21)
-        public var loop_count_reset: LOOP_COUNT_RESET
+        public var loop_count_reset_ch: LOOP_COUNT_RESET_CH
 
         /// This bit is used to enable the loop send stop function after the loop counter counts to loop number for CHANNEL%s.
         @ReadWrite(bits: 21..<22)
-        public var loop_stop_en: LOOP_STOP_EN
+        public var loop_stop_en_ch: LOOP_STOP_EN_CH
     }
 
     /// Channel %s Rx event configuration register
@@ -568,7 +568,7 @@ extension RMT {
     public struct CH_RX_LIM {
         /// This register is used to configure the maximum entries that CHANNEL%s can receive.
         @ReadWrite(bits: 0..<9)
-        public var rmt_rx_lim: RMT_RX_LIM
+        public var rmt_rx_lim_ch2: RMT_RX_LIM_CH2
     }
 
     /// RMT apb configuration register
@@ -584,11 +584,31 @@ extension RMT {
 
         /// Set this bit to power down RMT memory.
         @ReadWrite(bits: 2..<3)
-        public var mem_force_pd: MEM_FORCE_PD
+        public var rmt_mem_force_pd: RMT_MEM_FORCE_PD
 
         /// 1: Disable RMT memory light sleep power down function. 0: Power down RMT memory when RMT is in light sleep mode.
         @ReadWrite(bits: 3..<4)
-        public var mem_force_pu: MEM_FORCE_PU
+        public var rmt_mem_force_pu: RMT_MEM_FORCE_PU
+
+        /// the integral part of the fractional divisor
+        @ReadWrite(bits: 4..<12)
+        public var rmt_sclk_div_num: RMT_SCLK_DIV_NUM
+
+        /// the numerator of the fractional part of the fractional divisor
+        @ReadWrite(bits: 12..<18)
+        public var rmt_sclk_div_a: RMT_SCLK_DIV_A
+
+        /// the denominator of the fractional part of the fractional divisor
+        @ReadWrite(bits: 18..<24)
+        public var rmt_sclk_div_b: RMT_SCLK_DIV_B
+
+        /// choose the clock source of rmt_sclk. 1:CLK_80Mhz,2:CLK_FOSC, 3:XTAL
+        @ReadWrite(bits: 24..<26)
+        public var rmt_sclk_sel: RMT_SCLK_SEL
+
+        /// rmt_sclk switch
+        @ReadWrite(bits: 26..<27)
+        public var rmt_sclk_active: RMT_SCLK_ACTIVE
 
         /// RMT register clock gate enable signal. 1: Power up the drive clock of registers. 0: Power down the drive clock of registers
         @ReadWrite(bits: 31..<32)
@@ -616,7 +636,7 @@ extension RMT {
     public struct REF_CNT_RST {
         /// This register is used to reset the clock divider of CHANNEL0.
         @WriteOnly(bits: 0..<1)
-        public var tx_ref_cnt_rst: TX_REF_CNT_RST
+        public var tx_ref_cnt_rst_ch0: TX_REF_CNT_RST_CH0
 
         /// This register is used to reset the clock divider of CHANNEL1.
         @WriteOnly(bits: 1..<2)
