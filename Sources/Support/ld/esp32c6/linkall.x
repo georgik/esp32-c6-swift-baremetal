@@ -64,8 +64,6 @@ SECTIONS
     /* Discard problematic sections */
     /DISCARD/ : {
         *(.text_gap)
-        *(.data.wifi*)
-        *(.wifi*)
         *(.debug*)
         *(.comment*)
         *(.note*)

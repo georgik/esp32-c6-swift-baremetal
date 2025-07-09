@@ -33,6 +33,15 @@ public func printBootDiagnostics() {
     flushUART()
 }
 
+/// Print a StaticString without Unicode processing
+public func printStaticString(_ str: StaticString) {
+    str.withUTF8Buffer { buffer in
+        for i in 0..<buffer.count {
+            putChar(buffer[i])
+        }
+    }
+}
+
 @_cdecl("swift_main")
 public func swiftMain() {
     putLine("ESP32-C6")
