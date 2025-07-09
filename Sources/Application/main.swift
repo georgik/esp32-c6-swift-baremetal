@@ -79,7 +79,7 @@ public func swiftMain() {
     putLine("Initializing SPI for display communication...")
     runDisplayApplication()
 
-    // Initialize NVS after SPI is ready
+    // Initialize the NVS first
     putLine("\n=== NVS Initialization ===")
     let nvsResult = nvs_flash_init()
     if nvsResult != 0 {
@@ -88,11 +88,22 @@ public func swiftMain() {
     }
     putLine("NVS flash initialized")
 
-    // Initialize WiFi and scan for networks after NVS is ready
-    putLine("\n=== WiFi Initialization ===")
-    WiFiManager.initializeWiFi()
-    WiFiManager.scanNetworks()
-    putLine("=== WiFi Test Complete ===")
+    // Mark NVS as initialized in WiFiManager
+    WiFiManager.markNVSInitialized()
+
+    // Create scheduler and tasks
+    let scheduler = Scheduler()
+    scheduler.addTask(Task {
+        // First task: Initialize WiFi after NVS
+        WiFiManager.initializeWiFi()
+    })
+    scheduler.addTask(Task {
+        // Second task: Scan for networks after WiFi is initialized
+        WiFiManager.scanNetworks()
+    })
+
+    // Run the scheduler
+    scheduler.run()
 
     var counter = 0
 
@@ -148,7 +159,7 @@ public func freeEmbedded(_ ptr: UnsafeMutableRawPointer?) {
 }
 
 @_cdecl("free")
-public func free(_ ptr: UnsafeMutableRawPointer?) {
+public func freeEmbeddedFree(_ ptr: UnsafeMutableRawPointer?) {
     // No-op for embedded systems
 }
 

@@ -399,9 +399,29 @@ func phy_xpd_tsens() {
 }
 
 // WiFi functionality with display output support
-struct WiFiManager {
-    static func initializeWiFi() {
+public struct WiFiManager {
+    private nonisolated(unsafe) static var nvsInitialized = false
+    private nonisolated(unsafe) static var wifiInitialized = false
+    
+    // Function to mark NVS as initialized from external code
+    public static func markNVSInitialized() {
+        nvsInitialized = true
+    }
+    
+    public static func initializeWiFi() {
         putLine("Initializing WiFi subsystem...")
+        
+        // Check if NVS is initialized (should be done before WiFi init)
+        if !nvsInitialized {
+            putLine("Warning: NVS should be initialized before WiFi")
+            putLine("Attempting to initialize NVS now...")
+            let nvsResult = nvs_flash_init()
+            if nvsResult != 0 {
+                putLine("Failed to initialize NVS flash")
+                return
+            }
+            nvsInitialized = true
+        }
         
         // Display WiFi initialization on screen
         displayWiFiText("WiFi Init...", x: 10, y: 10)
@@ -440,9 +460,23 @@ struct WiFiManager {
         
         putLine("WiFi subsystem initialized successfully!")
         displayWiFiText("WiFi Ready", x: 10, y: 30)
+        
+        // Mark WiFi as initialized
+        wifiInitialized = true
     }
     
-    static func scanNetworks() {
+    public static func scanNetworks() {
+        // Check if WiFi is initialized
+        if !wifiInitialized {
+            putLine("Error: WiFi must be initialized before scanning")
+            putLine("Attempting to initialize WiFi now...")
+            initializeWiFi()
+            if !wifiInitialized {
+                putLine("Failed to initialize WiFi - cannot scan")
+                return
+            }
+        }
+        
         putLine("Starting WiFi network scan...")
         displayWiFiText("Scanning...", x: 10, y: 50)
         
