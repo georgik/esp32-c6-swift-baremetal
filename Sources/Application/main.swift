@@ -33,6 +33,15 @@ public func printBootDiagnostics() {
     flushUART()
 }
 
+/// Print a StaticString without Unicode processing
+public func printStaticString(_ str: StaticString) {
+    str.withUTF8Buffer { buffer in
+        for i in 0..<buffer.count {
+            putChar(buffer[i])
+        }
+    }
+}
+
 @_cdecl("swift_main")
 public func swiftMain() {
     putLine("ESP32-C6")
@@ -66,16 +75,24 @@ public func swiftMain() {
     // IMPORTANT: Initialize the LED first!
     initializeLED()
 
-    // Initialize and test SPI
+    // Initialize and test SPI first (needed for NVS flash operations)
     putLine("Initializing SPI for display communication...")
     runDisplayApplication()
-    
-    // Initialize WiFi and scan for networks
+
+    // Initialize NVS after SPI is ready
+    putLine("\n=== NVS Initialization ===")
+    let nvsResult = nvs_flash_init()
+    if nvsResult != 0 {
+        putLine("Failed to initialize NVS flash")
+        return
+    }
+    putLine("NVS flash initialized")
+
+    // Initialize WiFi and scan for networks after NVS is ready
+    putLine("\n=== WiFi Initialization ===")
     WiFiManager.initializeWiFi()
     WiFiManager.scanNetworks()
-
-    // IMPORTANT: Initialize the LED first!
-    initializeLED()
+    putLine("=== WiFi Test Complete ===")
 
     var counter = 0
 

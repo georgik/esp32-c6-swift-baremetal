@@ -231,7 +231,8 @@ private func printGPIOStatus(config: SPIConfig) {
     // Check each SPI pin specifically
     let pins = [config.sckPin, config.mosiPin, config.csPin, config.dcPin, config.rstPin]
 
-    for (i, pin) in pins.enumerated() {
+    for i in 0..<pins.count {
+        let pin = pins[i]
         let enabled = (enableValue & (1 << pin)) != 0
         let outState = (outValue & (1 << pin)) != 0
 
