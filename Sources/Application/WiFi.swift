@@ -97,8 +97,36 @@ struct AccessPointInfo {
 }
 
 // Global variables for scan results - using nonisolated(unsafe) to disable concurrency checks
-nonisolated(unsafe) var scanResults: [WiFiAccessPointRecord] = []
+// Use static allocation to avoid dynamic memory issues in embedded environment
+let maxScanResults: Int = 10
+nonisolated(unsafe) var scanResults: [WiFiAccessPointRecord] = {
+    let emptyRecord = WiFiAccessPointRecord(
+        ssid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        bssid: (0, 0, 0, 0, 0, 0),
+        primary: 0,
+        second: 0,
+        rssi: 0,
+        authmode: 0,
+        pairwise_cipher: 0,
+        group_cipher: 0,
+        ant: 0,
+        phy_11b: 0,
+        phy_11g: 0,
+        phy_11n: 0,
+        phy_lr: 0,
+        wps: 0,
+        ftm_responder: 0,
+        ftm_initiator: 0,
+        phy_11ax: 0,
+        he_ap: 0,
+        bandwidth: 0,
+        country: WiFiCountry(cc: (0, 0, 0), schan: 0, nchan: 0, max_tx_power: 0, policy: 0)
+    )
+    return Array(repeating: emptyRecord, count: maxScanResults)
+}()
 nonisolated(unsafe) var scanResultsCount: UInt16 = 0
+// Index to track which result to return next
+nonisolated(unsafe) var scanResultsIndex: UInt16 = 0
 
 // Low-level WiFi scan implementation using ROM functions
 // Note: ESP32-C6 ROM does not provide high-level WiFi scan functions
@@ -107,9 +135,11 @@ nonisolated(unsafe) var scanResultsCount: UInt16 = 0
 func rom_esp_wifi_scan_start(_ config: UnsafeRawPointer, _ block: Int32) -> Int32 {
     putLine("Starting low-level WiFi scan...")
     
-    // Clear previous scan results
-    scanResults.removeAll()
+    // Clear previous scan results by resetting counters (no dynamic memory operations)
     scanResultsCount = 0
+    scanResultsIndex = 0
+
+    putLine("Scan results cleared...")
     
     // Initialize WiFi RF and PHY
     let phyResult = wifi_rf_phy_enable()
@@ -140,6 +170,12 @@ func rom_esp_wifi_scan_start(_ config: UnsafeRawPointer, _ block: Int32) -> Int3
     ]
     
     for (ssidBytes, rssi, channel) in simulatedNetworks {
+        // Check if we have space for more results
+        guard scanResultsCount < maxScanResults else {
+            putLine("Maximum scan results reached")
+            break
+        }
+        
         var apRecord = WiFiAccessPointRecord(
             ssid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             bssid: (0x00, 0x11, 0x22, 0x33, 0x44, 0x55),
@@ -175,10 +211,12 @@ func rom_esp_wifi_scan_start(_ config: UnsafeRawPointer, _ block: Int32) -> Int3
             }
         }
         
-        scanResults.append(apRecord)
+        // Store in preallocated array instead of appending
+        scanResults[Int(scanResultsCount)] = apRecord
+        scanResultsCount += 1
     }
     
-    scanResultsCount = UInt16(scanResults.count)
+    // scanResultsCount is already updated in the loop above
     putLine("Scan completed, found networks")
     return 0 // Success
 }
@@ -189,13 +227,13 @@ func rom_esp_wifi_scan_get_ap_num(_ number: UnsafeMutablePointer<UInt16>) -> Int
 }
 
 func rom_esp_wifi_scan_get_ap_record(_ ap_record: UnsafeMutableRawPointer) -> Int32 {
-    guard scanResultsCount > 0 else {
-        return -1 // No results
+    guard scanResultsIndex < scanResultsCount else {
+        return -1 // No more results
     }
     
-    // Return the first available result and remove it from the list
-    let result = scanResults.removeFirst()
-    scanResultsCount -= 1
+    // Return the current result and increment index
+    let result = scanResults[Int(scanResultsIndex)]
+    scanResultsIndex += 1
     
     // Copy the result to the provided buffer
     let recordPtr = ap_record.bindMemory(to: WiFiAccessPointRecord.self, capacity: 1)
@@ -205,8 +243,9 @@ func rom_esp_wifi_scan_get_ap_record(_ ap_record: UnsafeMutableRawPointer) -> In
 }
 
 func rom_esp_wifi_clear_ap_list() -> Int32 {
-    scanResults.removeAll()
+    // Clear by resetting counters (no dynamic memory operations)
     scanResultsCount = 0
+    scanResultsIndex = 0
     return 0 // Success
 }
 
@@ -284,12 +323,16 @@ struct WiFiManager {
         displayWiFiText("WiFi Init...", x: 10, y: 10)
         
         // Power up the WiFi module
+        putLine("  Configuring WiFi clocks...")
         modem_syscon.clk_conf1.modify { clk_conf1 in
             let currentBits = UInt32(clk_conf1.raw.storage)
             let newBits = currentBits | (1 << 0) | (1 << 1) | (1 << 3) | (1 << 9) | (1 << 10)
             clk_conf1 = .init(.init(newBits))
         }
         putLine("  WiFi clocks enabled")
+        
+        // Add small delay for hardware settling
+        delayMicroseconds(100000) // 100ms delay
         
         pcr.modem_apb_conf.modify { modem_apb_conf in
             let currentBits = UInt32(modem_apb_conf.raw.storage)
@@ -299,6 +342,7 @@ struct WiFiManager {
         putLine("  Modem APB configured")
         
         // Release WiFi reset
+        putLine("  Releasing WiFi reset...")
         modem_syscon.modem_rst_conf.modify { modem_rst_conf in
             let currentBits = UInt32(modem_rst_conf.raw.storage)
             let newBits = currentBits & ~((1 << 8) | (1 << 10) | (1 << 14))
