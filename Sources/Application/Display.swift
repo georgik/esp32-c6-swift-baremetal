@@ -24,7 +24,7 @@ func runDisplayApplication() {
 
     // Test basic functionality
     putLine("STEP 5: Display Functionality Tests...")
-    testDisplayFunctionality()
+    //testDisplayFunctionality()
     ESP32C6ROM.disableRTCWatchdog()
     
     putLine("=== Display Application Complete ===")

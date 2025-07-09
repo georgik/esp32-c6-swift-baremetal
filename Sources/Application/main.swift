@@ -75,18 +75,24 @@ public func swiftMain() {
     // IMPORTANT: Initialize the LED first!
     initializeLED()
 
-    // Initialize WiFi and scan for networks before running the display application
+    // Initialize and test SPI first (needed for NVS flash operations)
+    putLine("Initializing SPI for display communication...")
+    runDisplayApplication()
+
+    // Initialize NVS after SPI is ready
+    putLine("\n=== NVS Initialization ===")
+    let nvsResult = nvs_flash_init()
+    if nvsResult != 0 {
+        putLine("Failed to initialize NVS flash")
+        return
+    }
+    putLine("NVS flash initialized")
+
+    // Initialize WiFi and scan for networks after NVS is ready
     putLine("\n=== WiFi Initialization ===")
     WiFiManager.initializeWiFi()
     WiFiManager.scanNetworks()
     putLine("=== WiFi Test Complete ===")
-
-    // Initialize and test SPI
-    putLine("Initializing SPI for display communication...")
-    runDisplayApplication()
-
-    // IMPORTANT: Initialize the LED first!
-    initializeLED()
 
     var counter = 0
 
