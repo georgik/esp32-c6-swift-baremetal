@@ -66,13 +66,15 @@ public func swiftMain() {
     // IMPORTANT: Initialize the LED first!
     initializeLED()
 
+    // Initialize WiFi and scan for networks before running the display application
+    putLine("\n=== WiFi Initialization ===")
+    WiFiManager.initializeWiFi()
+    WiFiManager.scanNetworks()
+    putLine("=== WiFi Test Complete ===")
+
     // Initialize and test SPI
     putLine("Initializing SPI for display communication...")
     runDisplayApplication()
-    
-    // Initialize WiFi and scan for networks
-    WiFiManager.initializeWiFi()
-    WiFiManager.scanNetworks()
 
     // IMPORTANT: Initialize the LED first!
     initializeLED()

@@ -366,7 +366,8 @@ func verifyPreDisplayGPIOStates() {
     
     var allGood = true
     
-    for (index, pin) in criticalPins.enumerated() {
+    for index in 0..<criticalPins.count {
+        let pin = criticalPins[index]
         let enabled = (enableValue & (1 << pin)) != 0
         let outState = (outValue & (1 << pin)) != 0
         let inState = (inValue & (1 << pin)) != 0
