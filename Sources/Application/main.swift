@@ -93,11 +93,11 @@ public func swiftMain() {
 
     // Create scheduler and tasks
     let scheduler = Scheduler()
-    scheduler.addTask(Task {
+    scheduler.addTask(Task(name: "Init WiFi") {
         // First task: Initialize WiFi after NVS
         WiFiManager.initializeWiFi()
     })
-    scheduler.addTask(Task {
+    scheduler.addTask(Task(name: "Scan Networks") {
         // Second task: Scan for networks after WiFi is initialized
         WiFiManager.scanNetworks()
     })
